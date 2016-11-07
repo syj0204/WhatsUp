@@ -24,10 +24,10 @@ class Database {
 		/* Connect using SQL Server Authentication. */
 		$this->connection = sqlsrv_connect( $this->server, $this->connectionInfo);
 		
-		if($this->connection) echo "Success!<br>\n";
-		else echo "fail!!";
+		if($this->connection) return $this->connection;
+		else return null;
 		
-		return $this->connection;
+		//return $this->connection;
 	}
 	
 	function executeQuery($query) {
