@@ -1,7 +1,7 @@
 <?php
 include "Database.php";
 
-Class User {
+Class Device{
 		
 	private $DBObject;
 	private $connection;
@@ -11,10 +11,10 @@ Class User {
 		$this->connection=$this->DBObject->connectDB();
 	}
 	
-	function getUserList() {
+	function getDeviceList() {
 		
 		if($this->connection) {
-			$query = "SELECT * FROM Users";
+			$query = "SELECT * FROM Device";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 			
@@ -30,11 +30,11 @@ Class User {
 		}
 	}
 	
-	function getUser($nUserID) {
+	function getDevice($nDeviceID) {
 	
 		if($this->connection) {
 				
-			$query = "SELECT * FROM User WHERE nUserID=".$nUserID;
+			$query = "SELECT * FROM Device WHERE nDeviceID=".$nDeviceID;
 			$statement = $this->DBObject->executeQuery($query);
 				
 			if(!$statement) return $statement;
