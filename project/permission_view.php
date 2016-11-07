@@ -1,5 +1,4 @@
 <?php
-
 include "permission.php";
 ?>
 <div id="page-wrapper">
@@ -36,8 +35,8 @@ Permission <small>Permission Overview</small>
 					<select name="device" id="device" class="form-control" size="10" multiple="multiple">
 						<?php
 
-							$DeviceObject = new Device();
-							$rows = $DeviceObject->getDeviceList();
+							$DBControlObject = new DBController();
+							$rows = $DBControlObject->getDeviceList();
 							if(count($rows)>0) {
 								for($i=0; $i<count($rows); $i++) {
 						?>
@@ -76,8 +75,7 @@ Permission <small>Permission Overview</small>
                     <div class="col-xs-4">
 					<select name="user" id="user" class="form-control" size="10" multiple="multiple">
 						<?php
-							$UserObject = new User();
-							$rows = $UserObject->getUserList();
+							$rows = $DBControlObject->getUserList();
 							if(count($rows)>0) {
 								for($i=0; $i<count($rows); $i++) {
 						?>
