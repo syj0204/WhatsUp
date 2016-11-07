@@ -1,6 +1,5 @@
-<?php 
-
-include "user.php";
+<?php
+include "DBController.php";
 ?>
 <div id="page-wrapper">
 
@@ -44,8 +43,8 @@ User <small>Users Overview</small>
 <tbody>
 
 <?php 
-$UserObject = new User();
-$rows = $UserObject->getUserList();
+$DBControlObject = new DBController();
+$rows = $DBControlObject->getUserList();
 if(count($rows)>0) {
 	for($i=0; $i<count($rows); $i++) {
 		?>

@@ -1,6 +1,5 @@
-<?php 
-
-include "device.php";
+<?php
+include "DBController.php";
 ?>
 <div id="page-wrapper">
 
@@ -43,8 +42,8 @@ Device <small>Device Overview</small>
 <tbody>
 
 <?php 
-$DeviceObject = new Device();
-$rows = $DeviceObject->getDeviceList();
+$DBControlObject = new DBController();
+$rows = $DBControlObject->getDeviceList();
 if(count($rows)>0) {
 	for($i=0; $i<count($rows); $i++) {
 		?>

@@ -1,5 +1,5 @@
 <?php
-include "permission.php";
+include "DBController.php";
 ?>
 <div id="page-wrapper">
 
