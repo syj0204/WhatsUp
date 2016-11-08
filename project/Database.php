@@ -40,8 +40,10 @@ class Database {
 	}
 	
 	function disconnectDB() {
-		if(sqlsrv_free_stmt( $this->statement) && sqlsrv_close( $this->connection))
-			echo "DB Closed!";	
+		sqlsrv_free_stmt( $this->statement);
+		sqlsrv_close( $this->connection);
+		//if(sqlsrv_free_stmt( $this->statement) && sqlsrv_close( $this->connection))
+		//	echo "DB Closed!";	
 	}
 }
 ?>
