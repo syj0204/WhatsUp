@@ -1,3 +1,5 @@
+
+
 <?php 
 
 class Database {
@@ -20,11 +22,11 @@ class Database {
 		$this->connectionInfo = array( "UID"=>$this->uid,
 				"PWD"=>$this->pwd,
 				"Database"=>$this->database);
-		
+		//echo "connectionninfo!!";
 		/* Connect using SQL Server Authentication. */
 		$this->connection = sqlsrv_connect( $this->server, $this->connectionInfo);
 		
-		if($this->connection) echo "Success!<br>\n";
+		if($this->connection); //echo "Success!<br>\n";
 		else echo "fail!!";
 		
 		return $this->connection;

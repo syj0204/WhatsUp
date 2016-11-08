@@ -10,11 +10,15 @@ $(document).ready(function(){
 		return false;
 	});
 	$('#permission').click(function(){
-		$('#ui_view').load("chart.html");
+		$('#ui_view').load("search_view.php");
 		return false;
 	});
-	$('#search').click(function(){
-		$('#ui_view').load("chart.html");
+	$('#Search_user_view').click(function(){
+		$('#ui_view').load("Search_user_view.php");
+		return false;
+	});
+	$('#Search_device_view').click(function(){
+		$('#ui_view').load("Search_device_view.php");
 		return false;
 	});
 	
