@@ -25,7 +25,7 @@ Device <small>Device Overview</small>
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading">
-<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Device List</h3>
+<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Device List <input type="button" id="device_insert" name="device_insert" value="INSERT"></h3>
 </div>
 <div class="panel-body">
 <!-- <div id="morris-area-chart"></div> -->

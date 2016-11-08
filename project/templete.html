@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html lang="kr">
-
-<head>
-
-    <meta charset="euc-kr">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>WhatsUp SMS Setting</title>
 
@@ -31,7 +27,7 @@
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -46,7 +42,7 @@
 				return false;
 			});	
 			$('#device').click(function(){
-				$('#ui_view').load("device_view.php");
+				$('#ui_view').load("device_control_view.php");
 				return false;
 			});
 			$('#user').click(function(){
