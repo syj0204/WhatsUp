@@ -97,10 +97,11 @@
 						$rows = $DBControlObject->getDeviceList();
 						if(count($rows)>0) {
 							for($i=0; $i<count($rows); $i++) {
+								$rows1 = ICONV("EUC-KR","UTF-8",$rows[$i][0]);
 						?>
-								<option value=<?php $rows[$i][0]?>>
+								<option value=<?php $rows[$i][1]?>>
 						<?php
-								echo $rows[$i][1]." <br> \n";
+								echo $rows1." <br> \n";
 							}
 						?>
 								</option>
@@ -136,10 +137,11 @@
 						$rows = $DBControlObject->getUserList();
 						if(count($rows)>0) {
 							for($i=0; $i<count($rows); $i++) {	
+								$rows2 = ICONV("EUC-KR","UTF-8",$rows[$i][0]);
 					?>
 								<option value=<?php $rows[$i][0]?>>
 					<?php
-								echo $rows[$i][1]." <br> \n";
+								echo $rows2." <br> \n";
 							}
 					?>
 								</option>
