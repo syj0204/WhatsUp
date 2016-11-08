@@ -86,15 +86,19 @@ include "Search_user.php";
 
 $UserObject = new User();
 $rows = $UserObject->getUserList();
-//echo count($rows);
+
+
 if(count($rows)>0) {
 	for($i=0; $i<count($rows); $i++) {
+		$rows1 = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 		?>
 		<tr>
 			
+			
+			 
 			<!-- <td><input type = "checkbox" value =""></td> -->
 			<td><?php echo $rows[$i][0]?></td>
-			<td><?php echo $rows[$i][1]?></td>
+			<td><?php echo $rows1?></td>
 			<td><?php echo $rows[$i][2]?></td>
 			
 		</tr>

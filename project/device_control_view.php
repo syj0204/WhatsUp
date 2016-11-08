@@ -79,10 +79,11 @@
 					$rows = $DBControlObject->getDeviceList();
 					if(count($rows)>0) {
 						for($i=0; $i<count($rows); $i++) {
+							$rows1 = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
 					<tr>
 						<td><?php echo $rows[$i][0]?></td>
-						<td><?php echo $rows[$i][1]?></td>
+						<td><?php echo $rows1?></td>
 						<td><button id="edit_device" class="btn btn-default" type="button">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td>
 					</tr>
 				<?php

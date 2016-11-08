@@ -47,10 +47,11 @@ $DBControlObject = new DBController();
 $rows = $DBControlObject->getUserList();
 if(count($rows)>0) {
 	for($i=0; $i<count($rows); $i++) {
+		$rows1 = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 		?>
 		<tr>
 			<td><?php echo $rows[$i][0]?></td>
-			<td><?php echo $rows[$i][1]?></td>
+			<td><?php echo $rows1?></td>
 			<td><?php echo $rows[$i][2]?></td>
 			<td><input type="button" id="user_edit" name="user_edit" value="EDIT"><input type="button" id="user_delete" name="user_delete" value="DELETE"></td>
 		</tr>
