@@ -1,6 +1,5 @@
-<?php 
-
-include "DBController.php";
+<?php
+	include "DBController.php";
 ?>
 <div id="page-wrapper">
 

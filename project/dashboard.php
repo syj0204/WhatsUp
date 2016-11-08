@@ -1,3 +1,6 @@
+<?php 
+	include "DBController.php";
+?>
 <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -66,7 +69,7 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">
-                                        <?php
+                                        <?php 
                                         	$rows = $DBControlObject->getUserList();
                                         	echo count($rows);
                                         ?>

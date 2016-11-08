@@ -1,6 +1,5 @@
 <?php
-
-include "DBController.php";
+	include "DBController.php";
 ?>
 <script type="text/javascript">
 

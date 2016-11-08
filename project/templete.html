@@ -26,6 +26,50 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+
+		$(function(){
+			$('#ui_view').load("dashboard.php");
+
+			$('#dashboard').click(function(){
+				$('#ui_view').load("dashboard.php");
+				return false;
+			});	
+			$('#device').click(function(){
+				$('#ui_view').load("device_view.php");
+				return false;
+			});
+			$('#user').click(function(){
+				$('#ui_view').load("user_view.php");
+				return false;
+			});
+			$('#permission').click(function(){
+				$('#ui_view').load("permission_view.php");
+				return false;
+			});
+			$('#search').click(function(){
+				$('#ui_view').load("search_view.html");
+				return false;
+			});
+
+		});
+
+		$(window).load(function(e){
+	
+		});
+
+	</script>
+	
 
 </head>
 
@@ -183,15 +227,6 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    
-    <script src="js/jqueryevent.js"></script>
 
 </body>
 
