@@ -1,71 +1,39 @@
+<?php
+
+include "DBController.php";
+?>
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="kr">
 
-    <title>WhatsUp SMS Setting</title>
+<head>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<meta charset="euc-kr">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+<title>WhatsUp SMS Setting</title>
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!-- Custom CSS -->
+<link href="css/sb-admin.css" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    
-    <script type="text/javascript">
-
-		$(function(){
-			$('#ui_view').load("dashboard.php");
-
-			$('#dashboard').click(function(){
-				$('#ui_view').load("dashboard.php");
-				return false;
-			});	
-			$('#device').click(function(){
-				$('#ui_view').load("device_control_view.php");
-				return false;
-			});
-			$('#user').click(function(){
-				$('#ui_view').load("user_view.php");
-				return false;
-			});
-			$('#permission').click(function(){
-				$('#ui_view').load("permission_view.php");
-				return false;
-			});
-			$('#search').click(function(){
-				$('#ui_view').load("search_view.html");
-				return false;
-			});
-
-		});
-
-		$(window).load(function(e){
-	
-		});
-
-	</script>
-	
+    <script src="jquery-hover-dropdown-box.js"></script>
+	<link rel="stylesheet" href="jquery-hover-dropdown-box.css" />
 
 </head>
 
@@ -205,26 +173,138 @@
                     <li>
                         <a href="#" id="permission"><i class="fa fa-fw fa-table"></i> Permission</a>
                     </li>
-               
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Search <i class="fa fa-fw fa-wrench"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#" id="Search_user_view">User Search</a>
-                            </li>
-                            <li>
-                                <a href="#" id="Search_device_view">Device Search</a>
-                            </li>
-                        </ul>
+                        <a href="#" id="search"><i class="fa fa-fw fa-dashboard"></i> Search</a>
                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="ui_view"></div>
+       <div class="container-fluid">
 
-            
+<!-- Page Heading -->
+<div class="row">
+<div class="col-lg-12">
+<h1 class="page-header">
+User <small>Users Overview</small>
+</h1>
+<ol class="breadcrumb">
+<li class="active">
+<i class="fa fa-dashboard"></i> User
+</li>
+</ol>
+</div>
+</div>
+
+<!-- /.row -->
+
+<div class="row">
+<div class="col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> User List</h3>
+</div>
+<div class="panel-body">
+<!-- <div id="morris-area-chart"></div> -->
+
+<div class="row">
+					<div class="col-lg-12">
+               		<label>Devices</label>
+				</div>
+                <div class="row">
+                    <div class="col-xs-4">
+					<select name="device" id="device" class="form-control" size="10" multiple="multiple">
+						<?php
+
+							$DBControlObject = new DBController();
+							$rows = $DBControlObject->getDeviceList();
+							if(count($rows)>0) {
+								for($i=0; $i<count($rows); $i++) {
+									///$row = $rows[i]
+						?>
+									<option value=<?php $rows[$i][0]?>>
+						<?php
+										echo $rows[$i][1]." <br> \n";
+									}
+						?>
+										</option>
+						<?php
+									}
+						?>
+					</select>
+					</div>
+
+					<div class="col-xs-2">
+						<!-- <button type="button" id="delete" class="btn btn-primary btn-block">delete</button> -->
+						<button type="button" id="toRightAllDevice" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+						<button type="button" id="toRightSelectedDevice" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+						<button type="button" id="toLeftSelectedDevice" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+						<button type="button" id="toLeftAllDevice" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+						<!-- <button type="button" id="reset" class="btn btn-warning btn-block">reset</button> -->
+					</div>
+
+					<div class="col-xs-4">
+						<select name="selected_device" id="selected_device" class="form-control" size="12" multiple="multiple"></select>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-lg-12">
+               		<label>Users</label>
+				</div>
+                <div class="row">
+                    <div class="col-xs-4">
+					<select name="user" id="user" class="form-control" size="10" multiple="multiple">
+						<?php
+							$rows = $DBControlObject->getUserList();
+							if(count($rows)>0) {
+								for($i=0; $i<count($rows); $i++) {
+						?>
+										<option value=<?php $rows[$i][0]?>>
+						<?php
+										echo $rows[$i][1]." <br> \n";
+									}
+						?>
+										</option>
+						<?php
+
+								$DBControlObject->disconnectDB();
+							}
+						?>
+					</select>
+					</div>
+
+					<div class="col-xs-2">
+						<!-- <button type="button" id="delete" class="btn btn-primary btn-block">delete</button> -->
+						<button type="button" id="toRightAllUser" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+						<button type="button" id="toRightSelectedUser" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+						<button type="button" id="toLeftSelectedUser" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+						<button type="button" id="toLeftAllUser" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+						<!-- <button type="button" id="reset" class="btn btn-warning btn-block">reset</button> -->
+					</div>
+
+					<div class="col-xs-4">
+						<select name="selected_user" id="selected_user" class="form-control" size="12" multiple="multiple"></select>
+					</div>
+					
+					<div class="row">
+					<div class="col-lg-12">
+               		<button type="button" id="register" class="btn btn-primary btn-block">Register</button>
+				</div>
+				</div>
+                <!-- /.row -->
+</div>
+</div>
+</div>
+</div>
+<!-- /.row -->
+
+				</div>
+				<!-- /.container-fluid -->
+
+
 
         </div>
         <!-- /#page-wrapper -->
@@ -232,7 +312,31 @@
     </div>
     <!-- /#wrapper -->
 
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/jqueryevent.js"></script>
 
 </body>
+<script type="text/javascript">
 
+		$(function(){
+			$('#toRightAllDevice').click(function(){
+				$('#device option').each(function() {
+					$(this).remove().appendTo('#selected_device');
+				});
+			});
+
+			
+
+		$(window).load(function(e){
+
+		});
+
+	</script>
 </html>
