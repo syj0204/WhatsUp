@@ -16,7 +16,7 @@ class Database {
 		
 		$this->server = "203.249.128.60";
 		$this->uid = "youngjoo";
-		$this->pwd = "dudwn0514";
+		$this->pwd = "dudwn0514"; 
 		$this->database = "whatsup";
 		
 		$this->connectionInfo = array( "UID"=>$this->uid,
