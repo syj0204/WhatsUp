@@ -1,3 +1,6 @@
+<?php 
+	include "DBController.php";
+?>
 <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -37,7 +40,13 @@
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">150</div>
+                                        <div class="huge">
+                                        <?php 
+                                        	$DBControlObject = new DBController();
+                                        	$rows = $DBControlObject->getDeviceList();
+                                        	echo count($rows);
+                                        ?>
+                                        </div>
                                         <div>Device</div>
                                     </div>
                                 </div>
@@ -59,7 +68,12 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">20</div>
+                                        <div class="huge">
+                                        <?php 
+                                        	$rows = $DBControlObject->getUserList();
+                                        	echo count($rows);
+                                        ?>
+                                        </div>
                                         <div>User</div>
                                     </div>
                                 </div>
@@ -81,7 +95,13 @@
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">3000</div>
+                                        <div class="huge">
+                                        <?php
+                                        	$rows = $DBControlObject->getPermissionList();
+                                        	echo count($rows);
+                                        	$DBControlObject->disconnectDB();
+                                        ?>
+                                        </div>
                                         <div>Permission</div>
                                     </div>
                                 </div>
