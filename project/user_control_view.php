@@ -1,8 +1,8 @@
 <?php
 	include "DBController.php";
 ?>
-
 <script type="text/javascript">
+		
 
 	$(function(){
 		$('#user_search').click(function(){
@@ -22,6 +22,11 @@
 				}*/
 				
 			});
+		});
+
+		$('#edit_user').click(function(){
+			//alert(''+$('#device_search_text').val());
+			var edittrid = $(this).parent().parent().attr('id');
 		});
 
 	});
@@ -88,10 +93,10 @@
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
 					<tr>
-						<td><?php echo $rows[$i][0]?></td>
-						<td><?php echo $user_name?></td>
-						<td><?php echo $rows[$i][2]?></td>
-						<td><button id="edit_user" class="btn btn-default" type="button">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
+						<td id="user_id"><?php echo $rows[$i][0]?></td>
+						<td id="user_name"><?php echo $user_name?></td>
+						<td id="user_cellphone"><?php echo $rows[$i][2]?></td>
+						<td id="user_button"><button id="edit_user" class="btn btn-default" type="button">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
 					</tr>
 				<?php
 		
