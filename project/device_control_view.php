@@ -9,8 +9,9 @@
 			//alert(''+$('#device_search_text').val());
 			var value = $('#device_search_text').val(); 
 
-			$('#device_list_table tbody tr th').each(function(){
-				var text = $(this).text();
+			$("#device_list_table tbody tr").each(function(){
+				$row = $(this);
+				var text = $row.find("td:eq(2)").text();
 				alert(text);
 				/*if(text.toLowerCase()==value.toLowerCase()) {
 					
