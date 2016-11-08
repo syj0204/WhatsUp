@@ -1,15 +1,15 @@
 <?php
 	include "DBController.php";
 ?>
-
 <script type="text/javascript">
+		
 
 	$(function(){
-		$('#device_search').click(function(){
+		$('#user_search').click(function(){
 			//alert(''+$('#device_search_text').val());
-			var value = $('#device_search_text').val(); 
+			var value = $('#user_search_text').val(); 
 
-			$("#device_list_table tbody tr").each(function(){
+			$("#user_list_table tbody tr").each(function(){
 				$row = $(this);
 				var text = $row.find("td:eq(1)").text();
 				if(text.toLowerCase()==value.toLowerCase()) {
@@ -22,6 +22,11 @@
 				}*/
 				
 			});
+		});
+
+		$('#edit_user').click(function(){
+			//alert(''+$('#device_search_text').val());
+			var edittrid = $(this).parent().parent().attr('id');
 		});
 
 	});
@@ -39,7 +44,7 @@
 <!-- Page Heading -->
 <div class="row">
 <div class="col-lg-12">
-	<h1 class="page-header">Device</h1>
+	<h1 class="page-header">User</h1>
 </div>
 </div>
 
@@ -48,32 +53,33 @@
 <div class="col-lg-12">
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Device List</h3>
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> User List</h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
-      			<input id="device_search_text" type="text" class="form-control" placeholder="Search for...">
+      			<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
      			<span class="input-group-btn">
-        			<button id="device_search" class="btn btn-default" type="button">Search</button>
+        			<button id="user_search" class="btn btn-default" type="button">Search</button>
       			</span>
     		</div>
     		<!-- /input-group -->
   		</div>
   		<!-- /.col-lg-6 -->
-  		<button id="add_device" class="btn btn-default" type="button">Add Device</button>
+  		<button id="add_user" class="btn btn-default" type="button">Add User</button>
   		</div>
   		<!-- /.row -->
   		
   		<br />
   		
   		<div class="table-responsive">
-			<table id="device_list_table" class="table table-bordered table-hover table-striped">
+			<table id="user_list_table" class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
-						<th>Device ID</th>
-						<th>Device Name</th>
+						<th>User ID</th>
+						<th>User Name</th>
+						<th>Cell Phone</th>
 						<th>Option</th>
 					</tr>
 				</thead>
@@ -81,15 +87,16 @@
 
 				<?php 
 					$DBControlObject = new DBController();
-					$rows = $DBControlObject->getDeviceList();
+					$rows = $DBControlObject->getUserList();
 					if(count($rows)>0) {
 						for($i=0; $i<count($rows); $i++) {
-							$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
 					<tr>
-						<td><?php echo $rows[$i][0]?></td>
-						<td><?php echo $device_name?></td>
-						<td><button id="edit_device" class="btn btn-default" type="button">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td>
+						<td id="user_id"><?php echo $rows[$i][0]?></td>
+						<td id="user_name"><?php echo $user_name?></td>
+						<td id="user_cellphone"><?php echo $rows[$i][2]?></td>
+						<td id="user_button"><button id="edit_user" class="btn btn-default" type="button">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
 					</tr>
 				<?php
 		

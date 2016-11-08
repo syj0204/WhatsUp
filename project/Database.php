@@ -16,7 +16,7 @@ class Database {
 		
 		$this->server = "203.249.128.60";
 		$this->uid = "youngjoo";
-		$this->pwd = "$%dudwn0514^*(";
+		$this->pwd = "dudwn0514";
 		$this->database = "whatsup";
 		
 		$this->connectionInfo = array( "UID"=>$this->uid,
@@ -42,8 +42,10 @@ class Database {
 	}
 	
 	function disconnectDB() {
-		if(sqlsrv_free_stmt( $this->statement) && sqlsrv_close( $this->connection))
-			echo "DB Closed!";	
+		sqlsrv_free_stmt( $this->statement);
+		sqlsrv_close( $this->connection);
+		/*if(sqlsrv_free_stmt( $this->statement) && sqlsrv_close( $this->connection))
+			echo "DB Closed!";	*/
 	}
 }
 ?>
