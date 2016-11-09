@@ -37,59 +37,46 @@ $(document).ready(function(){
 	<div class="panel-heading">
 		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> User List</h3>
 	</div>
-	<div class="panel-body">
-		<div class="row">
+<div class="panel-body">
+	<div class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
 			<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
-	
-			<button class="btn btn-default" > Enter</button>
-		
+			     <span class="input-group-btn">
+        			<button class="btn btn-default" > Enter</button>
+      			</span>	
     		</div>
     		<!-- /input-group -->
   		</div>
   		<!-- /.col-lg-6 -->
-  		</div>
+  	</div>
   		<!-- /.row -->
+  <br />
   		
-  		<br />
-  		
+<?php 
 
+$DBControlObject = new DBController();
+$rows = $DBControlObject->getUserList();
+$cnt = count($rows);
 
-				<?php 
-					$DBControlObject = new DBController();
-					$rows = $DBControlObject->getUserList();
-					$cnt = count($rows);
-					?>
-		<div class="table-responsive">
-			<table id="user_list_table" class="table table-bordered table-hover table-striped">
-
-				<tbody>
-					
-					<?php 
-					if(count($rows)>0) {
-						for($i=0; $i<count($rows); $i++) {
-							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
-
-				?>
-
-
-						<!-- <td id="user_id"><?php echo $rows[$i][0]?></td>
-						<td id="user_cellphone"><?php echo $rows[$i][2]?></td>
-						<td id="user_button"><button id="edit_user" class="btn btn-default" type="button">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
-						 -->
-				
-						<td align = "center"><?php echo $user_name?></td>
-
-				<?php
-		
-						}
+?>
+<div class="table-responsive">
+	<table id="user_list_table" class="table table-bordered table-hover table-striped">
+		<tbody>
+			<?php 
+				if(count($rows)>0) {
+					for($i=0; $i<count($rows); $i++) {
+						$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+			?>
+			<td align = "center"><?php echo $user_name?></td>
+			<?php
 					}
-				?>
-				</tbody>
-			</table>
-		</div>
-		<div id="div1"><br> </div>  		
+				}
+			?>
+		</tbody>
+	</table>
+</div>
+	<div id="div1" ><br> </div>  		
 		<!-- /table-responsive -->
 	</div>
 	<!-- /.panel-body -->
