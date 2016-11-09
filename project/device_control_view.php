@@ -4,6 +4,18 @@
 
 <script type="text/javascript">
 
+	function edit_device(td) {
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("device_list_table").rows.item(index).cells;
+		var pre_td_values = new Array(td_list.length);
+		for(var i=0; i<td_list.length; i++) {
+			pre_td_values[i] = td_list[i].innerHTML;
+		}
+		
+		td_list[1].innerHTML = "<input type='text' name='device_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[2].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_device_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_device_cancel("+index+","+pre_td_values+")'>Cancel</button>";
+	}
+
 	$(function(){
 		$('#device_search').click(function(){
 			//alert(''+$('#device_search_text').val());
@@ -89,7 +101,7 @@
 					<tr>
 						<td><?php echo $rows[$i][0]?></td>
 						<td><?php echo $device_name?></td>
-						<td><button id="edit_device" class="btn btn-default" type="button">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td>
+						<td><button id="edit_device" class="btn btn-default" type="button" onclick="edit_device(this)">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td>
 					</tr>
 				<?php
 		
