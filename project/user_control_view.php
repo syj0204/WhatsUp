@@ -13,23 +13,17 @@
 		
 		td_list[1].innerHTML = "<input type='text' name='user_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
 		td_list[2].innerHTML = "<input type='text' name='user_cellphone_input' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
-		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel("+index+","+pre_td_values+")'>Cancel</button>";
+		//td_list[3].innerHTML = '<button id="update_button" class="btn btn-default" type="button" onclick="edit_user_update('+index+')">Update</button>'
+		//+ '       <button id="cancel_button" class="btn btn-default" type="button" onclick="edit_user_cancel('+index+','+pre_td_values+')">Cancel</button>";
+		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
+		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel()'>Cancel</button>";
+
 	}
 
-	function edit_update(index) {
-		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		
-		td_list[1].innerHTML = "<input type='text' name='user_name' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[2].innerHTML = "<input type='text' name='user_cellphone' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
-		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_update()'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_cancel()'>Cancel</button>";
+	function edit_user_update() {
 	}
 
-	function edit_cancel(index, pre_td_values) {
-		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		
-		td_list[1].innerHTML = pre_td_values[1];
-		td_list[2].innerHTML = pre_td_values[2];
-		td_list[3].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>" + "       <button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>";
+	function edit_user_cancel() {		
 	}
 
 	
@@ -45,6 +39,15 @@
 					$row.show();
 				} else $row.hide();
 			});
+		});
+
+		$('#add_user').click(function(){
+
+			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
+
+			$.trClone = $('#user_list_table tr:last').clone().html();
+			$.newtr = $("<tr><td>-</td><td><input type='text' name='user_name' placeholder='Enter User Name'></td><td><input type='text' name='user_cellphone' placeholder='Enter User Cellphone'></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
+			$('#user_list_table').prepend($.newtr);
 		});
 
 		
@@ -95,10 +98,10 @@
   		<button id="add_user" class="btn btn-default" type="button">Add User</button>
   		</div>
   		<!-- /.row -->
-  		
   		<br />
   		
   		<div class="table-responsive">
+  		  	<br />
 			<table id="user_list_table" class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
