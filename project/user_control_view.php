@@ -45,8 +45,8 @@
 
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 
-			$.trClone = $('#user_list_table tr:last').clone().html();
-			$.newtr = $("<tr><td>-</td><td><input type='text' name='user_name' placeholder='Enter User Name'></td><td><input type='text' name='user_cellphone' placeholder='Enter User Cellphone'></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
+			//$.trClone = $('#user_list_table tr:last').clone().html();
+			$.newtr = $("<tr><td>-</td><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 
