@@ -7,9 +7,10 @@
 <script>
 $(document).ready(function(){
 	$("button").click(function(){
+		var value = $('#user_search_text').val(); 
 		$.post("test_post.php",{ 
-			name:"1"
-		},
+			name: value
+		}, 
 			function(data,status){
 
 			$("div#div1").html(data);
@@ -24,6 +25,8 @@ $(document).ready(function(){
 
 
 	<body>
+	<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+	
 	<button> post() button</button>
 	<div id="div1">
 	</div>
