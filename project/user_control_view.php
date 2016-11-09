@@ -2,10 +2,39 @@
 	include "DBController.php";
 ?>
 <script type="text/javascript">
-		
 
+	function edit_user(td) {
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		var pre_td_values = new Array(td_list.length);
+		for(var i=0; i<td_list.length; i++) {
+			pre_td_values[i] = td_list[i].innerHTML;
+		}
+		
+		td_list[1].innerHTML = "<input type='text' name='user_name' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[2].innerHTML = "<input type='text' name='user_cellphone' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
+		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_cancel("+index+","+pre_td_values+")'>Cancel</button>";
+	}
+
+	function edit_update(index) {
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		
+		td_list[1].innerHTML = "<input type='text' name='user_name' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[2].innerHTML = "<input type='text' name='user_cellphone' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
+		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_update()'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_cancel()'>Cancel</button>";
+	}
+
+	function edit_cancel(index, pre_td_values) {
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		
+		td_list[1].innerHTML = pre_td_values[1];
+		td_list[2].innerHTML = pre_td_values[2];
+		td_list[3].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>" + "       <button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>";
+	}
+
+	
 	$(function(){
-		$('#user_search').click(function(){
+		$('#search_user').click(function(){
 			//alert(''+$('#device_search_text').val());
 			var value = $('#user_search_text').val(); 
 
@@ -15,19 +44,15 @@
 				if(text.toLowerCase()==value.toLowerCase()) {
 					$row.show();
 				} else $row.hide();
-				
-				//alert(text);
-				/*if(text.toLowerCase()==value.toLowerCase()) {
-					
-				}*/
-				
 			});
 		});
 
-		$('#edit_user').click(function(){
-			//alert(''+$('#device_search_text').val());
-			var edittrid = $(this).parent().parent().attr('id');
-		});
+		
+
+		/*$('tr').click(function() {
+			alert(this.rowIndex);
+		});*/
+
 
 	});
 
@@ -61,7 +86,7 @@
    			<div class="input-group">
       			<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
      			<span class="input-group-btn">
-        			<button id="user_search" class="btn btn-default" type="button">Search</button>
+        			<button id="search_user" class="btn btn-default" type="button">Search</button>
       			</span>
     		</div>
     		<!-- /input-group -->
@@ -92,11 +117,11 @@
 						for($i=0; $i<count($rows); $i++) {
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
-					<tr>
-						<td id="user_id"><?php echo $rows[$i][0]?></td>
-						<td id="user_name"><?php echo $user_name?></td>
-						<td id="user_cellphone"><?php echo $rows[$i][2]?></td>
-						<td id="user_button"><button id="edit_user" class="btn btn-default" type="button">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
+					<tr id=<?= $i+1;?>>
+						<td><?php echo $rows[$i][0];?></td>
+						<td><?php echo $user_name;?></td>
+						<td><?php echo $rows[$i][2];?></td>
+						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
 					</tr>
 				<?php
 		
