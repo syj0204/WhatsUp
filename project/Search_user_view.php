@@ -1,23 +1,23 @@
 <?php
 	include "DBController.php";
 ?>
-<!-- 
-    <script src="js/bootstrap.min.js"></script>
-    
-    <script type="text/javascript">
-	$(function(){
-		$('#ui_view').load("Search_user.php");
-
-	});
-
-	$(window).load(function(e){
-
-	});
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 </script>
+<script>
+$(document).ready(function(){
+	$("button").click(function(){
+		var value = $('#user_search_text').val(); 
+		$.post("Search_user.php",{ 
+			name: value
+		}, 
+			function(data,status){
 
--->
+			$("div#div1").html(data);
+			});		
+	});
 
+});  // ajax 방식을 통해서 PHP에 POST 형식으로 데이터 값을 넘기고 다시 콜백으로 값을 받아서 출력함
+</script>
 
 <div id="page-wrapper">
 
@@ -41,12 +41,10 @@
 		<div class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
-   				<form name="user_search_form" action ="Search_user.php" method= "post">
-      			<input name="user_search_text" type="text" class="form-control" placeholder="Search for...">
-     			<span class="input-group-btn">
-        		<button name="user_search" class="btn btn-default" type="button">Search</button>
-      			</span>
-      			</form>
+			<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+	
+			<button class="btn btn-default" > Enter</button>
+		
     		</div>
     		<!-- /input-group -->
   		</div>
@@ -65,13 +63,7 @@
 					?>
 		<div class="table-responsive">
 			<table id="user_list_table" class="table table-bordered table-hover table-striped">
-				<thead>
-	
-					<tr> 
-						<td colspan = "20" align = "center"> User Name</td><!-- 수정 해야하는 부분 -->
-					</tr>
-					
-				</thead>
+
 				<tbody>
 					
 					<?php 
@@ -97,6 +89,7 @@
 				</tbody>
 			</table>
 		</div>
+		<div id="div1"><br> </div>  		
 		<!-- /table-responsive -->
 	</div>
 	<!-- /.panel-body -->

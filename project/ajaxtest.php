@@ -1,4 +1,4 @@
-
+<!--  현재 적용 완료되어서 사용되지 않는 파일 입니다. -->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -29,7 +29,7 @@ $(document).ready(function(){
 	
 	<button> post() button</button>
 	<div id="div1">
-	</div>
+	
 	</body>
 
 
