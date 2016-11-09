@@ -27,12 +27,17 @@
 	}
 
 	function add_user() {
+		//DB logic should be added!!
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
-		//<button id='edit_user' class='btn btn-default' type='button' onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button>
-		$.newtr = $("<tr><td>-</td><td></td><td></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
-		$('#user_list_table').prepend($.newtr);
-		alert(new_user_name);
+		
+		$.newtr = $("<tr><td>-</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button'>Delete User</button></td></tr>");
+		$('#user_list_table').append($.newtr);
+		document.getElementById("user_list_table").rows.item(1).remove();
+		/* if get 'td' parameter 
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;*/
+		alert("New User Added Successfully!!");
 	}
 
 	
