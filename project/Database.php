@@ -1,5 +1,3 @@
-
-
 <?php 
 
 class Database {
@@ -14,7 +12,7 @@ class Database {
 	
 	function connectDB() {
 		
-		$this->server = "203.249.128.60";
+		$this->server = "";
 		$this->uid = "youngjoo";
 		$this->pwd = "dudwn0514";
 		$this->database = "whatsup";
