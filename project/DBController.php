@@ -67,13 +67,17 @@ Class DBController{
 	
 		if($this->connection) {
 	
-			$query = "SELECT * FROM User WHERE nUserID=".$nUserID;
+			$query = "SELECT * FROM Users WHERE nUserID='".$nUserID."'";
 			$statement = $this->DBObject->executeQuery($query);
-	
-			if(!$statement) return $statement;
+			$rows = array();
+			
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
 			else return null;
-	
-			$this->DBObject->disconnectDB();
 		}
 	}
 	
@@ -137,11 +141,11 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}
-	function getUserDisPlayName($nUserID) {
+	function getUserDisPlayName($sUserName) {
 	
 		if($this->connection) {
 	
-			$query = "SELECT D.sDisplayName FROM Permission AS P INNER Join User As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.nUserID=".$nUserID;
+			$query = "SELECT D.sDisplayName FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sUserName=".$sUserName;
 			$statement = $this->DBObject->executeQuery($query);
 	
 			if(!$statement) return $statement;
