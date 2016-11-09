@@ -10,17 +10,19 @@ include "Search_user.php";
 <!-- Page Heading -->
 <div class="row">
 <div class="col-lg-12">
-	<h1 class="page-header">
-	User <small>Users Overview</small>
-	</h1>
-<ol class="breadcrumb">
-	<li class="active">
-		<i class="fa fa-dashboard"></i> User
-	</li>
-</ol>
+<h1 class="page-header">
+User  Search
+</h1>
+	<ol class="breadcrumb">
+   		<li>
+        	<i class="fa fa-dashboard"></i> <a href="templete.html">Dashboard</a>
+        </li>
+        <li class="active">
+            <i class="fa fa-edit"></i> User Search
+        </li>
+	</ol>
 </div>
 </div>
-
 <!-- /.row -->
 
 <div class="row">
@@ -31,7 +33,7 @@ include "Search_user.php";
 </div>
 <div class="panel-body">
 
-	
+<!-- 
 	<li>
 		<p>
         	<a href="javascript:;" data-toggle="collapse" data-target="#demo1" ><i class="btn btn-primary">Insert</i></a>
@@ -67,7 +69,7 @@ include "Search_user.php";
        	     </ul>
        	     </form>
   	</li>
-         
+        -->	  
 <!-- <div id="morris-area-chart"></div> -->
 <div class="table-responsive">
 	<table class="table table-bordered table-hover table-striped">
