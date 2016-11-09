@@ -67,13 +67,17 @@ Class DBController{
 	
 		if($this->connection) {
 	
-			$query = "SELECT * FROM User WHERE nUserID=".$nUserID;
+			$query = "SELECT * FROM Users WHERE nUserID='".$nUserID."'";
 			$statement = $this->DBObject->executeQuery($query);
-	
-			if(!$statement) return $statement;
+			$rows = array();
+			
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
 			else return null;
-	
-			$this->DBObject->disconnectDB();
 		}
 	}
 	
