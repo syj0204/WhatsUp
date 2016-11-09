@@ -137,6 +137,32 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}
+	function getUserDisPlayName($nUserID) {
+	
+		if($this->connection) {
+	
+			$query = "SELECT D.sDisplayName FROM Permission AS P INNER Join User As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.nUserID=".$nUserID;
+			$statement = $this->DBObject->executeQuery($query);
+	
+			if(!$statement) return $statement;
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}//유저를 이용한 디바이스 찾기
+	function getDisPlayNameUser($nDeviceID) {
+	
+		if($this->connection) {
+	
+			$query = "SELECT U.sUserName FROM Permission AS P INNER Join User As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE D.nDeviceID=".$nDeviceID;
+			$statement = $this->DBObject->executeQuery($query);
+	
+			if(!$statement) return $statement;
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	} //디바이스를 이용한 유저 찾기
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
