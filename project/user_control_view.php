@@ -26,6 +26,15 @@
 	function edit_user_cancel() {		
 	}
 
+	function add_user() {
+		var new_user_name = document.getElementById("user_name_to_add").value;
+		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
+		//<button id='edit_user' class='btn btn-default' type='button' onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button>
+		$.newtr = $("<tr><td>-</td><td></td><td></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
+		$('#user_list_table').prepend($.newtr);
+		alert(new_user_name);
+	}
+
 	
 	$(function(){
 		$('#search_user').click(function(){
