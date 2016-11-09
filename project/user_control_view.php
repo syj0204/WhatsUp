@@ -11,9 +11,9 @@
 			pre_td_values[i] = td_list[i].innerHTML;
 		}
 		
-		td_list[1].innerHTML = "<input type='text' name='user_name' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[2].innerHTML = "<input type='text' name='user_cellphone' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
-		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_cancel("+index+","+pre_td_values+")'>Cancel</button>";
+		td_list[1].innerHTML = "<input type='text' name='user_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[2].innerHTML = "<input type='text' name='user_cellphone_input' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
+		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel("+index+","+pre_td_values+")'>Cancel</button>";
 	}
 
 	function edit_update(index) {
