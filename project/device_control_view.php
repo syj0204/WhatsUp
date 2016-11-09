@@ -16,6 +16,19 @@
 		td_list[2].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_device_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_device_cancel("+index+","+pre_td_values+")'>Cancel</button>";
 	}
 
+	function add_device() {
+		//DB logic should be added!!
+		var new_device_name = document.getElementById("device_name_to_add").value;
+		
+		$.newtr = $("<tr><td>-</td><td>"+new_device_name+"</td><td><button id='edit_device' class='btn btn-default' type='button' onclick='edit_device(this)'>Edit Device</button>      <button id='delete_device' class='btn btn-default' type='button'>Delete Device</button></td></tr>");
+		$('#device_list_table').append($.newtr);
+		document.getElementById("device_list_table").rows.item(1).remove();
+		/* if get 'td' parameter 
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("device_list_table").rows.item(index).cells;*/
+		alert("New Device Added Successfully!!");
+	}
+
 	$(function(){
 		$('#device_search').click(function(){
 			//alert(''+$('#device_search_text').val());
