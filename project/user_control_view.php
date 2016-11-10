@@ -15,7 +15,8 @@
 		td_list[2].innerHTML = "<input type='text' name='user_cellphone_input' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
 		//td_list[3].innerHTML = '<button id="update_button" class="btn btn-default" type="button" onclick="edit_user_update('+index+')">Update</button>'
 		//+ '       <button id="cancel_button" class="btn btn-default" type="button" onclick="edit_user_cancel('+index+','+pre_td_values+')">Cancel</button>";
-		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
+		td_list[3].innerHTML = "<select class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select>";
+		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
 		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel()'>Cancel</button>";
 
 	}
@@ -30,14 +31,29 @@
 		//DB logic should be added!!
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
+		var new_user_department = document.getElementById("user_department_to_add")
+		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
 		
-		$.newtr = $("<tr><td>-</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button'>Delete User</button></td></tr>");
+		$.newtr = $("<tr><td>-</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button'>Delete User</button></td></tr>");
 		$('#user_list_table').append($.newtr);
 		document.getElementById("user_list_table").rows.item(1).remove();
 		/* if get 'td' parameter 
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;*/
 		alert("New User Added Successfully!!");
+
+		var value = $('#user_search_text').val(); 
+
+		/*$.post("user.php",{ 
+			username: new_user_name,
+			cellphone: new_user_cellphone
+		}, 
+		function(data,status){
+			//$("div#div1").html(data);
+			if(status=="success") {
+				alert("New User Added Successfully!!");
+			}
+		});	*/	
 	}
 
 	
@@ -60,7 +76,7 @@
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 
 			//$.trClone = $('#user_list_table tr:last').clone().html();
-			$.newtr = $("<tr><td>-</td><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
+			$.newtr = $("<tr><td>-</td><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 
@@ -122,6 +138,7 @@
 						<th>User ID</th>
 						<th>User Name</th>
 						<th>Cell Phone</th>
+						<th>Department</th>
 						<th>Option</th>
 					</tr>
 				</thead>
@@ -138,6 +155,7 @@
 						<td><?php echo $rows[$i][0];?></td>
 						<td><?php echo $user_name;?></td>
 						<td><?php echo $rows[$i][2];?></td>
+						<td><?php echo $rows[$i][3];?></td>
 						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
 					</tr>
 				<?php
