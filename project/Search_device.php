@@ -1,52 +1,33 @@
-<!--  작성  중 -->
-<?php
-include "Database.php";
+<?php 
 
-Class User {
-		
-	private $DBObject;
-	private $connection;
+
+	include "DBController.php";
 	
-	function __construct() {
-		$this->DBObject = new Database();
-		$this->connection=$this->DBObject->connectDB();
-		//echo "getuserlist connect!";
+	
+	$sDisplayName1 =$_POST["name"];
+	$sDisplayName =ICONV("UTF-8","EUC-KR",$sDisplayName1);  //입력 받은 한글의 케릭터셋을 변경시킴 쿼리문에서 사용하기 위함"10.50.106.1"; 
+	$DBControlObject = new DBController();
+	$rows = $DBControlObject->getDisPlayNameUser($sDisplayName);  // 퀴리문 호출하여서 값을 받음
+	if(count($rows)>0) {
+		for($i=0; $i<count($rows); $i++) {  // 레코드셋을 통재로 가져오기 때문에 배열로 나타내야함
+			$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+?>
+
+<div class="col-lg-6">
+       <div class="table-responsive">
+          <table class="table table-bordered table-hover">        
+             <tbody>
+               <tr > <?php echo $device_name; ?></tr>
+              </tbody>
+          </table>
+     </div>
+  </div>
+ 
+ 
+<?php 
+			}	
+
 	}
-	
-	function getUserList() {
-		
-		if($this->connection) {
-			$query = "SELECT * FROM ";
-			$statement = $this->DBObject->executeQuery($query);
-			$rows = array();
-			
-			if(count($statement)>0) {
-				//echo "getuserlist connect444!";
-				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
-					$rows[] = $row;
-				}
-				return $rows;
-			}
-			else return null;
-			
-			//$this->DBObject->disconnectDB();
-		}
-	}
-	
-	function getUser($nUserID) {
-	
-		if($this->connection) {
-				
-			$query = "SELECT * FROM User WHERE nUserID=".$nUserID;
-			$statement = $this->DBObject->executeQuery($query);
-				
-			if(!$statement) return $statement;
-			else return null;
-				
-			$this->DBObject->disconnectDB();
-		}
-	}
-	
-}
-	
+
+
 ?>

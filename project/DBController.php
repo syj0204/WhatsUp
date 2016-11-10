@@ -160,18 +160,26 @@ Class DBController{
 		}
 		
 	}//유저를 이용한 디바이스 찾기
-	function getDisPlayNameUser($nDeviceID) {
+	function getDisPlayNameUser($sDisplayName) {
 	
 		if($this->connection) {
 	
-			$query = "SELECT U.sUserName FROM Permission AS P INNER Join User As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE D.nDeviceID=".$nDeviceID;
+			//$query = "SELECT U.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sDisplayName='".$sDisplayName."'";
+			$query = "Select U.* From Device AS D INNER JOIN Permission AS P ON D.nDeviceID = P.nDeviceID INNER JOIN Users AS U ON P.nUserID=U.nUserID Where D.sDisplayName ='".$sDisplayName."'";
+			
+			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
-	
-			if(!$statement) return $statement;
+			$rows = array();
+			
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
 			else return null;
-	
-			//$this->DBObject->disconnectDB();
-		}
+			
+			}
 	} //디바이스를 이용한 유저 찾기
 	
 	function disconnectDB() {
