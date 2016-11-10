@@ -26,7 +26,19 @@
 		/* if get 'td' parameter 
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("device_list_table").rows.item(index).cells;*/
-		alert("New Device Added Successfully!!");
+		//alert("New Device Added Successfully!!");
+
+		$.post("device.php",{
+			devicename:new_device_name
+			}, 
+			function(data,status) {
+			//$("div#div1").html(data);
+				alert(data);
+				/*if(data=='success') {
+					alert("New User Added Successfully!!");
+				}*/
+			}
+		);
 	}
 
 	$(function(){
@@ -91,7 +103,7 @@
     		<!-- /input-group -->
   		</div>
   		<!-- /.col-lg-6 -->
-  		<button id="add_device" class="btn btn-default" type="button">Add Device</button>
+  		<!-- <button id="add_device" class="btn btn-default" type="button">Add Device</button> -->
   		</div>
   		<!-- /.row -->
   		
@@ -101,9 +113,9 @@
 			<table id="device_list_table" class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
-						<th>Device ID</th>
+						<!-- <th>Device ID</th> -->
 						<th>Device Name</th>
-						<th>Option</th>
+						<!-- <th>Option</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -116,9 +128,9 @@
 							$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
 					<tr>
-						<td><?php echo $rows[$i][0]?></td>
+						<!-- <td><?php echo $rows[$i][0]?></td> -->
 						<td><?php echo $device_name?></td>
-						<td><button id="edit_device" class="btn btn-default" type="button" onclick="edit_device(this)">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td>
+						<!-- <td><button id="edit_device" class="btn btn-default" type="button" onclick="edit_device(this)">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td> -->
 					</tr>
 				<?php
 		
