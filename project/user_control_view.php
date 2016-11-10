@@ -1,6 +1,8 @@
 <?php
 	include "DBController.php";
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
 <script type="text/javascript">
 
 	function edit_user(td) {
@@ -28,32 +30,32 @@
 	}
 
 	function add_user() {
-		//DB logic should be added!!
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
 		var new_user_department = document.getElementById("user_department_to_add")
 		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
 		
-		$.newtr = $("<tr><td>-</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button'>Delete User</button></td></tr>");
+		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button'>Delete User</button></td></tr>");
 		$('#user_list_table').append($.newtr);
 		document.getElementById("user_list_table").rows.item(1).remove();
 		/* if get 'td' parameter 
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;*/
-		alert("New User Added Successfully!!");
+		//alert("New User Added Successfully!!");
 
-		var value = $('#user_search_text').val(); 
-
-		/*$.post("user.php",{ 
-			username: new_user_name,
-			cellphone: new_user_cellphone
-		}, 
-		function(data,status){
+		$.post("user.php",{
+			username:new_user_name,
+			cellphone:new_user_cellphone,
+			department:new_user_department
+			}, 
+			function(data,status) {
 			//$("div#div1").html(data);
-			if(status=="success") {
-				alert("New User Added Successfully!!");
+				//alert(data);
+				/*if(data=='success') {
+					alert("New User Added Successfully!!");
+				}*/
 			}
-		});	*/	
+		);
 	}
 
 	
@@ -76,17 +78,14 @@
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 
 			//$.trClone = $('#user_list_table tr:last').clone().html();
-			$.newtr = $("<tr><td>-</td><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
+			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
-
-		
 
 		/*$('tr').click(function() {
 			alert(this.rowIndex);
 		});*/
-
-
+		
 	});
 
 	$(window).load(function(e){
@@ -135,7 +134,7 @@
 			<table id="user_list_table" class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
-						<th>User ID</th>
+						<!-- <th>User ID</th> -->
 						<th>User Name</th>
 						<th>Cell Phone</th>
 						<th>Department</th>
@@ -152,7 +151,7 @@
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
 					<tr id=<?= $i+1;?>>
-						<td><?php echo $rows[$i][0];?></td>
+						<!-- <td><?php echo $rows[$i][0];?></td> -->
 						<td><?php echo $user_name;?></td>
 						<td><?php echo $rows[$i][2];?></td>
 						<td><?php echo $rows[$i][3];?></td>
