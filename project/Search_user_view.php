@@ -6,17 +6,37 @@
 <script>
 $(document).ready(function(){
 	$("button").click(function(){
-		var value = $('#user_search_text').val(); 
+		//var new_user_name = document.getElementById("user_search_text").value;
+		var value = $(this).attr("value"); 
+		//$("div#div2").html(value);
 		$.post("Search_user.php",{ 
+			//name: new_user_name
 			name: value
 		}, 
 			function(data,status){
 
 			$("div#div1").html(data);
-			});		
+			});	
+	
 	});
 
-});  // ajax 방식을 통해서 PHP에 POST 형식으로 데이터 값을 넘기고 다시 콜백으로 값을 받아서 출력함
+}); // ajax 방식을 통해서 PHP에 POST 형식으로 데이터 값을 넘기고 다시 콜백으로 값을 받아서 출력함
+$(window).load(function(e){
+
+});	// 별 쓸모가 없는 코드....
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 <div id="page-wrapper">
@@ -30,6 +50,9 @@ $(document).ready(function(){
 </div>
 </div>
 
+
+
+
 <!-- /.row -->
 <div class="row">
 <div class="col-lg-12">
@@ -41,10 +64,10 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
-			<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+			<!-- <input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
 			     <span class="input-group-btn">
         			<button class="btn btn-default" > Enter</button>
-      			</span>	
+      			</span>	-->
     		</div>
     		<!-- /input-group -->
   		</div>
@@ -60,22 +83,28 @@ $rows = $DBControlObject->getUserList();
 $cnt = count($rows);
 
 ?>
+<!-- 
 <div class="table-responsive">
 	<table id="user_list_table" class="table table-bordered table-hover table-striped">
 		<tbody>
-			<?php 
+ -->
+		<?php 
 				if(count($rows)>0) {
 					for($i=0; $i<count($rows); $i++) {
 						$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 			?>
-			<td align = "center"><?php echo $user_name?></td>
+	 		<!--<td align = "center"></td> -->
+				<button class="btn btn-default" id="user_search_text" value="<?php echo $user_name?>"><?php echo $user_name?></button>
 			<?php
 					}
 				}
 			?>
+<!-- 			
 		</tbody>
 	</table>
 </div>
+-->
+	<div id="div2" ><br> </div>  		
 	<div id="div1" ><br> </div>  		
 		<!-- /table-responsive -->
 	</div>
@@ -92,3 +121,8 @@ $cnt = count($rows);
 <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
+
+
+
+
+
