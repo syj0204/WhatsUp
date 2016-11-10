@@ -65,6 +65,7 @@
 			$('#device_list_table').prepend($.newtr);
 		});
 
+
 	});
 
 	$(window).load(function(e){
@@ -129,7 +130,7 @@
 				?>
 					<tr>
 						<!-- <td><?php //echo $rows[$i][0]?></td> -->
-						<td><?php echo $rows[$i][0].".   ".$device_name?></td>
+						<td><?php echo $device_name?></td>
 						<!-- <td><button id="edit_device" class="btn btn-default" type="button" onclick="edit_device(this)">Edit Device</button>      <button id="delete_device" class="btn btn-default" type="button">Delete Device</button></td> -->
 					</tr>
 				<?php
