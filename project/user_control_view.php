@@ -13,12 +13,12 @@
 			pre_td_values[i] = td_list[i].innerHTML;
 		}
 		
-		td_list[1].innerHTML = "<input type='text' name='user_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[2].innerHTML = "<input type='text' name='user_cellphone_input' value='"+td_list[2].innerHTML+"' placeholder='Enter User CellPhone'>";
+		td_list[0].innerHTML = "<input type='text' class='form-control' name='user_name_input' value='"+td_list[0].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[1].innerHTML = "<input type='text' class='form-control' name='user_cellphone_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User CellPhone'>";
 		//td_list[3].innerHTML = '<button id="update_button" class="btn btn-default" type="button" onclick="edit_user_update('+index+')">Update</button>'
 		//+ '       <button id="cancel_button" class="btn btn-default" type="button" onclick="edit_user_cancel('+index+','+pre_td_values+')">Cancel</button>";
-		td_list[3].innerHTML = "<select class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select>";
-		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
+		td_list[2].innerHTML = "<select class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
+		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
 		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel()'>Cancel</button>";
 
 	}
@@ -50,7 +50,7 @@
 			}, 
 			function(data,status) {
 			//$("div#div1").html(data);
-				//alert(data);
+				alert(data);
 				/*if(data=='success') {
 					alert("New User Added Successfully!!");
 				}*/
@@ -66,7 +66,7 @@
 
 			$("#user_list_table tbody tr").each(function(){
 				$row = $(this);
-				var text = $row.find("td:eq(1)").text();
+				var text = $row.find("td:eq(0)").text();
 				if(text.toLowerCase()==value.toLowerCase()) {
 					$row.show();
 				} else $row.hide();
@@ -135,10 +135,10 @@
 				<thead>
 					<tr>
 						<!-- <th>User ID</th> -->
-						<th>User Name</th>
-						<th>Cell Phone</th>
-						<th>Department</th>
-						<th>Option</th>
+						<th align="center">User Name</th>
+						<th align="center">Cell Phone</th>
+						<th align="center">Department</th>
+						<th align="center">Option</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -151,16 +151,17 @@
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
 					<tr id=<?= $i+1;?>>
-						<!-- <td><?php echo $rows[$i][0];?></td> -->
-						<td><?php echo $user_name;?></td>
-						<td><?php echo $rows[$i][2];?></td>
-						<td><?php echo $rows[$i][3];?></td>
-						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
+						<!-- <td><?php //echo $rows[$i][0];?></td> -->
+						<td align="center"><?php echo $user_name;?></td>
+						<td align="center"><?php echo $rows[$i][2];?></td>
+						<td align="center"><?php echo $rows[$i][3];?></td>
+						<td align="center"><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
 					</tr>
 				<?php
 		
 						}
 					}
+					$DBControlObject->disconnectDB();
 				?>
 				</tbody>
 			</table>
