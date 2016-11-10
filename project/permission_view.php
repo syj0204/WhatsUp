@@ -3,6 +3,20 @@
 ?>
 <script type="text/javascript">
 
+	/*function add_permission() {
+		var devices = new Array;
+		var users = new Array;
+
+		var new_user_department = document.getElementById("selected_device_list");
+		for(var i=0; i<new_user_department.options.length; i++) {
+			if(new_user_department.options[i].selected) {
+				alert(new_user_department.options[i].value);
+			}
+		}
+		
+		
+	}*/
+
 	$(function(){
 
 		$('#toRightAllDevice').click(function(){
@@ -53,6 +67,35 @@
 			});
 		});
 
+		$('#add_permission').click(function(){
+			var devices = new Array;
+			var users = new Array;
+			
+			$('#selected_device_list option:selected').each(function() {
+				//alert("as"+$(this).val());
+				devices.push($(this).val());
+			});
+			
+			$('#selected_user_list option:selected').each(function() {
+				users.push($(this).val());
+			});
+			alert(devices);
+			alert(users);
+			$.post("permission.php",{
+				userarray:users,
+				devicearray:devices
+				}, 
+				function(data,status) {
+				//$("div#div1").html(data);
+					alert(data);
+					/*if(data=='success') {
+						alert("New User Added Successfully!!");
+					}*/
+				}
+			);
+			
+		});
+
 	});
 
 	$(window).load(function(e){
@@ -99,7 +142,7 @@
 							for($i=0; $i<count($rows); $i++) {
 								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 						?>
-								<option value=<?php $rows[$i][1]?>>
+								<option value=<?php echo $rows[$i][0]?>>
 						<?php
 								echo $device_name." <br> \n";
 							}
@@ -139,7 +182,7 @@
 							for($i=0; $i<count($rows); $i++) {	
 								$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 					?>
-								<option value=<?php $rows[$i][0]?>>
+								<option value=<?php echo $rows[$i][0]?>>
 					<?php
 								echo $user_name." <br> \n";
 							}
@@ -162,6 +205,10 @@
 			<div class="col-xs-4">
 				<select name="selected_user_list" id="selected_user_list" class="form-control" size="12" multiple="multiple"></select>
 			</div>
+			<div class="col-xs-2" align="center">
+				<button id="add_permission" class="btn btn-default" type="button">Add Permission</button>
+			</div>
+			
 		</div>
 		<!-- /.row -->						
 	</div>
