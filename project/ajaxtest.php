@@ -6,15 +6,9 @@
 </script>
 <script>
 $(document).ready(function(){
-	$("button").click(function(){
+	$('#test').click(function(){
 		var value = $('#user_search_text').val(); 
-		$.post("test_post.php",{ 
-			name: value
-		}, 
-			function(data,status){
-
-			$("div#div1").html(data);
-			});		
+		$("div#div1").html(value);
 	});
 
 });
@@ -25,9 +19,9 @@ $(document).ready(function(){
 
 
 	<body>
-	<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+	<input id="user_search_text" type="text"placeholder="Search for...">
 	
-	<button> post() button</button>
+	<button id ="test" > post() button</button>
 	<div id="div1">
 	
 	</body>
