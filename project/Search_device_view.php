@@ -18,16 +18,28 @@ $(document).ready(function(){
 
 				} // 오류시 수정 예정
 				else {
-					for (var i =0; i<count(data); i++)
-					{
-						var rut[]=data;
-					}		//alert(status);
+					//alert(status);
+					$("table#div1").html(data);  //데이터 호출 성공
 
 									}
 			});	
 	});
 
+	$("search_user").click(function(){
+		var value = $('#user_search_text').val(); 
+
+		$("#user_list_table tbody tr").each(function(){
+			$row = $(this);
+			var text = $row.find("td:eq(0)").find().attr("value");
+			if(text.toLowerCase()==value.toLowerCase()) {
+				$row.show();
+			} else $row.hide();
+		});
+	});
+
 }); // ajax 방식을 통해서 PHP에 POST 형식으로 데이터 값을 넘기고 다시 콜백으로 값을 받아서 출력함
+
+
 
 $(window).load(function(e){
 
@@ -101,13 +113,12 @@ $(window).load(function(e){
                             <table class="table table-bordered table-hover table-striped" id="div1">
 								<thead>
 									<tr>
-									 
-									</tr>
+																</tr>
 								</thead>
                                 <tbody>
 	
                                     <tr>
-
+										<div id="div1"><br> </div> 
                                     </tr>
 				
                                 </tbody>
