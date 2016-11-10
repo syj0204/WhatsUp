@@ -18,14 +18,17 @@ $(document).ready(function(){
 
 				} // 오류시 수정 예정
 				else {
-					//alert(status);
-					$("div#div1").html(data);  //데이터 호출 성공
-					alert(data);
+					for (var i =0; i<count(data); i++)
+					{
+						var rut[]=data;
+					}		//alert(status);
+
 									}
 			});	
 	});
 
 }); // ajax 방식을 통해서 PHP에 POST 형식으로 데이터 값을 넘기고 다시 콜백으로 값을 받아서 출력함
+
 $(window).load(function(e){
 
 });	// 별 쓸모가 없는 코드....
@@ -38,7 +41,7 @@ $(window).load(function(e){
 		<!-- Page Heading -->
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">User</h1>
+				<h1 class="page-header">Device</h1>
 			</div>
 		</div>
 
@@ -47,9 +50,22 @@ $(window).load(function(e){
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> User List</h3>
+						<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Device List</h3>
 					</div>
 					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-6">
+   								<div class="input-group">
+      								<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+     									<span class="input-group-btn">
+        									<button id="search_user" class="btn btn-default" type="button">Search</button>
+      									</span>
+    							</div>
+    							<!-- /input-group -->
+  							</div>
+  							<!-- /.col-lg-6 -->
+
+  						</div>
 
 					<?php 
 
@@ -59,25 +75,18 @@ $(window).load(function(e){
 						if(count($rows)>0) {
 					?>
 
-					<div ><br> </div>  
-
 				<div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Device List</th>
-
-                                    </tr>
-                                </thead>
+                            <table class="table table-bordered table-hover" id="user_list_table">
+    
                                 <tbody>
 					<?php 
-							for($i=0; $i<count($rows)/3; $i++) {
+							for($i=0; $i<count($rows); $i++) {
 								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 					?>
                                     <tr>
-                                        <td><button  class="btn btn-sm btn-primary" value="<?php echo $device_name?>"> <?php echo $device_name?></button></td>
+                                        <td><button id="<?php echo $device_name?>" class="btn btn-lg btn-primary" value="<?php echo $device_name?>"> <?php echo $device_name?></button></td>
 
                                     </tr>
 					<?php	
@@ -87,59 +96,25 @@ $(window).load(function(e){
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Device List</th>
-                                    </tr>
-                                </thead>
+                            <table class="table table-bordered table-hover table-striped" id="div1">
+								<thead>
+									<tr>
+									 
+									</tr>
+								</thead>
                                 <tbody>
-					<?php 
-							for($i=count($rows)/3; $i<(count($rows)*2)/3; $i++) {
-								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
-					?>
+	
                                     <tr>
-                                        <td><button  class="btn btn-sm btn-primary" value="<?php echo $device_name?>"> <?php echo $device_name?></button></td>
 
                                     </tr>
-					<?php	
-							}
-					?>
+				
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                <!-- /.row -->
-                <div class="col-lg-4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Device List</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-					<?php 
-							for($i=(count($rows)*2)/3; $i<(count($rows)*3)/3; $i++) {
-								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
-					?>
-                                    <tr>
-                                        <td><button  class="btn btn-sm btn-primary" value="<?php echo $device_name?>"> <?php echo $device_name?></button></td>
-
-                                    </tr>
-					<?php	
-							}
-					?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-					
 					<?php	
 							}
 					?>	
