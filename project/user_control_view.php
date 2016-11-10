@@ -66,7 +66,7 @@
 
 			$("#user_list_table tbody tr").each(function(){
 				$row = $(this);
-				var text = $row.find("td:eq(1)").text();
+				var text = $row.find("td:eq(0)").text();
 				if(text.toLowerCase()==value.toLowerCase()) {
 					$row.show();
 				} else $row.hide();
