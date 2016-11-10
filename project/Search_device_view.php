@@ -3,8 +3,13 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 </script>
 <script>
-$(document).ready(function(){
-	$("button").click(function(){
+
+function get
+$(document).ready (function(){
+
+	
+	
+	/*$("button").click(function(){
 		var value = $(this).attr("value"); //버튼에 잇는 value 값을 호출해서 변수에 저장
 		//alert(value)
 		$.post("Search_device.php",{ 
@@ -23,17 +28,19 @@ $(document).ready(function(){
 
 									}
 			});	
-	});
+	});*/
 
-	$("search_user").click(function(){
-		var value = $('#user_search_text').val(); 
-
-		$("#user_list_table tbody tr").each(function(){
+	$('#search_device').click(function(){
+		//alert(''+$('#device_search_text').val());
+		var value = $('#device_search_text').val(); 
+		alert(value);
+		$("#device_list_table tbody tr").each(function(){
 			$row = $(this);
-			var text = $row.find("td:eq(0)").find().attr("value");
+			var text = $row.find("td:eq(0)").children("button").text();
 			if(text.toLowerCase()==value.toLowerCase()) {
 				$row.show();
 			} else $row.hide();
+			
 		});
 	});
 
@@ -68,9 +75,9 @@ $(window).load(function(e){
 						<div class="row">
 							<div class="col-lg-6">
    								<div class="input-group">
-      								<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+      								<input id="device_search_text" type="text" class="form-control" placeholder="Search for...">
      									<span class="input-group-btn">
-        									<button id="search_user" class="btn btn-default" type="button">Search</button>
+        									<button id="search_device" class="btn btn-default" type="button">Search</button>
       									</span>
     							</div>
     							<!-- /input-group -->
@@ -90,7 +97,7 @@ $(window).load(function(e){
 				<div class="row">
                     <div class="col-lg-6">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="user_list_table">
+                            <table class="table table-bordered table-hover" id="device_list_table">
     
                                 <tbody>
 					<?php 
@@ -98,7 +105,7 @@ $(window).load(function(e){
 								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 					?>
                                     <tr>
-                                        <td><button id="<?php echo $device_name?>" class="btn btn-lg btn-primary" value="<?php echo $device_name?>"> <?php echo $device_name?></button></td>
+                                        <td><button class="btn btn-lg btn-primary" value="<?php echo $device_name?>"> <?php echo $device_name?></button></td>
 
                                     </tr>
 					<?php	
