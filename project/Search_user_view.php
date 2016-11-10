@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 				} // 오류시 수정 예정
 				else {
-					alert(status);
+					//alert(status);
 					$("div#div1").html(data);
 
 				}
