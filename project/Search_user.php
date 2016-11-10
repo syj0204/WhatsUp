@@ -13,7 +13,7 @@
 		for($i=0; $i<count($rows); $i++) {  // 레코드셋을 통재로 가져오기 때문에 배열로 나타내야함
 			$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 
-			?>
+?>
 <div class="col-lg-6">
        <div class="table-responsive">
           <table class="table table-hover">        
