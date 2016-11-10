@@ -72,27 +72,29 @@
 			var users = new Array;
 			
 			$('#selected_device_list option:selected').each(function() {
-				//alert("as"+$(this).val());
 				devices.push($(this).val());
 			});
 			
 			$('#selected_user_list option:selected').each(function() {
 				users.push($(this).val());
 			});
-			alert(devices);
-			alert(users);
-			$.post("permission.php",{
-				userarray:users,
-				devicearray:devices
-				}, 
-				function(data,status) {
-				//$("div#div1").html(data);
-					alert(data);
-					/*if(data=='success') {
-						alert("New User Added Successfully!!");
-					}*/
-				}
-			);
+			//alert(devices);
+			//alert(users);
+			if(devices.length>0 && users.length>0) {
+
+				$.post("permission.php",{
+					userarray:users,
+					devicearray:devices
+					}, 
+					function(data,status) {
+					//$("div#div1").html(data);
+						alert(data);
+						/*if(data=='success') {
+							alert("New User Added Successfully!!");
+						}*/
+					}
+				);
+			} else alert("Choose Device and User!");			
 			
 		});
 
@@ -169,7 +171,6 @@
 		</div>
 		<!-- /.row -->		
 				
-				
 		<div class="col-lg-12">
             <label>Users</label>
 		</div>
@@ -205,10 +206,11 @@
 			<div class="col-xs-4">
 				<select name="selected_user_list" id="selected_user_list" class="form-control" size="12" multiple="multiple"></select>
 			</div>
-			<div class="col-xs-2" align="center">
-				<button id="add_permission" class="btn btn-default" type="button">Add Permission</button>
-			</div>
 			
+			
+		</div>
+		<div class="col-xs-2" align="center">
+				<button id="add_permission" class="btn btn-default" type="button">Add Permission</button>
 		</div>
 		<!-- /.row -->						
 	</div>
