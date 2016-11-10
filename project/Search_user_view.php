@@ -8,14 +8,22 @@ $(document).ready(function(){
 	$("button").click(function(){
 		//var new_user_name = document.getElementById("user_search_text").value;
 		var value = $(this).attr("value"); 
-		//$("div#div2").html(value);
+
 		$.post("Search_user.php",{ 
 			//name: new_user_name
 			name: value
 		}, 
 			function(data,status){
+				if(data==0){
+					alert("No Device");
+					$("div#div1").text("No Device");
 
-			$("div#div1").html(data);
+				} // 오류시 수정 예정
+				else {
+					alert(status);
+					$("div#div1").html(data);
+
+				}
 			});	
 	
 	});
@@ -24,18 +32,6 @@ $(document).ready(function(){
 $(window).load(function(e){
 
 });	// 별 쓸모가 없는 코드....
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
 
@@ -76,13 +72,13 @@ $(window).load(function(e){
   		<!-- /.row -->
   <br />
   		
-<?php 
+		<?php 
 
-$DBControlObject = new DBController();
-$rows = $DBControlObject->getUserList();
-$cnt = count($rows);
+			$DBControlObject = new DBController();
+			$rows = $DBControlObject->getUserList();
+			$cnt = count($rows);
 
-?>
+		?>
 <!-- 
 <div class="table-responsive">
 	<table id="user_list_table" class="table table-bordered table-hover table-striped">
@@ -104,8 +100,10 @@ $cnt = count($rows);
 	</table>
 </div>
 -->
-	<div id="div2" ><br> </div>  		
-	<div id="div1" ><br> </div>  		
+	
+	<br>
+	<div ><br> </div>  
+	<div id="div1" class="active" ><br> </div>  		
 		<!-- /table-responsive -->
 	</div>
 	<!-- /.panel-body -->
