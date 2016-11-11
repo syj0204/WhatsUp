@@ -74,9 +74,9 @@ $(window).load(function(e){
 				<div class="row">
                     <div class="col-lg-6">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="device_list_table">
+                            <table class="table table-bordered table-hover" id="device_list_table"  >
     
-                                <tbody>
+                                <tbody >
 					<?php
 							for($i=0; $i<count($rows); $i++) {
 								$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
