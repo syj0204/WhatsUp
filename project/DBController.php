@@ -21,14 +21,26 @@ Class DBController{
 		}
 	}
 	
-	function deleteUser($new_user_name, $new_user_cellphone, $new_user_department) {
+	function deleteUser($user_id) {
 		if($this->connection) {
-			/*$query = "INSERT INTO Users (nDeviceID, sDisplayName, nDeviceTypeID, nDeviceMenu) VALUES('".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
-			$statement = $this->DBObject->executeQuery($query);*/
+			$query = "DELETE FROM Users WHERE nUserID=".$user_id;
+			$statement = $this->DBObject->executeQuery($query);
 	
 			return $statement;
 			//$this->DBObject->disconnectDB();
 		}
+	}
+	
+	function selectUser($user_id) {
+		$row = -1;
+		if($this->connection) {
+			$query = "SELECT * FROM Users WHERE nUserID=".$user_id;
+			$statement = $this->DBObject->executeQuery($query);
+			if(count($statement)>0) {
+				$row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC);
+			}
+		}
+		return $row;
 	}
 	
 	/*function addDevice($new_device_name) {
