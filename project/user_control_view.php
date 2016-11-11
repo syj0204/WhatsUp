@@ -1,7 +1,7 @@
 <?php
 	include "DBController.php";
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 
 	function edit_user(td) {
@@ -11,43 +11,101 @@
 		for(var i=0; i<td_list.length; i++) {
 			pre_td_values[i] = td_list[i].innerHTML;
 		}
-		
-		td_list[0].innerHTML = "<input type='text' class='form-control' name='user_name_input' value='"+td_list[0].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[1].innerHTML = "<input type='text' class='form-control' name='user_cellphone_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User CellPhone'>";
-		//td_list[3].innerHTML = '<button id="update_button" class="btn btn-default" type="button" onclick="edit_user_update('+index+')">Update</button>'
-		//+ '       <button id="cancel_button" class="btn btn-default" type="button" onclick="edit_user_cancel('+index+','+pre_td_values+')">Cancel</button>";
-		td_list[2].innerHTML = "<select class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
-		td_list[3].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
-		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel()'>Cancel</button>";
+	
+		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
+		td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
+		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'>Update</button>"
+		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'>Cancel</button>";
+	}
 
+	function edit_user_update(td) {
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		alert(index);
+		alert(td_list[1].innerHTML);
+		var user_id = td_list[0].innerHTML;
+		alert(user_id);
+		var user_name_to_update = document.getElementById("user_name_to_update").value;
+		alert(user_name_to_update);
+		var user_cellphone_to_update = document.getElementById("user_cellphone_to_update").value;
+		alert(user_cellphone_to_update);
+		//var user_department_to_update = document.getElementById("user_department_to_update");
+		//user_department_to_update = new_user_department.options[new_user_department.selectedIndex].text;
+		var user_department_to_update = $("#user_department_to_update option:selected").text();
+		alert(user_department_to_update);
+		
+		$.post("update_user.php",{
+			userid:user_id,
+			username:user_name_to_update,
+			cellphone:user_cellphone_to_update,
+			department:user_department_to_update
+			}, 
+			function(data,status) {
+				alert(data);
+				var user_info_array = null;
+				if(data!="fail") {
+					user_info_array = data.split(',');
+					//alert(user_info_array);
+					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
+					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
+					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
+					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
+					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>"
+					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button>";
+
+				}
+			}
+		);
+	}
+
+	
+	function edit_user_cancel(td) {
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		//alert(td_list[0].innerHTML);
+		var user_id = td_list[0].innerHTML;
+		//alert(user_id);
+		$.post("select_user.php",{
+			userid:user_id
+			}, 
+			function(data,status) {
+				//alert(data);
+				var user_info_array = null;
+				if(data!="fail") {
+					user_info_array = data.split(',');
+					//alert(user_info_array);
+					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
+					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
+					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
+					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
+					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>"
+					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button>";
+
+				}
+			}
+		);
 	}
 
 	function delete_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
-		document.getElementById("user_list_table").rows.item(index).remove();
-
-		/*$.post("user.php",{
-			username:new_user_name,
-			cellphone:new_user_cellphone,
-			department:new_user_department
+		alert(index);
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		var user_id = td_list[0].innerHTML;
+		$.post("delete_user.php",{
+			userid:user_id
 			}, 
 			function(data,status) {
-				alert(data)
-			}*/
+				alert(data);
+			}
 		);
-
-	}
-
-	function edit_user_update() {
-	}
-
-	function edit_user_cancel() {		
+		document.getElementById("user_list_table").rows.item(index).remove();
 	}
 
 	function add_user() {
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
-		var new_user_department = document.getElementById("user_department_to_add")
+		var new_user_department = document.getElementById("user_department_to_add");
 		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
 		
 		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button></td></tr>");
@@ -73,7 +131,6 @@
 		);
 	}
 
-	
 	$(function(){
 		
 		$('#search_user').click(function(){
@@ -82,12 +139,13 @@
 
 			$("#user_list_table tbody tr").each(function(){
 				$row = $(this);
-				var text = $row.find("td:eq(0)").text();
+				var text = $row.find("td:eq(1)").text();
 				if(text.toLowerCase()==value.toLowerCase()) {
 					$row.show();
 				} else $row.hide();
 			});
 		});
+
 
 		$('#add_user').click(function(){
 
@@ -97,18 +155,6 @@
 			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
-
-		/*$('tr').click(function() {
-			alert(this.rowIndex);
-		});*/
-
-		
-
-		
-	});
-
-	$(window).load(function(e){
-
 	});
 
 </script>
@@ -149,15 +195,14 @@
   		<br />
   		
   		<div class="table-responsive">
-  		  	<br />
 			<table id="user_list_table" class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
-						<!-- <th>User ID</th> -->
-						<th align="center">User Name</th>
-						<th align="center">Cell Phone</th>
-						<th align="center">Department</th>
-						<th align="center">Option</th>
+						<th style="display: none">User ID</th>
+						<th>User Name</th>
+						<th>Cell Phone</th>
+						<th>Department</th>
+						<th>Option</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -169,18 +214,17 @@
 						for($i=0; $i<count($rows); $i++) {
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 				?>
-					<tr id=<?= $i+1;?>>
-						<!-- <td><?php //echo $rows[$i][0];?></td> -->
-						<td align="center"><?php echo $user_name;?></td>
-						<td align="center"><?php echo $rows[$i][2];?></td>
-						<td align="center"><?php echo $rows[$i][3];?></td>
-						<td align="center"><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)">Delete User</button></td>
+					<tr>
+						<td style="display: none"><?php echo $rows[$i][0]?></td>
+						<td><?php echo $user_name?></td>
+						<td><?php echo $rows[$i][2]?></td>
+						<td><?php echo $rows[$i][3]?></td>
+						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)">Delete User</button></td>
 					</tr>
 				<?php
 		
 						}
 					}
-					$DBControlObject->disconnectDB();
 				?>
 				</tbody>
 			</table>
