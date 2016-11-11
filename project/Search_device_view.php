@@ -44,7 +44,15 @@ $(document).ready (function(){
 
 }); 
 
+$(function(){
 
+	$('#permission_view').click(function(){
+		$('#ui_view').load("permission_view.php");
+		return false;
+	});	
+
+
+});
 $(window).load(function(e){
 
 });	// 별 쓸모가 없는 코드....
@@ -65,8 +73,10 @@ $(window).load(function(e){
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Device List</h3>
+					
+					<div class="panel-heading"  >
+					<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Device List
+					</h3> 
 					</div>
 					<div class="panel-body">
 						<!-- <div class="row">
@@ -113,30 +123,34 @@ $(window).load(function(e){
                         </div>
                     </div>
                     <div class="col-lg-6">
+                     <div class="panel panel-default">
+					  <div class="panel-body">		
                         <div class="table-responsive">
+							<a href="#" id="permission_view"><i class="btn-primary"></i> Go permission</a>
                             <table class="table table-bordered table-hover table-striped">
 								<thead>
 									<tr>
-																</tr>
+									
+									</tr>
+									<br>
 								</thead>
                                 <tbody>
-	
+
                                     <tr>
-										<div id="div1" ><br> </div>  	
+										<div id="div1" > </div>  	
                                     </tr>
 				
                                 </tbody>
                             </table>
                         </div>
+                      </div>
+                     </div>
                     </div>
 
 					<?php	
 							}
 					?>	
-									
 
-					
-					 
 					</div>
 					<!-- /.panel-body -->
 						
