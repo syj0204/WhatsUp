@@ -2,7 +2,6 @@
 include "DBController.php";
 
 $user_id =$_POST["userid"];
-//$user_id =50;
 $DBControlObject = new DBController();
 $result = $DBControlObject->selectUser($user_id);
 if($result==-1) echo "fail";
@@ -11,6 +10,5 @@ else {
 	echo "".$result[0].",".$user_name.",".$result[2].",".$result[3];
 }
 
-//echo "abc"+$result;
 ?>
 
