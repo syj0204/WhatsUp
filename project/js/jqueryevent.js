@@ -17,8 +17,8 @@ $(document).ready(function(){
 		$('#ui_view').load("Search_user_view.php");
 		return false;
 	});
-	$('#Search_device_view').click(function(){
-		$('#ui_view').load("Search_device_view.php");
+	$('#ajaxtest').click(function(){
+		$('#ui_view').load("ajaxtest.php");
 		return false;
 	});
 	

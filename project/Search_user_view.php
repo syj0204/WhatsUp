@@ -13,18 +13,21 @@ $(document).ready(function(){
 			//name: new_user_name
 			name: value
 		}, 
-			function(data,status){
-				if(data==0){
-					alert("No Device");
-					$("div#div1").text("No Device");
+		function(data,status){
+			if(!data==0){
+				//$("#test").show(); 
+				$("div#div1").html(data); 
+				// 데이터가 없는 경우를 나타낸다.
 
-				} // 오류시 수정 예정
-				else {
-					//alert(status);
-					$("div#div1").html(data);
+			} // 오류시 수정 예정
+			else {
+				//alert(status);
+				//$test.show();
+				//$("#test").show(); 
+			//	$("div#div1").html(data);  //데이터 호출 성공
 
-				}
-			});	
+								}
+		});
 	
 	});
 
@@ -73,17 +76,18 @@ $(window).load(function(e){
 					?>
 				<div class="row">
                     <div class="col-lg-6">
+                    	<div class="col-lg-6">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="device_list_table">
+                            <table class="table table-striped" id="device_list_table"  >
     
-                                <tbody>
+                                <tbody >
 					<?php
-							for($i=0; $i<count($rows); $i++) {
+							for($i=0; $i<count($rows)/2; $i++) {
 								$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 					?>
                                     <tr>
 
-                                        <td><button  class="btn btn-lg btn-primary" value="<?php echo $user_name?>"> <?php echo $user_name?></button></td>
+                                        <td align="center"><button  class="btn btn-lg btn-primary" value="<?php echo $user_name?>"> <?php echo $user_name?></button></td>
 
                                     </tr>
 					<?php	
@@ -92,7 +96,33 @@ $(window).load(function(e){
 					?>	
 						      </tbody>
                             </table>
+                            </div>
+                            
                         </div>
+                        <div class="col-lg-6">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="device_list_table"  >
+    
+                                <tbody >
+					<?php
+							for($i=count($rows)/2; $i<count($rows); $i++) {
+								$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+					?>
+                                    <tr>
+
+                                        <td align="center"><button  class="btn btn-lg btn-primary" value="<?php echo $user_name?>"> <?php echo $user_name?></button></td>
+
+                                    </tr>
+					<?php	
+							}
+							
+					?>	
+						      </tbody>
+                            </table>
+                            </div>
+                            
+                        </div>
+                        
                     </div>
                     <div class="col-lg-6">
                       <div class="panel panel-default">
