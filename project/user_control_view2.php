@@ -12,11 +12,43 @@
 			pre_td_values[i] = td_list[i].innerHTML;
 		}
 	
-		td_list[1].innerHTML = "<input type='text' class='form-control' name='user_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[2].innerHTML = "<input type='text' class='form-control' name='user_cellphone_input' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
+		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_input' name='user_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
+		td_list[2].innerHTML = "<input type='text' class='form-control' id=='user_cellphone_input' name='user_cellphone_input' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
 		td_list[3].innerHTML = "<select class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
-		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update()'>Update</button>"
-		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel()'>Cancel</button>";
+		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'>Update</button>"
+		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'>Cancel</button>";
+	}
+
+	function edit_user_update(td) {
+		
+	}
+
+	
+	function edit_user_cancel(td) {
+		var index = td.parentElement.parentElement.rowIndex;
+		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		//alert(td_list[0].innerHTML);
+		var user_id = td_list[0].innerHTML;
+		//alert(user_id);
+		$.post("select_user.php",{
+			userid:user_id
+			}, 
+			function(data,status) {
+				//alert(data);
+				var user_info_array = null;
+				if(data!="fail") {
+					user_info_array = data.split(',');
+					//alert(user_info_array);
+					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
+					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
+					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
+					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
+					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>"
+					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button>";
+
+				}
+			}
+		);
 	}
 
 	function delete_user(td) {
