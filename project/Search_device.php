@@ -13,18 +13,33 @@
 			$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 
 ?>
+<font face="±Ã¼­Ã¼" color="blue" size="4">
+          <div class="col-lg-6">
+              <div class="panel panel-default">
+					<div class="panel-body">
+                        <div class="table-responsive" align="center">
+                            <table class="table table-bordered table-hover table-striped" >
 
-<div class="col-lg-6">
-       <div class="table-responsive">
-          <table class="table table-bordered table-hover">        
-             <tbody>
-               <tr > <?php echo $device_name; ?></tr>
-              </tbody>
-          </table>
-     </div>
-  </div>
- 
- 
+								<thead>
+									<tr>
+									</tr>
+								</thead>
+                                <tbody>
+	
+                                   <tr>  <?php echo $device_name; ?></tr>
+				
+                                </tbody>
+
+                            </table>
+
+						</div>
+                    </div>
+                </div>
+             </div>
+                    
+
+     
+</font>
 <?php 
 			}	
 
