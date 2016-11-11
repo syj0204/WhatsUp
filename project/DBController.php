@@ -31,6 +31,18 @@ Class DBController{
 		}
 	}
 	
+	function selectUser($user_id) {
+		$row = -1;
+		if($this->connection) {
+			$query = "SELECT * FROM Users WHERE nUserID=".$user_id;
+			$statement = $this->DBObject->executeQuery($query);
+			if(count($statement)>0) {
+				$row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC);
+			}
+		}
+		return $row;
+	}
+	
 	/*function addDevice($new_device_name) {
 		if($this->connection) {
 			$query = "INSERT INTO Device (sUserName, nCellNum, Department) VALUES('".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
