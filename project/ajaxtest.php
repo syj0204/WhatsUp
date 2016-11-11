@@ -128,7 +128,7 @@ $(window).load(function(e){
                             		<table class="table table-bordered table-hover" id="user_list_table">	
 
 										<thead>
-											<th style="text-align:center; "class="bg-primary"> Device List(2)</td>
+											<td align="center" > Device List(2)</td>
 										</thead>
     									<tbody>
     									<?php 

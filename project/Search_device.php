@@ -8,7 +8,7 @@
 	$sDisplayName =ICONV("UTF-8","EUC-KR",$sDisplayName1);  //입력 받은 한글의 케릭터셋을 변경시킴 쿼리문에서 사용하기 위함"10.50.106.1"; 
 	$DBControlObject = new DBController();
 	$rows = $DBControlObject->getDisPlayNameUser($sDisplayName);  // 퀴리문 호출하여서 값을 받음
-	$test = count($rows);
+
 	?>
 
 
