@@ -1,8 +1,7 @@
 <?php
 	include "DBController.php";
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
-</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 	function edit_user(td) {
@@ -23,6 +22,22 @@
 
 	}
 
+	function delete_user(td) {
+		var index = td.parentElement.parentElement.rowIndex;
+		document.getElementById("user_list_table").rows.item(index).remove();
+
+		/*$.post("user.php",{
+			username:new_user_name,
+			cellphone:new_user_cellphone,
+			department:new_user_department
+			}, 
+			function(data,status) {
+				alert(data)
+			}*/
+		);
+
+	}
+
 	function edit_user_update() {
 	}
 
@@ -35,7 +50,7 @@
 		var new_user_department = document.getElementById("user_department_to_add")
 		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
 		
-		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button'>Delete User</button></td></tr>");
+		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button></td></tr>");
 		$('#user_list_table').append($.newtr);
 		document.getElementById("user_list_table").rows.item(1).remove();
 		/* if get 'td' parameter 
@@ -60,6 +75,7 @@
 
 	
 	$(function(){
+		
 		$('#search_user').click(function(){
 			//alert(''+$('#device_search_text').val());
 			var value = $('#user_search_text').val(); 
@@ -85,6 +101,9 @@
 		/*$('tr').click(function() {
 			alert(this.rowIndex);
 		});*/
+
+		
+
 		
 	});
 
@@ -155,7 +174,7 @@
 						<td align="center"><?php echo $user_name;?></td>
 						<td align="center"><?php echo $rows[$i][2];?></td>
 						<td align="center"><?php echo $rows[$i][3];?></td>
-						<td align="center"><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button">Delete User</button></td>
+						<td align="center"><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)">Delete User</button></td>
 					</tr>
 				<?php
 		
