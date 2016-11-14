@@ -7,6 +7,7 @@
 	$(function(){
 
 		$('#list1').change(function(){
+			$('#list2 option').remove();
 			var selected_category = $('#list1 option:selected').val();
 			//alert(selected_category);
 
@@ -16,9 +17,11 @@
 				function(data,status) {
 					//alert(data);
 					var data_by_category = data.split('/');
-					for(var i=0; i<data_by_category.length; i++) {
+					//alert(data_by_category.length);
+					for(var i=0; i<data_by_category.length-1; i++) {
 						//alert(data_by_category[i]);
 						var value = data_by_category[i].split(',');
+						//alert(value.length);
 						$('#list2').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
 					}
 				}
@@ -26,10 +29,11 @@
 		});
 
 		$('#list2').change(function(){
+			$('#list3 option').remove();
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
-			alert(selected_category);
-			alert(selected_item);
+			//alert(selected_category);
+			//alert(selected_item);
 			//alert(selected_category);
 
 			$.post("item1.php",{
@@ -37,10 +41,10 @@
 				item:selected_item
 				}, 
 				function(data,status) {
-					alert(data);
+					//alert(data);
 					var data_by_list1 = data.split('/');
-					for(var i=0; i<data_by_list1.length; i++) {
-						alert(data_by_list1[i]);
+					for(var i=0; i<data_by_list1.length-1; i++) {
+						//alert(data_by_list1[i]);
 						var value = data_by_list1[i].split(',');
 						$('#list3').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
 					}
