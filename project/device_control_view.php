@@ -12,34 +12,10 @@
 			pre_td_values[i] = td_list[i].innerHTML;
 		}
 		
-		td_list[1].innerHTML = "<input type='text' name='device_name_input' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[2].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_device_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_device_cancel("+index+","+pre_td_values+")'>Cancel</button>";
+		td_list[0].innerHTML = "<input type='text' name='device_name_input' value='"+td_list[0].innerHTML+"' placeholder='Enter Device Name'>";
+		td_list[1].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_device_update("+index+")'>Update</button>" + "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_device_cancel("+index+","+pre_td_values+")'>Cancel</button>";
 	}
 
-	function add_device() {
-		//DB logic should be added!!
-		var new_device_name = document.getElementById("device_name_to_add").value;
-		
-		$.newtr = $("<tr><td>-</td><td>"+new_device_name+"</td><td><button id='edit_device' class='btn btn-default' type='button' onclick='edit_device(this)'>Edit Device</button>      <button id='delete_device' class='btn btn-default' type='button'>Delete Device</button></td></tr>");
-		$('#device_list_table').append($.newtr);
-		document.getElementById("device_list_table").rows.item(1).remove();
-		/* if get 'td' parameter 
-		var index = td.parentElement.parentElement.rowIndex;
-		var td_list = document.getElementById("device_list_table").rows.item(index).cells;*/
-		//alert("New Device Added Successfully!!");
-
-		$.post("device.php",{
-			devicename:new_device_name
-			}, 
-			function(data,status) {
-			//$("div#div1").html(data);
-				alert(data);
-				/*if(data=='success') {
-					alert("New User Added Successfully!!");
-				}*/
-			}
-		);
-	}
 
 	$(function(){
 		$('#device_search').click(function(){
