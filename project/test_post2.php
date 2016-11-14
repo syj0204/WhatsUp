@@ -7,8 +7,17 @@ include "DBController.php";
 $category = $_POST["category"];
 $DBControlObject = new DBController();
 $result = null;
+if($category=="Device")
+{
+	$result = $DBControlObject->getDeviceList();
+}
+elseif($category=="User"){
+	$result = $DBControlObject->getUserList();
+	
+}
+else{
 $result = $DBControlObject->GroupDeviceView($category);
-
+}
 //echo json_encode($result);
 $new_result="";
 for($i=0; $i<count($result); $i++) {
