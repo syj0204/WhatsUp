@@ -118,6 +118,25 @@ Class DBController{
 		}
 	}
 	
+	function getDeviceListNotForUser($user_id) {
+	
+		if($this->connection) {
+			$query = "SELECT * FROM Device WHERE nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID ='".$user_id."')";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}
+	
 	function getDeviceGroupList() {
 	
 		if($this->connection) {
