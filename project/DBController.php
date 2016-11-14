@@ -293,7 +293,7 @@ Class DBController{
 		if($this->connection) {
 	
 			//$query = "SELECT U.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sDisplayName='".$sDisplayName."'";
-			$query = "Select sGroupName from DeviceGroup Where nMonitorStateID='6' and nParentGroupID = '0' order by sGroupName ASC";
+			$query = "Select * from DeviceGroup Where nMonitorStateID='6' and nParentGroupID = '0' order by sGroupName ASC";
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -313,7 +313,7 @@ Class DBController{
 		if($this->connection) {
 	
 		
-			$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='".$Device_List1."'";
+			$query = "Select D.* from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where nDeviceGroupID='".$Device_List1."'";
 			//$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='03. MIS'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();

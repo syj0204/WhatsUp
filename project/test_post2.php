@@ -4,10 +4,10 @@ include "DBController.php";
 
 
 
-$category = "03. MIS";//$_POST["category"];
+$category = $_POST["category"];
 $DBControlObject = new DBController();
 $result = null;
-$result = $DBControlObject->GroupDeviceView(intval($category));
+$result = $DBControlObject->GroupDeviceView($category);
 
 //echo json_encode($result);
 $new_result="";
