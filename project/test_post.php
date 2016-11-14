@@ -7,8 +7,9 @@
 	$(function(){
 
 		$('#list1').change(function(){
+			$('#list2 option').remove();
+			$('#list3 option').remove();
 			var selected_category = $('#list1 option:selected').val();
-			//alert(selected_category);
 			alert(selected_category);
 			$.post("test_post2.php",{
 				category:selected_category
@@ -16,7 +17,7 @@
 				function(data,status) {
 					//alert(data);
 					var data_by_category = data.split('/');
-					for(var i=0; i<data_by_category.length; i++) {
+					for(var i=0; i<data_by_category.length-1; i++) {
 						//alert(data_by_category[i]);
 						var value = data_by_category[i].split(',');
 						$('#list2').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
@@ -25,28 +26,24 @@
 			);
 		});
 
-	/*	$('#list2').change(function(){
-			var selected_category = $('#list1 option:selected').val();
+	$('#list2').change(function(){
+		$('#list3 option').remove();
 			var selected_item = $('#list2 option:selected').val();
-			alert(selected_category);
 			alert(selected_item);
 			//alert(selected_category);
 
-			$.post("item1.php",{
-				category:selected_category,
+			$.post("test_post3.php",{
 				item:selected_item
 				}, 
 				function(data,status) {
-					alert(data);
 					var data_by_list1 = data.split('/');
-					for(var i=0; i<data_by_list1.length; i++) {
-						alert(data_by_list1[i]);
+					for(var i=0; i<data_by_list1.length-1; i++) {
 						var value = data_by_list1[i].split(',');
 						$('#list3').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
 					}
 				}
 			);
-		});*/
+		});
 	});
 
 </script>
@@ -87,7 +84,7 @@
 						$rows = $DBControlObject->DeviceGroupsView();
 						if(count($rows)>0) {
 							for($i=0; $i<count($rows)-1; $i++) {
-								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][0]);
+								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
 						?>
 								<option value=<?php echo $rows[$i][0]?>>
 						<?php
@@ -100,21 +97,7 @@
 						?>
 				</select>
 			</div>
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			<!-- /.col-xs-3 -->
+		<!-- /.col-xs-3 -->
         	<div class="col-xs-3">
 				<select name="list2" id="list2" class="form-control" size="25">
 				</select>
