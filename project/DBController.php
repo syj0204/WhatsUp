@@ -118,6 +118,25 @@ Class DBController{
 		}
 	}
 	
+	function getDeviceListNotForUser($user_id) {
+	
+		if($this->connection) {
+			$query = "SELECT * FROM Device WHERE nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID ='".$user_id."')";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}
+	
 	function getDeviceGroupList() {
 	
 		if($this->connection) {
@@ -293,7 +312,7 @@ Class DBController{
 		if($this->connection) {
 	
 			//$query = "SELECT U.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sDisplayName='".$sDisplayName."'";
-			$query = "Select sGroupName from DeviceGroup Where nMonitorStateID='6' and nParentGroupID = '0' order by sGroupName ASC";
+			$query = "Select * from DeviceGroup Where nMonitorStateID='6' and nParentGroupID = '0' order by sGroupName ASC";
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
