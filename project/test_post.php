@@ -1,22 +1,30 @@
 
-<!--  현재 적용 완료되어서 사용되지 않는 파일 입니다. -->
-<?php 
+<!--  현재 Divce 목록 호출 부분 제작중 -->
 
-include "DBController.php";
-
-
-$sDisplayName1 =$_POST["name"];
-$sDisplayName =ICONV("UTF-8","EUC-KR",$sDisplayName1);  //입력 받은 한글의 케릭터셋을 변경시킴 쿼리문에서 사용하기 위함"10.50.106.1";
-$DBControlObject = new DBController();
-$rows = $DBControlObject->getDisPlayNameUser($sDisplayName);  // 퀴리문 호출하여서 값을 받음
-if(count($rows)>0) {
-	for($i=0; $i<count($rows); $i++) {  // 레코드셋을 통재로 가져오기 때문에 배열로 나타내야함
-		$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
-			echo User, $device_name ;
-				
-		}
-	}
-
-
-
+<?php
+	include "DBController.php";
 ?>
+    	<div class="row">
+        	<div class="col-xs-4">
+				<select name="device_list" id="device_list" class="form-control" size="10" multiple="multiple">
+					<?php
+						$DBControlObject = new DBController();
+						$rows = $DBControlObject->DeviceGroupsView();
+						if(count($rows)>0) {
+							for($i=0; $i<count($rows)-1; $i++) {
+								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][0]);
+						?>
+								<option value=<?php echo $rows[$i][0]?>>
+						<?php
+								echo $device_name." <br> \n";
+							}
+						?>
+								</option>
+						<?php
+						}
+						?>
+				</select>
+			</div>
+			<!-- /.col-xs-4 -->
+		</div>
+		<!-- /.row -->
