@@ -99,6 +99,11 @@
 	        });*/
 		});
 
+		$('#list4').change(function(){
+			$('#list4 option:selected').remove().appendTo('#list3');
+		});
+
+
 		
 	});
 
