@@ -8,6 +8,7 @@
 
 		$('#list1').change(function(){
 			$('#list2 option').remove();
+			$('#list3 option').remove();
 			var selected_category = $('#list1 option:selected').val();
 			//alert(selected_category);
 
