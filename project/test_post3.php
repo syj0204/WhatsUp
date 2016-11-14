@@ -4,10 +4,10 @@ include "DBController.php";
 
 
 
-$category = $_POST["category"];
+$item = $_POST["item"];
 $DBControlObject = new DBController();
 $result = null;
-$result = $DBControlObject->GroupDeviceView($category);
+$result = $DBControlObject->getDisPlayNameUser2($item);
 
 //echo json_encode($result);
 $new_result="";

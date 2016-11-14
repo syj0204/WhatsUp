@@ -332,7 +332,7 @@ Class DBController{
 		if($this->connection) {
 	
 		
-			$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='".$Device_List1."'";
+			$query = "Select D.* from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where nDeviceGroupID='".$Device_List1."'";
 			//$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='03. MIS'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -347,6 +347,28 @@ Class DBController{
 				
 		}
 	} //디바이스를 그룹 찾기
+	
+	function getDisPlayNameUser2($nDeviceID) {
+	
+		if($this->connection) {
+	
+			//$query = "SELECT U.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sDisplayName='".$sDisplayName."'";
+			$query = "Select U.* From Device AS D INNER JOIN Permission AS P ON D.nDeviceID = P.nDeviceID INNER JOIN Users AS U ON P.nUserID=U.nUserID Where D.nDeviceID='".$nDeviceID."'";
+			
+			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+			
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+			
+			}
+	} //디바이스를 이용한 유저 찾기2
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
