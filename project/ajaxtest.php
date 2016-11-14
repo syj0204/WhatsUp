@@ -5,58 +5,6 @@
 </script>
 <script>
 
-$(document).ready(function(){
-	$('#search_device').click(function(){
-		//alert(''+$('#device_search_text').val());
-		var value = $('#user_search_text').val(); 
-		$("#user_list_table tbody tr").each(function(){
-			$row = $(this);
-			var text = $row.find("td:eq(0)").text();
-			if(text.toLowerCase()==value.toLowerCase()) {
-				$row.show();
-			
-			} else {
-				$row.hide();
-				
-			}
-		});
-		/*$("#user_list_table1 tbody tr").each(function(){
-			$row = $(this);
-			var text = $row.find("td:eq(0)").text();
-			if(text.toLowerCase()==value.toLowerCase()) {
-				$row.show();
-			
-			} else {
-				$row.hide();
-				
-			}
-		});*/
-			$.post("Search_device.php",{ 
-				//name: new_user_name
-				name: value
-			}, 
-				function(data,status){
-					if(!data==0){
-						//$("#test").show(); 
-						$("div#div1").html(data); 
-						// 데이터가 없는 경우를 나타낸다.
-
-					} // 오류시 수정 예정
-					else {
-						//alert(status);
-						//$test.show();
-						//$("#test").show(); 
-					//	$("div#div1").html(data);  //데이터 호출 성공
-
-										}
-				});
-
-	});
-	
-});
-$(window).load(function(e){
-
-});	
 </script>
 </head>
 <div id="page-wrapper">
@@ -90,7 +38,8 @@ $(window).load(function(e){
 
     							</div>
   							</div>
-  						</div>  	        									<br>					
+  						</div>
+  						<br>					
 						<div class="row">
                    			<div class="col-lg-6">
 
@@ -103,7 +52,7 @@ $(window).load(function(e){
 										</thead>
     									<tbody>
 										<?php 
-										$test = "test";
+
 										$DBControlObject = new DBController();
 										$rows = $DBControlObject->getDeviceList();
 										$cnt = count($rows);
@@ -117,20 +66,9 @@ $(window).load(function(e){
 										<?php	
 													}
 										?>
-                                		</tbody>
-                           			 </table>
-                           			 	</div>
-
-                    		</div>
-                   		 <div class="col-lg-6">
-
-					 			   <div class="table-responsive">
-                            		<table class="table table-bordered table-hover" id="user_list_table">	
-
-										<thead>
-											<th style="text-align:center; "class="bg-primary"> Device List(2)</td>
-										</thead>
-    									<tbody>
+										
+										
+										        
     									<?php 
     											for($i=count($rows)/2; $i<count($rows); $i++) {
     												$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
@@ -144,6 +82,12 @@ $(window).load(function(e){
 										<?php 
 												}
 										?>
+										
+                                		</tbody>
+                           			 </table>
+                           			 	</div>
+
+                    		</div>
 
 										
 										</tbody>
