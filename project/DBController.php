@@ -13,7 +13,7 @@ Class DBController{
 	
 	function addUser($new_user_name, $new_user_cellphone, $new_user_department) {
 		if($this->connection) {
-			$query = "INSERT INTO Users (nDeviceID, sDisplayName, nDeviceTypeID, nDeviceMenu) VALUES('".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
+			$query = "INSERT INTO Users (sUserName, nCellNum, Department) VALUES('".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
 			$statement = $this->DBObject->executeQuery($query);
 		
 			return $statement;
@@ -311,7 +311,7 @@ Class DBController{
 	
 		if($this->connection) {
 	
-			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC"; 실제 WhatsUp DB 사용시 사용예정
+			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";// 실제 WhatsUp DB 사용시 사용예정
 			$query = "Select * from DeviceGroup Where nMonitorStateID='6' and nParentGroupID = '0' order by sGroupName ASC";
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
