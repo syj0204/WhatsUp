@@ -8,7 +8,6 @@
 
 		$('#list1').change(function(){
 			var selected_category = $('#list1 option:selected').val();
-			//alert(selected_category);
 			alert(selected_category);
 			$.post("test_post2.php",{
 				category:selected_category
@@ -16,7 +15,7 @@
 				function(data,status) {
 					//alert(data);
 					var data_by_category = data.split('/');
-					for(var i=0; i<data_by_category.length; i++) {
+					for(var i=0; i<data_by_category.length-1; i++) {
 						//alert(data_by_category[i]);
 						var value = data_by_category[i].split(',');
 						$('#list2').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
@@ -87,7 +86,7 @@
 						$rows = $DBControlObject->DeviceGroupsView();
 						if(count($rows)>0) {
 							for($i=0; $i<count($rows)-1; $i++) {
-								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][0]);
+								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
 						?>
 								<option value=<?php echo $rows[$i][0]?>>
 						<?php
