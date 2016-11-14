@@ -1,63 +1,88 @@
-
-<!--  현재 Divce 목록 호출 부분 제작중 -->
-
 <?php
 	include "DBController.php";
 ?>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+<script type="text/javascript">
+
+	$(function(){
+
+		$('#list1').change(function(){
+			var selected_category = $('#list1 option:selected').val();
+			//alert(selected_category);
+
+			$.post("category.php",{
+				category:selected_category
+				}, 
+				function(data,status) {
+					//alert(data);
+					var data_by_category = data.split('/');
+					for(var i=0; i<data_by_category.length; i++) {
+						//alert(data_by_category[i]);
+						var value = data_by_category[i].split(',');
+						$('#list2').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
+					}
+				}
+			);
+		});
+
+	/*	$('#list2').change(function(){
+			var selected_category = $('#list1 option:selected').val();
+			var selected_item = $('#list2 option:selected').val();
+			alert(selected_category);
+			alert(selected_item);
+			//alert(selected_category);
+
+			$.post("item1.php",{
+				category:selected_category,
+				item:selected_item
+				}, 
+				function(data,status) {
+					alert(data);
+					var data_by_list1 = data.split('/');
+					for(var i=0; i<data_by_list1.length; i++) {
+						alert(data_by_list1[i]);
+						var value = data_by_list1[i].split(',');
+						$('#list3').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
+					}
+				}
+			);
+		});*/
+	});
+
 </script>
-<script>
-
-
-/*
-$.ajax({
-	url: 'test_post.php'
-	type: 'post'
-	data: {
-		Name: '$("#Device_List option:selected").text()'
-	}
-	datatype: 'text'
-});
-
-$.post("test_post2.php",{
-		name:user_department_to_update
-		}, 
-		function(data,status) {
-			alert(data);
-		}
-		}
-	);
-
-
-*/
-function update() {
-
-	var device_list_1 = $("#device_list option:selected").val();
-	alert(device_list_1);
 	
-	$.post("test_post2.php",{
-		name:device_list_1
-		}, 
-		function(data,status) {
-			$("div#div1").html(data); 
-		}
-		);
-	 }
+<div id="page-wrapper">
 
-	
+<div class="container-fluid">
 
+<!-- Page Heading -->
+<div class="row">
+<div class="col-lg-12">
+	<h1 class="page-header">Permission <small>Permission Overview</small></h1>
+	<ol class="breadcrumb">
+		<li class="active"><i class="fa fa-dashboard"></i> Permission</li>
+	</ol>
+</div>
+</div>
 
-
-</script>
-
+<!-- /.row -->
+<div class="row">
+<div class="col-lg-12">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Permission List</h3>
+	</div>
+	<div class="panel-body">
+	<!-- <div id="morris-area-chart"></div> -->
 
 	<div class="row">
-	   <div class="col-xs-6">
+		<div class="col-lg-12">
+    		<label>DeviceGroups</label>
+		</div>
     	<div class="row">
-        	<div class="col-xs-4">
-				<select name ="device_list" id="device_list" class="form-control" size="12" onchange="update()"  >
-					<?php
+        	<div class="col-xs-3">
+				<select name="list1" id="list1" class="form-control" size="25">						
+						<?php
 						$DBControlObject = new DBController();
 						$rows = $DBControlObject->DeviceGroupsView();
 						if(count($rows)>0) {
@@ -75,12 +100,46 @@ function update() {
 						?>
 				</select>
 			</div>
-			<!-- /.col-xs-4 -->
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- /.col-xs-3 -->
+        	<div class="col-xs-3">
+				<select name="list2" id="list2" class="form-control" size="25">
+				</select>
+			</div>
+			<!-- /.col-xs-3 -->			
+
+			<div class="col-xs-3">
+				<select name="list3" id="list3" class="form-control" size="25">
+				</select>
+			</div>
 		</div>
-		<!-- /.row -->
- <div id="div1" > </div> 
-		</div>
-	<!-- /.col-xs-6 -->
+		<!-- /.row -->	
+        					
+	</div>
+	<!-- /.row -->
+	</div>
+	<!-- /.panel-body -->
+</div>
+<!-- /.panel panel-default -->
+</div>
+<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- /.page-wrapper -->				
+				
