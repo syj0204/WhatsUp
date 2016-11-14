@@ -10,7 +10,7 @@
 			$('#list2 option').remove();
 			$('#list3 option').remove();
 			var selected_category = $('#list1 option:selected').val();
-			alert(selected_category);
+			//alert(selected_category);
 			$.post("test_post2.php",{
 				category:selected_category
 				}, 
@@ -30,7 +30,7 @@
 		$('#list3 option').remove();
 		var selected_category = $('#list1 option:selected').val();
 		var selected_item = $('#list2 option:selected').val();
-			alert(selected_item);
+			//alert(selected_item);
 			//alert(selected_category);
 
 			$.post("test_post3.php",{
