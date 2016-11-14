@@ -28,11 +28,13 @@
 
 	$('#list2').change(function(){
 		$('#list3 option').remove();
-			var selected_item = $('#list2 option:selected').val();
+		var selected_category = $('#list1 option:selected').val();
+		var selected_item = $('#list2 option:selected').val();
 			alert(selected_item);
 			//alert(selected_category);
 
 			$.post("test_post3.php",{
+				category:selected_category,
 				item:selected_item
 				}, 
 				function(data,status) {
@@ -78,7 +80,9 @@
 		</div>
     	<div class="row">
         	<div class="col-xs-3">
-				<select name="list1" id="list1" class="form-control" size="25">						
+				<select name="list1" id="list1" class="form-control" size="25">	
+					<option value="User">User</option>	
+					<option value="Device">Device / ALL</option>					
 						<?php
 						$DBControlObject = new DBController();
 						$rows = $DBControlObject->DeviceGroupsView();
@@ -86,9 +90,10 @@
 							for($i=0; $i<count($rows)-1; $i++) {
 								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
 						?>
+
 								<option value=<?php echo $rows[$i][0]?>>
 						<?php
-								echo $device_name." <br> \n";
+								echo "Device / " .$device_name." <br> \n";
 							}
 						?>
 								</option>

@@ -4,10 +4,19 @@ include "DBController.php";
 
 
 
+$category = $_POST["category"];
 $item = $_POST["item"];
+
 $DBControlObject = new DBController();
 $result = null;
-$result = $DBControlObject->getDisPlayNameUser2($item);
+if($category=="User"){
+	$result = $DBControlObject->getDeviceListForUser(intval($item));
+
+}
+else{
+	$result = $DBControlObject->getDisPlayNameUser2($item);
+}
+
 
 //echo json_encode($result);
 $new_result="";
