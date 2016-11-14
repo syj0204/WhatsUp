@@ -313,8 +313,8 @@ Class DBController{
 		if($this->connection) {
 	
 		
-			//$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='".$Device_List1."'";
-			$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='03. MIS'";
+			$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='".$Device_List1."'";
+			//$query = "Select sDisplayName from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where sGroupName='03. MIS'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 				

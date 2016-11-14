@@ -9,8 +9,8 @@
 		$('#list1').change(function(){
 			var selected_category = $('#list1 option:selected').val();
 			//alert(selected_category);
-
-			$.post("category.php",{
+			alert(selected_category);
+			$.post("test_post2.php",{
 				category:selected_category
 				}, 
 				function(data,status) {
