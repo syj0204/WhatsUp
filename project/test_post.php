@@ -4,9 +4,59 @@
 <?php
 	include "DBController.php";
 ?>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+
+
+/*
+$.ajax({
+	url: 'test_post.php'
+	type: 'post'
+	data: {
+		Name: '$("#Device_List option:selected").text()'
+	}
+	datatype: 'text'
+});
+
+$.post("test_post2.php",{
+		name:user_department_to_update
+		}, 
+		function(data,status) {
+			alert(data);
+		}
+		}
+	);
+
+
+*/
+function update() {
+
+	var device_list_1 = $("#device_list option:selected").val();
+	alert(device_list_1);
+	
+	$.post("test_post2.php",{
+		name:device_list_1
+		}, 
+		function(data,status) {
+			$("div#div1").html(data); 
+		}
+		);
+	 }
+
+	
+
+
+
+</script>
+
+
+	<div class="row">
+	   <div class="col-xs-6">
     	<div class="row">
         	<div class="col-xs-4">
-				<select name="device_list" id="device_list" class="form-control" size="10" multiple="multiple">
+				<select name ="device_list" id="device_list" class="form-control" size="12" onchange="update()"  >
 					<?php
 						$DBControlObject = new DBController();
 						$rows = $DBControlObject->DeviceGroupsView();
@@ -28,3 +78,9 @@
 			<!-- /.col-xs-4 -->
 		</div>
 		<!-- /.row -->
+ <div id="div1" > </div> 
+		</div>
+	<!-- /.col-xs-6 -->
+</div>
+<!-- /.row -->
+
