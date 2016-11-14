@@ -24,7 +24,7 @@
 						//alert(data_by_category[i]);
 						var value = data_by_category[i].split(',');
 						//alert(value.length);
-						$('#list2').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
+						$('#list2').append("<option value="+value[1]+">"+value[2]+"</option>");
 					}
 				}
 			);
@@ -48,7 +48,7 @@
 					for(var i=0; i<data_by_list1.length-1; i++) {
 						//alert(data_by_list1[i]);
 						var value = data_by_list1[i].split(',');
-						$('#list3').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
+						$('#list3').append("<option value="+value[1]+">"+value[2]+"</option>");
 					}
 				}
 			);
@@ -58,6 +58,10 @@
 
 			$('#list3').attr( "size", 11 );
 			$('#list4').show();
+			//$('#edit_permission').text("SAVE");
+			$('#edit_permission').hide();
+			$('#edit_permission_save').show();
+			$('#edit_permission_cancel').show();
 
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
@@ -74,7 +78,7 @@
 						//alert(data_by_category[i]);
 						var value = data_by_category_item[i].split(',');
 						//alert(value.length);
-						$('#list4').append("<option value='"+value[1]+"'>"+value[2]+"</option>");
+						$('#list4').append("<option value="+value[1]+">"+value[2]+"</option>");
 					}
 				}
 			);
@@ -100,11 +104,47 @@
 		});
 
 		$('#list4').change(function(){
-			$('#list4 option:selected').remove().appendTo('#list3');
+			var new_devices = $('#list4 option:selected').remove().appendTo('#list3').val();
+			alert(new_devices);
 		});
 
+		$('#edit_permission_save').click(function(){
+			var selected_category = $('#list1 option:selected').val();
+			var selected_item = $('#list2 option:selected').val();
 
+			alert(selected_category);
+			alert(selected_item);
+
+			switch(selected_category) {
+				case 'user':
+					alert("user");
+					/*var devices = new Array;
+					$('#list3 option').each(function() {
+						devices.push($(this).val());
+					});
+	
+					$.post("permission_update.php",{
+						user:selected_item,
+						devicearray:new_devices
+						}, 
+						function(data,status) {
+							alert(data);
+						}
+					);*/
+					break;
+				case 'device':
+					break;
+				case 'devicegroup':
+					break;
+				case 'host':
+					//$result = $DBControlObject->;
+					break;
+			}
+		});
 		
+		$('#edit_permission_cancel').click(function(){
+			
+		});
 	});
 
 </script>
@@ -165,6 +205,8 @@
 		<!-- /.row -->
 		<div class="col-xs-3" align="center">
 				<button id="edit_permission" class="btn btn-default" type="button">Edit Permission</button>
+				<button id="edit_permission_save" class="btn btn-default" type="button" style="display: none">Save</button>
+				<button id="edit_permission_cancel" class="btn btn-default" type="button" style="display: none">Cancel</button>
 		</div>
 		</div>
 		<!-- /.row -->
