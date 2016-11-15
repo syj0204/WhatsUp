@@ -85,7 +85,7 @@
 			userid:user_id
 			}, 
 			function(data,status) {
-				//alert(data);
+				alert(data);
 				var user_info_array = null;
 				if(data!="fail") {
 					user_info_array = data.split(',');

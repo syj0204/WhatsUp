@@ -40,7 +40,6 @@
 	}
 
 	$(function(){
-
 		$('#list1').change(function(){
 			initSelectBoxes();
 			var selected_category = $('#list1 option:selected').val();
@@ -99,7 +98,6 @@
 		});
 
 		$('#list3').change(function(){
-			
 			if(isEditMode==1) {
 				var count = $('#list3 option:selected').length;
 				if(count==0) {
@@ -139,7 +137,8 @@
 
 			switch(selected_category) {
 				case 'user':
-					alert(to_add_list);
+					alert('user');
+					/*alert(to_add_list);
 					alert(to_delete_list);
 
 					to_add_list.forEach( function(add_item, add_index, add_array){
@@ -166,13 +165,13 @@
 						function(data,status) {
 							alert(data);
 						}
-					);
+					);*/
 					break;
 				case 'device':
+					alert('device');
 					break;
-				case 'devicegroup':
-					break;
-				case 'host':
+				default:
+					alert('devicegroup');
 					break;
 			}
 			setSearchMode();
