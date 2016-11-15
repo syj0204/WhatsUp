@@ -11,11 +11,8 @@ $result = null;
 
 switch($category) {
 	case 'user':
-		$result = $DBControlObject->getDeviceListForUser(intval($item));
+		$result = $DBControlObject->getDeviceListForUser($item);
 		break;
-	/*case 'device':
-		$result = $DBControlObject->getDeviceList();
-		break;*/
 	default:
 		$result = $DBControlObject->getDisPlayNameUser2($item);
 		break;
