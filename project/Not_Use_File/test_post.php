@@ -46,7 +46,7 @@
 				}
 			);
 		});
-	});
+	
 	$('#edit_permission').click(function(){
 
 		$('#list3').attr( "size", 11 );
@@ -153,7 +153,7 @@
 		$('#edit_permission_cancel').hide();
 		
 	});
-
+	});
 </script>
 	
 <div id="page-wrapper">
