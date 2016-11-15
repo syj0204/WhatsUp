@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+<!-- 
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
@@ -27,7 +27,7 @@
                             <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.row -->
 
                 <div class="row">
@@ -45,16 +45,18 @@
                                         	$DBControlObject = new DBController();
                                         	$rows = $DBControlObject->getDeviceList();
                                         	echo count($rows);
+                                        	 $text = "전체 서버 수";
+                                        	$text = ICONV("EUC-KR","UTF-8",$text);
                                         ?>
                                         </div>
-                                        <div>Device</div>
+                                        <div><?php echo $text?></div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#" id="device">
                                 <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                   <!--  <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> -->
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -72,16 +74,18 @@
                                         <?php 
                                         	$rows = $DBControlObject->getUserList();
                                         	echo count($rows);
+                                        	$text1 = "전체 사용자 수";
+                                        	$text1 = ICONV("EUC-KR","UTF-8",$text1);
                                         ?>
                                         </div>
-                                        <div>User</div>
+                                        <div><?php echo $text1?></div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                   <!--  <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -100,17 +104,19 @@
                                         	$rows = $DBControlObject->getPermissionList();
                                         	echo count($rows);
                                         	$DBControlObject->disconnectDB();
+                                        	$text2 = "권한 설정 수";
+                                        	$text2 = ICONV("EUC-KR","UTF-8",$text2);
                                         ?>
                                         </div>
-                                        <div>Permission</div>
+                                        <div><?php echo $text2?></div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
+                                   <!--  <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
+                                    <div class="clearfix"></div> -->
                                 </div>
                             </a>
                         </div>
@@ -123,15 +129,20 @@
                                         <i class="fa fa-support fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">Search</div>
-                                        <div>Server, User, Permission ...etc.</div>
+                                        <div class="huge">
+                                        <?php
+                                        	$text3 = "기 타";
+                                        	$text3 = ICONV("EUC-KR","UTF-8",$text3);
+                                        	echo $text3;
+                                        ?></div>
+                                        <div></div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <!-- <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> -->
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -139,7 +150,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+<!-- 
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
@@ -151,10 +162,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.row -->
 
-                <div class="row">
+               <!--  <div class="row">
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -288,9 +299,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.row -->
-
+            
+                
+                
+                
+                
+                
             </div>
             <!-- /.container-fluid -->
 
