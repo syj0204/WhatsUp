@@ -226,7 +226,7 @@
 						$DBControlObject = new DBController();
 						$rows = $DBControlObject->DeviceGroupsView();
 						if(count($rows)>0) {
-							for($i=0; $i<count($rows)-1; $i++) {
+							for($i=0; $i<count($rows); $i++) {
 								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
 						?>
 
