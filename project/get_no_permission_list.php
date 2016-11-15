@@ -14,7 +14,7 @@ switch($category) {
 		$result = $DBControlObject->getDeviceListNotForUser($item);
 		break;
 	default:
-		$result = $DBControlObject->getUserListNotForDevice($item);
+		$result = $DBControlObject->getUserListNotForDevice($item); 
 		break;
 		
 }
