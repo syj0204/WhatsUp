@@ -11,15 +11,12 @@ $result = null;
 
 switch($category) {
 	case 'user':
-		$result = $DBControlObject->getDeviceListNotForUser(intval($item));
+		$result = $DBControlObject->getDeviceListNotForUser($item);
 		break;
 	case 'device':
-		$result = $DBControlObject->getDeviceList();
+		$result = $DBControlObject->getUserListNotForDevice($item);
 		break;
-	case 'devicegroup':
-		$result = $DBControlObject->getDeviceGroupList();
-		break;
-	case 'host':
+	default:
 		//$result = $DBControlObject->;
 		break;
 		
@@ -30,7 +27,7 @@ for($i=0; $i<count($result); $i++) {
 	for($j=0; $j<count($result[$i]); $j++) {
 		$new_result = $new_result.",".ICONV("EUC-KR","UTF-8",$result[$i][$j]);
 	}
-	$new_result = $new_result."/";
+	$new_result = $new_result."|";
 }
 echo $new_result;
 ?>
