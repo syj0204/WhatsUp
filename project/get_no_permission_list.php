@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-
 <?php
 include "DBController.php";
 
@@ -15,7 +14,7 @@ switch($category) {
 		$result = $DBControlObject->getDeviceListNotForUser($item);
 		break;
 	default:
-		$result = $DBControlObject->getUserListNotForDevice($item); 
+		$result = $DBControlObject->getUserListNotForDevice($item);
 		break;
 		
 }
@@ -28,4 +27,5 @@ for($i=0; $i<count($result); $i++) {
 	$new_result = $new_result."|";
 }
 echo $new_result;
+
 ?>
