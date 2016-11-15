@@ -40,7 +40,6 @@
 	}
 
 	$(function(){
-
 		$('#list1').change(function(){
 			initSelectBoxes();
 			var selected_category = $('#list1 option:selected').val();
@@ -60,6 +59,7 @@
 
 		$('#list2').change(function(){
 			$('#list3 option').remove();
+			$('#list4 option').remove();
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
 
@@ -83,8 +83,10 @@
 
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
+			alert(selected_category);
+			alert(selected_item);
 
-			$.post("get_no_permission_device_list.php",{
+			$.post("get_no_permission_list.php",{
 				category:selected_category,
 				item:selected_item
 				}, 
@@ -99,7 +101,6 @@
 		});
 
 		$('#list3').change(function(){
-			
 			if(isEditMode==1) {
 				var count = $('#list3 option:selected').length;
 				if(count==0) {
@@ -139,7 +140,8 @@
 
 			switch(selected_category) {
 				case 'user':
-					alert(to_add_list);
+					alert('user');
+					/*alert(to_add_list);
 					alert(to_delete_list);
 
 					to_add_list.forEach( function(add_item, add_index, add_array){
@@ -166,13 +168,13 @@
 						function(data,status) {
 							alert(data);
 						}
-					);
+					);*/
 					break;
 				case 'device':
+					alert('device');
 					break;
-				case 'devicegroup':
-					break;
-				case 'host':
+				default:
+					alert('devicegroup');
 					break;
 			}
 			setSearchMode();
