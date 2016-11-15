@@ -144,7 +144,7 @@ Class DBController{
 	function getDeviceListNotForUser($user_id) {
 	
 		if($this->connection) {
-			$query = "SELECT * FROM Device WHERE nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID ='".$user_id."')";
+			$query = "SELECT * FROM Device WHERE nDeviceID NOT IN (SELECT nDeviceID FROM Permission WHERE nUserID =".$user_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
@@ -334,10 +334,10 @@ Class DBController{
 	
 		if($this->connection) {
 	
+
 			$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
 			// 실제 WhatsUp DB 사용시 사용예정
-			
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -358,8 +358,11 @@ Class DBController{
 	
 		
 			$query = "Select D.* from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where nDeviceGroupID='".$Device_List1."'";
+
 			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."' order by nDeviceID ASC";
 			// WhatsUp DB 사용시 사용예정
+
+
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 				
@@ -378,7 +381,9 @@ Class DBController{
 	
 		if($this->connection) {
 	
+
 			//$query = "SELECT U.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sDisplayName='".$sDisplayName."' order by nUserID ASC";
+
 			$query = "Select U.* From Device AS D INNER JOIN Permission AS P ON D.nDeviceID = P.nDeviceID INNER JOIN Users AS U ON P.nUserID=U.nUserID Where D.nDeviceID='".$nDeviceID."'";
 			
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
