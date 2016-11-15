@@ -1,5 +1,20 @@
 <?php
 	include "DBController.php";
+	
+	$han="사용자 추가";
+	$han1="수정";
+	$han2="삭제";
+	$han3="검색";
+	$han4="취소";
+	$han5="완료";
+	$han6="이름으로 찾기";
+	$han = ICONV("EUC-KR","UTF-8",$han);
+	$han1 = ICONV("EUC-KR","UTF-8",$han1);
+	$han2 = ICONV("EUC-KR","UTF-8",$han2);
+	$han3 = ICONV("EUC-KR","UTF-8",$han3);
+	$han4 = ICONV("EUC-KR","UTF-8",$han4);
+	$han5 = ICONV("EUC-KR","UTF-8",$han5);
+	$han6 = ICONV("EUC-KR","UTF-8",$han6);
 ?>
 
 <script type="text/javascript">
@@ -15,8 +30,8 @@
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
 		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
 		td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
-		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'>Update</button>"
-		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'>Cancel</button>";
+		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'><?php echo $han5?></button>"
+		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'><?php echo $han4?></button>";
 	}
 
 	function edit_user_update(td) {
@@ -51,8 +66,8 @@
 					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
 					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
 					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
-					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>"
-					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button>";
+					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
+					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
 
 				}
 			}
@@ -79,8 +94,8 @@
 					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
 					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
 					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
-					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>"
-					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button>";
+					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
+					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
 
 				}
 			}
@@ -108,7 +123,7 @@
 		var new_user_department = document.getElementById("user_department_to_add");
 		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
 		
-		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'>Edit User</button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'>Delete User</button></td></tr>");
+		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 		$('#user_list_table').append($.newtr);
 		document.getElementById("user_list_table").rows.item(1).remove();
 		/* if get 'td' parameter 
@@ -152,7 +167,7 @@
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 
 			//$.trClone = $('#user_list_table tr:last').clone().html();
-			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'>Add</button></td></tr>");
+			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'><?php echo $han5?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 	});
@@ -181,15 +196,15 @@
 		<div class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
-      			<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
+      			<input id="user_search_text" type="text" class="form-control" placeholder="<?php echo $han6?>~~">
      			<span class="input-group-btn">
-        			<button id="search_user" class="btn btn-default" type="button">Search</button>
+        			<button id="search_user" class="btn btn-default" type="button"><?php echo $han3?></button>
       			</span>
     		</div>
     		<!-- /input-group -->
   		</div>
   		<!-- /.col-lg-6 -->
-  		<button id="add_user" class="btn btn-default" type="button">Add User</button>
+  		<button id="add_user" class="btn btn-default" type="button"><?php echo $han?></button>
   		</div>
   		<!-- /.row -->
   		<br />
@@ -219,12 +234,14 @@
 						<td><?php echo $user_name?></td>
 						<td><?php echo $rows[$i][2]?></td>
 						<td><?php echo $rows[$i][3]?></td>
-						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)">Edit User</button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)">Delete User</button></td>
+						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td>
 					</tr>
 				<?php
 		
 						}
 					}
+					
+					
 				?>
 				</tbody>
 			</table>
