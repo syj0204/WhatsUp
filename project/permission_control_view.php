@@ -4,9 +4,18 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+	function setEditMode() {
+	}
+	function setSearchMode() {
+	}
+	function initSelectBoxes() {
+	}
+
 	$(function(){
 
-		var new_added_lists = [];   
+		//var new_added_lists = [];
+		var to_add_list = [];  
+		var to_delete_list = [];
 
 		$('#list1').change(function(){
 			$('#list2 option').remove();
@@ -64,6 +73,16 @@
 			$('#edit_permission_save').show();
 			$('#edit_permission_cancel').show();
 
+			/*var list3_array = [];
+			$('#list3 option').each(function() {
+				list3_array.push($(this));
+			});
+
+			$('#list3 option').remove();
+			for(var i=3; i<list3_array.length; i++) {
+				$('#list3').append("<option value="+list3_array[i].val()+">"+list3_array[i].text()+"</option>");
+			}*/
+
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
 
@@ -104,9 +123,15 @@
 	        });*/
 		});
 
+		$('#list3').change(function(){
+			var to_delete_item = $('#list3 option:selected').remove().appendTo('#list4').val();
+			to_delete_list.push(to_delete_item);
+		});
+
 		$('#list4').change(function(){
-			var new_list_item = $('#list4 option:selected').remove().appendTo('#list3').val();
-			new_added_lists.push(new_list_item);
+			var to_add_item = $('#list4 option:selected').remove().appendTo('#list3').val();
+			//new_added_lists.push(new_list_item);
+			to_add_list.push(to_add_item);
 		});
 
 		$('#edit_permission_save').click(function(){
@@ -118,12 +143,11 @@
 
 			switch(selected_category) {
 				case 'user':
-					alert("user");
-					alert(new_added_lists);
-
+					//alert("user");
+					//alert(to_add_list);
 					$.post("permission_update.php",{
 						user:selected_item,
-						devicearray:new_added_lists
+						devicearray:to_add_list
 						}, 
 						function(data,status) {
 							alert(data);
@@ -138,6 +162,12 @@
 					//$result = $DBControlObject->;
 					break;
 			}
+			
+			$('#list4').hide();
+			$('#list3').attr( "size", 25 );
+			$('#edit_permission').show();
+			$('#edit_permission_save').hide();
+			$('#edit_permission_cancel').hide();
 			
 		});
 
@@ -177,7 +207,7 @@
     		<label>Permission Search</label>
 		</div>
     	<div class="row">
-        	<div class="col-xs-3">
+        	<div class="col-xs-2">
 				<select name="list1" id="list1" class="form-control" size="25">
 					<option value='user'>User</option>
 					<option value='device'>Device</option>
@@ -186,22 +216,21 @@
 						
 				</select>
 			</div>
-			<!-- /.col-xs-3 -->
-        	<div class="col-xs-3">
+			<!-- /.col-xs-2 -->
+        	<div class="col-xs-2">
 				<select name="list2" id="list2" class="form-control" size="25">
 				</select>
 			</div>
-			<!-- /.col-xs-3 -->			
+			<!-- /.col-xs-2 -->			
 
-			<div class="col-xs-3">
+			<div class="col-xs-2">
 				<select name="list3" id="list3" class="form-control" size="25">
 				</select>
 				<br />
 				<select name="list4" id="list4" class="form-control" size="11" style="display: none">
 				</select>
 			</div>
-			
-			<!-- /.row -->
+			<!-- /.col-xs-2 -->	
 			<div class="col-xs-3" align="center">
 				<button id="edit_permission" class="btn btn-default" type="button">Edit Permission</button>
 				<button id="edit_permission_save" class="btn btn-default" type="button" style="display: none">Save</button>
