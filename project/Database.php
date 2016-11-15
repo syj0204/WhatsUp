@@ -12,9 +12,7 @@ class Database {
 	
 	function connectDB() {
 
-		$this->server = "203.249.128.60";
-
-		 $this->server = "10.50.202.121";
+		$this->server = "10.50.202.121";
 		$this->uid = "smssend";
 		$this->pwd = "answkqkfthd!@12";
 		$this->database = "WhatsUp";
