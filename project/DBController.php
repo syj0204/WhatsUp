@@ -177,7 +177,7 @@ Class DBController{
 		
 			//$this->DBObject->disconnectDB();
 		}
-	}
+	}      
 	    
 	function getDeviceGroupList() {
 	
