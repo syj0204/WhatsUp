@@ -59,6 +59,7 @@
 
 		$('#list2').change(function(){
 			$('#list3 option').remove();
+			$('#list4 option').remove();
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
 
@@ -82,8 +83,10 @@
 
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
+			alert(selected_category);
+			alert(selected_item);
 
-			$.post("get_no_permission_device_list.php",{
+			$.post("get_no_permission_list.php",{
 				category:selected_category,
 				item:selected_item
 				}, 
