@@ -15,11 +15,8 @@ switch($category) {
 	case 'device':
 		$result = $DBControlObject->getDeviceList();
 		break;
-	case 'devicegroup':
-		$result = $DBControlObject->getDeviceGroupList();
-		break;
-	case 'host':
-		//$result = $DBControlObject->;
+	default :
+		$result = $DBControlObject->GroupDeviceView($category);
 		break;
 		
 }

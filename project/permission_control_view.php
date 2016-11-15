@@ -221,10 +221,24 @@
 				</div>
 				<select name="list1" id="list1" class="form-control" size="25">
 					<option value='user'>User</option>
-					<option value='device'>Device</option>
-					<option value='devicegroup'>Device Group</option>
-					<option value='host'>Host<option>
-						
+					<option value='device'>Device / ALL</option>
+						<?php
+						$DBControlObject = new DBController();
+						$rows = $DBControlObject->DeviceGroupsView();
+						if(count($rows)>0) {
+							for($i=0; $i<count($rows)-1; $i++) {
+								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
+						?>
+
+								<option value=<?php echo $rows[$i][0]?>>
+						<?php
+								echo "Device / " .$device_name." <br> \n";
+							}
+						?>
+								</option>
+						<?php
+						}
+						?>
 				</select>
 			</div>
 			<!-- /.col-xs-2 -->
