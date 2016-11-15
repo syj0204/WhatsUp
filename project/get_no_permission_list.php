@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 <?php
 include "DBController.php";
 
@@ -14,11 +12,8 @@ switch($category) {
 	case 'user':
 		$result = $DBControlObject->getDeviceListNotForUser($item);
 		break;
-	case 'device':
-		$result = $DBControlObject->getUserListNotForDevice($item);
-		break;
 	default:
-		//$result = $DBControlObject->;
+		$result = $DBControlObject->getUserListNotForDevice($item);
 		break;
 		
 }
