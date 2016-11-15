@@ -12,11 +12,16 @@ class Database {
 	
 	function connectDB() {
 		
-		$this->server = "";
+		 $this->server = "10.50.202.121";
+		$this->uid = "smssend";
+		$this->pwd = "answkqkfthd!@12";
+		$this->database = "WhatsUp";
+		//whatsUP¿ë
+		/*$this->server = "203.249.128.60";
 		$this->uid = "youngjoo";
-		$this->pwd = "dudwn0514"; 
+		$this->pwd = "$%dudwn0514^*("; 
 		$this->database = "whatsup";
-		
+		*/
 		$this->connectionInfo = array( "UID"=>$this->uid,
 				"PWD"=>$this->pwd,
 				"Database"=>$this->database);
