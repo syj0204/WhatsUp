@@ -1,18 +1,19 @@
 <?php
 	include "DBController.php";
 ?>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 	$(function(){
+
+		var new_added_lists = [];   
 
 		$('#list1').change(function(){
 			$('#list2 option').remove();
 			$('#list3 option').remove();
 			var selected_category = $('#list1 option:selected').val();
-			//alert(selected_category);
-
+			//alert("abc");
+			alert(selected_category);
 			$.post("category.php",{
 				category:selected_category
 				}, 
@@ -78,7 +79,7 @@
 						//alert(data_by_category[i]);
 						var value = data_by_category_item[i].split(',');
 						//alert(value.length);
-						$('#list4').append("<option value="+value[1]+">"+value[2]+"</option>");
+						$('#list4').append("<option value="+value[1]+">"+value[1]+"."+value[2]+"</option>");
 					}
 				}
 			);
@@ -104,8 +105,8 @@
 		});
 
 		$('#list4').change(function(){
-			var new_devices = $('#list4 option:selected').remove().appendTo('#list3').val();
-			alert(new_devices);
+			var new_list_item = $('#list4 option:selected').remove().appendTo('#list3').val();
+			new_added_lists.push(new_list_item);
 		});
 
 		$('#edit_permission_save').click(function(){
@@ -118,19 +119,16 @@
 			switch(selected_category) {
 				case 'user':
 					alert("user");
-					/*var devices = new Array;
-					$('#list3 option').each(function() {
-						devices.push($(this).val());
-					});
-	
+					alert(new_added_lists);
+
 					$.post("permission_update.php",{
 						user:selected_item,
-						devicearray:new_devices
+						devicearray:new_added_lists
 						}, 
 						function(data,status) {
 							alert(data);
 						}
-					);*/
+					);
 					break;
 				case 'device':
 					break;
@@ -140,10 +138,11 @@
 					//$result = $DBControlObject->;
 					break;
 			}
-		});
-		
-		$('#edit_permission_cancel').click(function(){
 			
+		});
+
+		$(window).load(function(e){
+
 		});
 	});
 
@@ -168,14 +167,14 @@
 <div class="col-lg-12">
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Permission List</h3>
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Permission Search</h3>
 	</div>
 	<div class="panel-body">
 	<!-- <div id="morris-area-chart"></div> -->
 
 	<div class="row">
 		<div class="col-lg-12">
-    		<label>DeviceGroups</label>
+    		<label>Permission Search</label>
 		</div>
     	<div class="row">
         	<div class="col-xs-3">
@@ -202,16 +201,14 @@
 				</select>
 			</div>
 			
-		<!-- /.row -->
-		<div class="col-xs-3" align="center">
+			<!-- /.row -->
+			<div class="col-xs-3" align="center">
 				<button id="edit_permission" class="btn btn-default" type="button">Edit Permission</button>
 				<button id="edit_permission_save" class="btn btn-default" type="button" style="display: none">Save</button>
 				<button id="edit_permission_cancel" class="btn btn-default" type="button" style="display: none">Cancel</button>
-		</div>
+			</div>
 		</div>
 		<!-- /.row -->
-		
-        					
 	</div>
 	<!-- /.row -->
 	</div>
