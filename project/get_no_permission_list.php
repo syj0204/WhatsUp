@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 include "DBController.php";
 
@@ -26,5 +27,5 @@ for($i=0; $i<count($result); $i++) {
 	$new_result = $new_result."|";
 }
 echo $new_result;
-?>
 
+?>
