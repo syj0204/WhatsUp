@@ -48,7 +48,7 @@
 				category:selected_category
 				}, 
 				function(data,status) {
-					var data_by_category = data.split('/');
+					var data_by_category = data.split('|');
 					for(var i=0; i<data_by_category.length-1; i++) {
 						var value = data_by_category[i].split(',');
 						$('#list2').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
@@ -67,7 +67,7 @@
 				item:selected_item
 				}, 
 				function(data,status) {
-					var data_by_list1 = data.split('/');
+					var data_by_list1 = data.split('|');
 					for(var i=0; i<data_by_list1.length-1; i++) {
 						var value = data_by_list1[i].split(',');
 						$('#list3').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
@@ -88,7 +88,7 @@
 				item:selected_item
 				}, 
 				function(data,status) {
-					var data_by_category_item = data.split('/');
+					var data_by_category_item = data.split('|');
 					for(var i=0; i<data_by_category_item.length-1; i++) {
 						var value = data_by_category_item[i].split(',');
 						$('#list4').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
