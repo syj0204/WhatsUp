@@ -104,9 +104,9 @@ Class DBController{
 	function getDeviceList() {
 	
 		if($this->connection) {
-			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
+			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
 			// WhatUp DB시 사용
-			$query = "SELECT * from  Device";
+			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 				
@@ -156,25 +156,6 @@ Class DBController{
 			}
 			else return null;
 	
-			//$this->DBObject->disconnectDB();
-		}
-	}
-	
-	
-	function getUserListNotForDevice($device_id) {
-		if($this->connection) {
-			$query = "SELECT * FROM Users WHERE nUserID NOT IN (SELECT nUserID FROM Permission WHERE nDeviceID =".$device_id.")";
-			$statement = $this->DBObject->executeQuery($query);
-			$rows = array();
-		
-			if(count($statement)>0) {
-				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
-					$rows[] = $row;
-				}
-				return $rows;
-			}
-			else return null;
-		
 			//$this->DBObject->disconnectDB();
 		}
 	}
@@ -354,9 +335,11 @@ Class DBController{
 		if($this->connection) {
 	
 
-			$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
-			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
+			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
+			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
 			// 실제 WhatsUp DB 사용시 사용예정
+			
+
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -376,11 +359,10 @@ Class DBController{
 		if($this->connection) {
 	
 		
-			$query = "Select D.* from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where nDeviceGroupID='".$Device_List1."'";
+			//$query = "Select D.* from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where nDeviceGroupID='".$Device_List1."'";
 
-			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."' order by nDeviceID ASC";
+			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."' order by nDeviceID ASC";
 			// WhatsUp DB 사용시 사용예정
-
 
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
