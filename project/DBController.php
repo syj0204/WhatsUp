@@ -83,6 +83,24 @@ Class DBController{
 		}
 	}
 	
+	function deletePermission($user_id, $device_id) {
+		if($this->connection) {
+				
+			$query = "DELETE FROM Permission WHERE nUserID=".$user_id."and nDeviceID=".$device_id;
+			$statement = $this->DBObject->executeQuery($query);
+			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
+				$statement = $this->DBObject->executeQuery($query);
+				if(count($statement)>0) $statement = true;
+				else {
+				$query = "INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
+				$statement = $this->DBObject->executeQuery($query);
+				}*/
+	
+			return $statement;
+			//$this->DBObject->disconnectDB();
+		}
+	}
+	
 	function getDeviceList() {
 	
 		if($this->connection) {
