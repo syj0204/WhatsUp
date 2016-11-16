@@ -30,6 +30,9 @@
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
 			alert(list_size);
+
+			var Temp = $('#Temp_Name').val();
+			alert(Temp);
 			//for(var j=0 j<list_size; j++){
 				for(var i=0; i<list_size; i++) {
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -39,16 +42,14 @@
 				
 			//}
 			 alert(list_string1);
-		
-		
-		$.post("test2.php",{
-			category:list_string1
-			}, 
-			function(data,status) {
-				
-				 
-			}
-		);
+			$.post("test2.php",{
+				name:Temp,
+				category:list_string1
+				}, 
+				function(data,status) {
+					alert(status);
+				}
+			);
 
 	
 			
@@ -66,6 +67,13 @@
 		
 	});
 
+		$('#list20').change(function(){
+			var to_add_item1 = $('#list20 option:selected').remove();
+			//alert(to_add_item);
+			$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
+			//to_add_list.push(to_add_item);
+		
+	});
 
 		
 	});
@@ -83,9 +91,9 @@
 <!-- Page Heading -->
 <div class="row">
 <div class="col-lg-12">
-	<h1 class="page-header">Permission <small>Permission Overview</small></h1>
+	<h1 class="page-header">Template </h1>
 	<ol class="breadcrumb">
-		<li class="active"><i class="fa fa-dashboard"></i> Permission</li>
+		<li class="active"><i class="fa fa-dashboard"></i>Template</li>
 	</ol>
 </div>
 </div>
@@ -95,7 +103,7 @@
 <div class="col-lg-12">
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Permission Search</h3>
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Setting Template</h3>
 	</div>
 	<div class="panel-body">
 	<!-- <div id="morris-area-chart"></div> -->
@@ -106,20 +114,22 @@
 		</div> -->
     	<div class="row">
         	<div class="col-xs-6">
-        		<select name="list1" id="list1" class="form-control" size="10" >
-<?php $DBControlObject = new DBController();
-	  $rows = $DBControlObject->DeviceGroupsView();
-		if(count($rows)>0) {		
-			for($i=0; $i<count($rows); $i++) {
-			$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
-?>
+        		<select name="list1" id="list1" class="form-control"  >
+        			<option>--Select Device Group --</option>
+						<?php $DBControlObject = new DBController();
+							  $rows = $DBControlObject->DeviceGroupsView();
+								if(count($rows)>0) {		
+									for($i=0; $i<count($rows); $i++) {
+									$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
+						?>
 					<option value=<?php echo $rows[$i][0]?>>      		 		
-<?php
-				echo "Device / " .$device_name." <br> \n";
-			}
-		}
-?>
-					</option></select>
+						<?php
+										echo "Device / " .$device_name." <br> \n";
+									}
+								}
+						?>
+					</option>
+				</select>
 					
 					<br>
 				<select name="list2" id="list2" class="form-control" size="10" ></select>
@@ -127,9 +137,10 @@
 			<!-- /.col-xs-4 -->			
 
 			<div class="col-xs-6">
-				<input type="textbox" placeholder="<?php echo $han?>~~"></input>
+				<input type="textbox" placeholder="<?php echo $han?>~~" id="Temp_Name"></input><button id="ent">enter</button><br>
+				
 				<select name="list20" id="list20" class="form-control" size="25"></select>
-				<button id="ent">enter</button>
+				
 				
 			</div>
 			<!-- /.col-xs-4 -->	

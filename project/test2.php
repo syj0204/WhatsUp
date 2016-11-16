@@ -2,20 +2,12 @@
 <?php
 include "DBController.php";
 
+$temp_name= $_POST["name"];
+$temp_string=$_POST["category"];
 
-$category = $_POST["category"];
 
 $DBControlObject = new DBController();
 $result = null;
-$result = $DBControlObject->GroupDeviceView($category);
+$result = $DBControlObject-> tem($temp_name, $temp_string);
 
-//echo json_encode($result);
-$new_result="";
-for($i=0; $i<count($result); $i++) {
-	for($j=0; $j<count($result[$i]); $j++) {
-		$new_result = $new_result.",".ICONV("EUC-KR","UTF-8",$result[$i][$j]);
-	}
-	$new_result = $new_result."|";
-}
-echo $new_result;
 ?>
