@@ -1,6 +1,6 @@
 
 <?php
-include "DBController.php";
+include "DBController.php";         
 
 $new_user_name =$_POST["username"];
 $new_user_name = ICONV("UTF-8","EUC-KR",$new_user_name);
