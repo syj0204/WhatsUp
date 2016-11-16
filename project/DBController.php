@@ -398,7 +398,7 @@ Class DBController{
 			else return null;
 				
 		}
-	} //디바이스를 그룹 찾기
+	} //그룹내 디바이스  찾기
 	
 	function getDisPlayNameUser2($nDeviceID) {
 	
@@ -423,6 +423,100 @@ Class DBController{
 			
 			}
 	} //디바이스를 이용한 유저 찾기2
+	function tem($temp_name, $temp_string) {
+		if($this->connection) {
+				
+			$query = "INSERT INTO template (templateName, templateString) VALUES('".$temp_name."','".$temp_string."')";
+			$statement = $this->DBObject->executeQuery($query);
+			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
+				$statement = $this->DBObject->executeQuery($query);
+			if(count($statement)>0) $statement = true;
+			else {
+			$query = "INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
+			$statement = $this->DBObject->executeQuery($query);
+			}*/
+			
+			return $statement;
+			//$this->DBObject->disconnectDB();
+		}
+	}//template에 새롭게 추가하는 쿼리
+	
+	function getTemplate($template_select) {
+	
+		if($this->connection) {
+			
+			$query = "SELECT * FROM Template where templateId ='".$template_select."'";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}// Template테이블에서 String을 호출
+	function getSelecttemp() {
+	
+		if($this->connection) {
+			$query = "SELECT * FROM Template";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}// 초기 Template select문에 나타내는 것
+
+	function getDeviceName($result_first) {
+	
+		if($this->connection) {
+	
+			$query = "SELECT * FROM Device WHERE nDeviceID='".$result_first."' order by nDeviceID ASC";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}//Template string의 값을 이용해서 디바이스 이름 찾기
+	function update_template($update_temp_id, $update_temp_string) {
+		if($this->connection) {
+			$query = "Update Template set templateString = '".$update_temp_string."' where templateID ='".$update_temp_id."'";
+			$statement = $this->DBObject->executeQuery($query);
+
+				
+			return $statement;
+		}
+	}
+	function delete_template($update_temp_id) {
+		if($this->connection) {
+			$query = "delete from template where templateID ='".$update_temp_id."'";
+			$statement = $this->DBObject->executeQuery($query);
+	
+	
+			return $statement;
+		}
+	}
+	
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
