@@ -13,7 +13,7 @@ Class DBController{
 	
 	function addUser($new_user_name, $new_user_cellphone, $new_user_department) {
 		if($this->connection) {
-			$query = "INSERT INTO Users (sUserName, nCellNum, Department) VALUES('".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
+			$query = "INSERT INTO Users (sUserName, nCellNum, Department) VALUES(N'".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
 			$statement = $this->DBObject->executeQuery($query);
 		
 			return $statement;
@@ -419,22 +419,6 @@ Class DBController{
 			
 			}
 	} //디바이스를 이용한 유저 찾기2
-	function UserInsertest($nDevice,$nUser) {
-	
-		if($this->connection) {
-			$query = "insert into  Permission (nDeviceID, nUserID) VALUES('".$nDevice."','".$nUser."')";
-			$statement = $this->DBObject->executeQuery($query);
-
-	} // 리스트 클릭시 바로 접속 디비에 저장
-	}
-	function DevieceInsertest($nUser,$nDevice) {
-	
-		if($this->connection) {
-			$query = "insert into  Permission (nUserID, nDeviceID) VALUES('".$nUser."','".$nDevice."')";
-			$statement = $this->DBObject->executeQuery($query);
-	
-		} // 리스트 클릭시 바로 접속 디비에 저장
-	}
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
