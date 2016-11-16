@@ -6,6 +6,6 @@ $DBControlObject = new DBController();
 $result = $DBControlObject->deleteUser($user_id);
 if($result) echo "success";
 else echo "fail";
-
+//echo $user_id."/".$result;
 ?>
 

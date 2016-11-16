@@ -26,7 +26,7 @@
 		for(var i=0; i<td_list.length; i++) {
 			pre_td_values[i] = td_list[i].innerHTML;
 		}
-	
+		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
 		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
 		td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
@@ -37,9 +37,9 @@
 	function edit_user_update(td) {
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		alert(index);
-		alert(td_list[1].innerHTML);
-		var user_id = td_list[0].innerHTML;
+		//alert(index);
+		//alert(td_list[1].innerHTML);
+		var user_id = document.getElementById("user_id_to_update").value;
 		alert(user_id);
 		var user_name_to_update = document.getElementById("user_name_to_update").value;
 		alert(user_name_to_update);
@@ -68,38 +68,31 @@
 					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
 					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
 					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
-
 				}
 			}
 		);
 	}
-
 	
 	function edit_user_cancel(td) {
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		//alert(td_list[0].innerHTML);
-		var user_id = td_list[0].innerHTML;
+		var user_id = document.getElementById("user_id_to_update").value;
 		//alert(user_id);
-		$.post("select_user.php",{
-			userid:user_id
-			}, 
-			function(data,status) {
-				alert(data);
-				var user_info_array = null;
-				if(data!="fail") {
-					user_info_array = data.split(',');
-					//alert(user_info_array);
-					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
-					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
-					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
-					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
-					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
-					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
+		var user_name = document.getElementById("user_name_to_update").value;
+		//alert(user_name);
+		var user_cellphone = document.getElementById("user_cellphone_to_update").value;
+		//alert(user_cellphone);
+		var user_department = $("#user_department_to_update option:selected").text();
+		//alert(user_department);
 
-				}
-			}
-		);
+		td_list[0].innerHTML = "<td style='display: none'>"+user_id+"</td>";
+		td_list[1].innerHTML = "<td>"+user_name+"</td>";
+		td_list[2].innerHTML = "<td>"+user_cellphone+"</td>";
+		td_list[3].innerHTML =  "<td>"+user_department+"</td>";
+		td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
+		+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
+		
 	}
 
 	function delete_user(td) {
@@ -107,6 +100,7 @@
 		alert(index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		var user_id = td_list[0].innerHTML;
+		alert(user_id);
 		$.post("delete_user.php",{
 			userid:user_id
 			}, 
@@ -123,25 +117,19 @@
 		var new_user_department = document.getElementById("user_department_to_add");
 		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
 		
-		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
-		$('#user_list_table').append($.newtr);
-		document.getElementById("user_list_table").rows.item(1).remove();
-		/* if get 'td' parameter 
-		var index = td.parentElement.parentElement.rowIndex;
-		var td_list = document.getElementById("user_list_table").rows.item(index).cells;*/
-		//alert("New User Added Successfully!!");
-
 		$.post("user.php",{
 			username:new_user_name,
 			cellphone:new_user_cellphone,
 			department:new_user_department
 			}, 
 			function(data,status) {
-			//$("div#div1").html(data);
 				alert(data);
-				/*if(data=='success') {
-					alert("New User Added Successfully!!");
-				}*/
+				if(data!=null) {
+					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+					$('#user_list_table').append($.newtr);
+					document.getElementById("user_list_table").rows.item(1).remove();
+				} else alert("fail");
+				
 			}
 		);
 	}
@@ -149,9 +137,8 @@
 	$(function(){
 		
 		$('#search_user').click(function(){
-			//alert(''+$('#device_search_text').val());
 			var value = $('#user_search_text').val(); 
-
+			
 			$("#user_list_table tbody tr").each(function(){
 				$row = $(this);
 				var text = $row.find("td:eq(1)").text();
@@ -161,12 +148,10 @@
 			});
 		});
 
-
 		$('#add_user').click(function(){
-
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
-
 			//$.trClone = $('#user_list_table tr:last').clone().html();
+			
 			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'><?php echo $han5?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
@@ -237,11 +222,8 @@
 						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td>
 					</tr>
 				<?php
-		
 						}
 					}
-					
-					
 				?>
 				</tbody>
 			</table>
