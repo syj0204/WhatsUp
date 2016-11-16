@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 include "DBController.php";
 
