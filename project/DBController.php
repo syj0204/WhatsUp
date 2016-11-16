@@ -15,8 +15,12 @@ Class DBController{
 		if($this->connection) {
 			$query = "INSERT INTO Users (sUserName, nCellNum, Department) VALUES(N'".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
 			$statement = $this->DBObject->executeQuery($query);
+			
+			$query = "SELECT nUserID FROM Users WHERE sUserName=N'".$new_user_name."' and nCellNum='".$new_user_cellphone."'";
+			$statement = $this->DBObject->executeQuery($query);
+			$row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC);
 		
-			return $statement;
+			return $row[0];
 		}
 	}
 	
@@ -32,7 +36,7 @@ Class DBController{
 	function updateUser($user_id, $user_name, $user_cellphone, $user_department) {
 		$row = -1;
 		if($this->connection) {
-			$query = "UPDATE Users SET sUserName='".$user_name."', nCellNum='".$user_cellphone."', Department='".$user_department."' WHERE nUserID=".$user_id;
+			$query = "UPDATE Users SET sUserName=N'".$user_name."', nCellNum='".$user_cellphone."', Department='".$user_department."' WHERE nUserID=".$user_id;
 			$statement = $this->DBObject->executeQuery($query);
 			
 			if($statement) {
