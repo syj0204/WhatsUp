@@ -25,13 +25,13 @@
 				}
 			);
 		});
-		/*$('#enter_temp').click(function(){
+		$('#select_temp').click(function(){
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
 			alert(list_size);
 
-			var Temp = $('#Temp_Name').val();
+			var Temp = $('#list10 option:selected').val();
 			alert(Temp);
 			//for(var j=0 j<list_size; j++){
 				for(var i=0; i<list_size; i++) {
@@ -42,7 +42,7 @@
 				
 			//}
 			 alert(list_string1);
-			$.post("test2.php",{
+			$.post("test4.php",{
 				name:Temp,
 				category:list_string1
 				}, 
@@ -51,7 +51,34 @@
 				}
 			);
 		});
-		*/
+		
+		/*$('#enter_temp').click(function(){
+	    var list_save = new Array();
+	    var list_string1=""
+		var list_size = $('#list20 option').size();
+		alert(list_size);
+
+		var Temp = $('#Temp_Name').val();
+		alert(Temp);
+		//for(var j=0 j<list_size; j++){
+			for(var i=0; i<list_size; i++) {
+				 list_save[i] = $('#list20 option:eq('+i+')').val();	
+				 var list_string = list_save[i]+",";
+				 var list_string1 = list_string1 + list_string;
+			}
+			
+		//}
+		 alert(list_string1);
+		$.post("test2.php",{
+			name:Temp,
+			category:list_string1
+			}, 
+			function(data,status) {
+				alert(status);
+			}
+		);
+	});
+	*/
 		
 		$('#list2').change(function(){
 			var to_add_item = $('#list2 option:selected').text();

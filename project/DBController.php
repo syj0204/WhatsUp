@@ -498,6 +498,15 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}//Template string의 값을 이용해서 디바이스 이름 찾기
+	function update_template($update_temp_id, $update_temp_string) {
+		if($this->connection) {
+			$query = "Update Template set templateString = '".$update_temp_string."' where templateID ='".$update_temp_id."'";
+			$statement = $this->DBObject->executeQuery($query);
+
+				
+			return $statement;
+		}
+	}
 	
 	
 	function disconnectDB() {
