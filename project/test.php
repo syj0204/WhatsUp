@@ -25,7 +25,7 @@
 				}
 			);
 		});
-		$('#ent').click(function(){
+		/*$('#enter_temp').click(function(){
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
@@ -50,13 +50,8 @@
 					alert(status);
 				}
 			);
-
-	
-			
-	
-});
-
-
+		});
+		*/
 		
 		$('#list2').change(function(){
 			var to_add_item = $('#list2 option:selected').text();
@@ -72,6 +67,23 @@
 			//alert(to_add_item);
 			$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
 			//to_add_list.push(to_add_item);
+		
+	});
+		$('#list10').change(function(){
+			var template_select = $('#list10 option:selected').val();
+			$('#list20 option').remove();
+			alert(template_select);
+			$.post("test3.php",{
+				category:template_select
+				}, 
+				function(data,status) {
+					var data_by_list1 = data.split('|');
+					for(var i=0; i<data_by_list1.length-1; i++) {
+						var value = data_by_list1[i].split(',');
+						$('#list20').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+					}
+				}
+			);
 		
 	});
 
@@ -137,8 +149,25 @@
 			<!-- /.col-xs-4 -->			
 
 			<div class="col-xs-6">
-				<input type="textbox" placeholder="<?php echo $han?>~~" id="Temp_Name"></input><button id="ent">enter</button><br>
-				
+			   <select name="list10" id="list10" class="form-control">
+        			<option>--Select Template --</option>
+						<?php $DBControlObject = new DBController();
+							  $rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것
+								if(count($rows)>0) {		
+									for($i=0; $i<count($rows); $i++) {
+									$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+						?>
+					<option value=<?php echo $rows[$i][0]?>>      		 		
+						<?php
+										echo "Template / " .$device_name." <br> \n";
+									}
+								}
+						?>
+					</option>
+			   </select>
+				<button id="enter_temp">enter_temp</button>
+				<button id="select_temp">select_temp</button>
+				<!-- <input type="textbox" id="Temp_Name"></input> -->
 				<select name="list20" id="list20" class="form-control" size="25"></select>
 				
 				
