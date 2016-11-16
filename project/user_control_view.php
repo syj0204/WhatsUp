@@ -68,7 +68,6 @@
 					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
 					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
 					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
-
 				}
 			}
 		);
@@ -129,7 +128,6 @@
 					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 					$('#user_list_table').append($.newtr);
 					document.getElementById("user_list_table").rows.item(1).remove();
-					//$(window).load(("user_control_view.php");
 				} else alert("fail");
 				
 			}
@@ -139,9 +137,8 @@
 	$(function(){
 		
 		$('#search_user').click(function(){
-			//alert(''+$('#device_search_text').val());
 			var value = $('#user_search_text').val(); 
-
+			
 			$("#user_list_table tbody tr").each(function(){
 				$row = $(this);
 				var text = $row.find("td:eq(1)").text();
@@ -152,10 +149,9 @@
 		});
 
 		$('#add_user').click(function(){
-
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
-
 			//$.trClone = $('#user_list_table tr:last').clone().html();
+			
 			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'><?php echo $han5?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
@@ -226,11 +222,8 @@
 						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td>
 					</tr>
 				<?php
-		
 						}
 					}
-					
-					
 				?>
 				</tbody>
 			</table>

@@ -4,13 +4,13 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-	var isEditMode = -1;
+	var isAddMode = -1;
 	var to_add_list = [];
 	var to_add_text_list_ = [];    
 	var to_delete_list = [];
 
-	function setEditMode() {
-		isEditMode = 1;
+	function setAddMode() {
+		isAddMode = 1;
 		$('#list3').attr( "size", 11 );
 		$('#list4').show();
 		$('#list4_title').show();
@@ -21,9 +21,22 @@
 		$('#cancel').show();
 		$('#list3_title').text("Current Permission List");
 	}
+
+	function setDeleteMode() {
+		isEditMode = 1;
+		$('#list3').attr( "size", 11 );
+		//$('#list4').show();
+		$('#list4_title').show();
+		//$('#edit_permission').text("SAVE");
+		$('#add_permission').hide();
+		$('#delete_permission').hide();
+		$('#save').show();
+		$('#cancel').show();
+		$('#list3_title').text("Current Permission List");
+	}
 	
 	function setSearchMode() {
-		isEditMode = 0;
+		isAddMode = 0;
 		$('#list4').hide();
 		$('#list4_title').hide();
 		$('#list3').attr( "size", 25 );
@@ -82,12 +95,30 @@
 
 		$('#add_permission').click(function(){
 
-			setEditMode();
+			setAddMode();
 
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
-			//alert(selected_category);
-			//alert(selected_item);
+
+			$.post("get_no_permission_list.php",{
+				category:selected_category,
+				item:selected_item
+				}, 
+				function(data,status) {
+					var data_by_category_item = data.split('|');
+					for(var i=0; i<data_by_category_item.length-1; i++) {
+						var value = data_by_category_item[i].split(',');
+						$('#list4').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+					}
+				}
+			);
+		});
+
+		$('#delete_permission').click(function(){
+
+
+			var selected_category = $('#list1 option:selected').val();
+			var selected_item = $('#list2 option:selected').val();
 
 			$.post("get_no_permission_list.php",{
 				category:selected_category,
@@ -104,7 +135,7 @@
 		});
 
 		$('#list3').change(function(){
-			if(isEditMode==1) {
+			if(isAddMode==1) {
 				var count = $('#list3 option:selected').length;
 				if(count==0) {
 					$('#save').attr('disabled',true);
@@ -116,21 +147,12 @@
 				}
 				
 				var to_delete_item = $('#list3 option:selected').remove().appendTo('#list4').val();
-				/*to_delete_list.forEach( function(item, index, array){
-					var isExist = -1;
-					if(array[index]===to_delete_item) isExist = 1;
 
-					if(isExist!=1) to_delete_list.push(to_delete_item);
-						//add_array.splice(add_index, 1);
-						//delete_array.splice(delete_index, 1);
-						//return false;
-					}
-				});*/
 			}
 		});
 
 		$('#list4').change(function(){
-			if(isEditMode==1) {
+			if(isAddMode==1) {
 				var count = $('#list4 option:selected').length;
 				if(count==0) {
 					$('#save').attr('disabled',true);
