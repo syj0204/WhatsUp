@@ -423,6 +423,27 @@ Class DBController{
 			
 			}
 	} //디바이스를 이용한 유저 찾기2
+	function tem($temp_name, $temp_string) {
+		if($this->connection) {
+				
+			$query = "INSERT INTO template (templateName, templateString) VALUES('".$temp_name."','".$temp_string."')";
+			$statement = $this->DBObject->executeQuery($query);
+			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
+				$statement = $this->DBObject->executeQuery($query);
+			if(count($statement)>0) $statement = true;
+			else {
+			$query = "INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
+			$statement = $this->DBObject->executeQuery($query);
+			}*/
+			
+			return $statement;
+			//$this->DBObject->disconnectDB();
+		}
+	}
+	
+	
+	
+	
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
