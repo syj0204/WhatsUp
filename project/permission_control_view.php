@@ -5,7 +5,8 @@
 <script type="text/javascript">
 
 	var isEditMode = -1;
-	var to_add_list = [];  
+	var to_add_list = [];
+	var to_add_text_list_ = [];    
 	var to_delete_list = [];
 
 	function setEditMode() {
@@ -14,10 +15,11 @@
 		$('#list4').show();
 		$('#list4_title').show();
 		//$('#edit_permission').text("SAVE");
-		$('#edit_permission').hide();
-		$('#edit_permission_save').show();
-		$('#edit_permission_cancel').show();
-		$('#list3_title').text("Make New Permission List");
+		$('#add_permission').hide();
+		$('#delete_permission').hide();
+		$('#save').show();
+		$('#cancel').show();
+		$('#list3_title').text("Current Permission List");
 	}
 	
 	function setSearchMode() {
@@ -25,9 +27,10 @@
 		$('#list4').hide();
 		$('#list4_title').hide();
 		$('#list3').attr( "size", 25 );
-		$('#edit_permission').show();
-		$('#edit_permission_save').hide();
-		$('#edit_permission_cancel').hide();
+		$('#add_permission').show();
+		$('#delete_permission').show();
+		$('#save').hide();
+		$('#cancel').hide();
 		//$('#list2_title').text("List By Category");
 		$('#list3_title').text("Permission List");
 	}
@@ -77,14 +80,14 @@
 			);
 		});
 
-		$('#edit_permission').click(function(){
+		$('#add_permission').click(function(){
 
 			setEditMode();
 
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
-			alert(selected_category);
-			alert(selected_item);
+			//alert(selected_category);
+			//alert(selected_item);
 
 			$.post("get_no_permission_list.php",{
 				category:selected_category,
@@ -104,16 +107,25 @@
 			if(isEditMode==1) {
 				var count = $('#list3 option:selected').length;
 				if(count==0) {
-					$('#edit_permission_save').attr('disabled',true);
-					$('#edit_permission_cancel').attr('disabled',true);
+					$('#save').attr('disabled',true);
+					$('#cancel').attr('disabled',true);
 				}
 				else {
-					$('#edit_permission_save').attr('disabled',false);
-					$('#edit_permission_cancel').attr('disabled',false);
+					$('#save').attr('disabled',false);
+					$('#cancel').attr('disabled',false);
 				}
 				
 				var to_delete_item = $('#list3 option:selected').remove().appendTo('#list4').val();
-				to_delete_list.push(to_delete_item);
+				/*to_delete_list.forEach( function(item, index, array){
+					var isExist = -1;
+					if(array[index]===to_delete_item) isExist = 1;
+
+					if(isExist!=1) to_delete_list.push(to_delete_item);
+						//add_array.splice(add_index, 1);
+						//delete_array.splice(delete_index, 1);
+						//return false;
+					}
+				});*/
 			}
 		});
 
@@ -121,54 +133,37 @@
 			if(isEditMode==1) {
 				var count = $('#list4 option:selected').length;
 				if(count==0) {
-					$('#edit_permission_save').attr('disabled',true);
-					$('#edit_permission_cancel').attr('disabled',true);
+					$('#save').attr('disabled',true);
+					$('#cancel').attr('disabled',true);
 				}
 				else {
-					$('#edit_permission_save').attr('disabled',false);
-					$('#edit_permission_cancel').attr('disabled',false);
+					$('#save').attr('disabled',false);
+					$('#cancel').attr('disabled',false);
 				}
-				
-				var to_add_item = $('#list4 option:selected').remove().appendTo('#list3').val();
-				to_add_list.push(to_add_item);
 			}
 		});
 
-		$('#edit_permission_save').click(function(){
+		$('#save').click(function(){
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
 
 			switch(selected_category) {
 				case 'user':
-					alert('user');
-					/*alert(to_add_list);
-					alert(to_delete_list);
-
-					to_add_list.forEach( function(add_item, add_index, add_array){
-						//alert(add_array[add_index]);
-						to_delete_list.forEach( function(delete_item, delete_index, delete_array){
-							//alert(add_array[add_index]+","+delete_array[delete_index]);
-							if(add_array[add_index]===delete_array[delete_index]) {
-								
-								add_array.splice(add_index, 1);
-								delete_array.splice(delete_index, 1);
-								//return false;
-							}
-						});
+					//alert('user');
+					$('#list4 option:selected').each(function(){
+						to_add_list.push($(this).val());
 					});
-					alert("re:"+to_add_list);
-					alert("re:"+to_delete_list);
 
-					
 					$.post("update_permission.php",{
 						user:selected_item,
-						addlist:to_add_list,
-						deletelist:to_delete_list
+						addlist:to_add_list
 						}, 
 						function(data,status) {
 							alert(data);
+							if(data=="success") {
+							}
 						}
-					);*/
+					);
 					break;
 				case 'device':
 					alert('device');
@@ -178,7 +173,6 @@
 					break;
 			}
 			setSearchMode();
-			
 		});
 
 		$(window).load(function(e){
@@ -261,16 +255,17 @@
 				</select>
 				<br />
 				<div class="col-lg-12">
-	    			<label id="list4_title" style="display: none">Available Options</label>
+	    			<label id="list4_title" style="display: none">Available Options To Add</label>
 				</div>
-				<select name="list4" id="list4" class="form-control" size="11" style="display: none">
+				<select name="list4" id="list4" class="form-control" size="11" style="display: none" multiple="multiple">
 				</select>
 			</div>
 			<!-- /.col-xs-2 -->	
 			<div class="col-xs-3" align="center">
-				<button id="edit_permission" class="btn btn-default" type="button">Edit Permission</button>
-				<button id="edit_permission_save" class="btn btn-default" type="button" style="display: none" disabled="true">Save</button>
-				<button id="edit_permission_cancel" class="btn btn-default" type="button" style="display: none" disabled="true">Cancel</button>
+				<button id="add_permission" class="btn btn-default" type="button">Add Permission</button>
+				<button id="delete_permission" class="btn btn-default" type="button">Delete Permission</button>
+				<button id="save" class="btn btn-default" type="button" style="display: none" disabled="true">Save</button>
+				<button id="cancel" class="btn btn-default" type="button" style="display: none" disabled="true">Cancel</button>
 			</div>
 		</div>
 		<!-- /.row -->
