@@ -107,6 +107,7 @@
 		alert(index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		var user_id = td_list[0].innerHTML;
+		alert(user_id);
 		$.post("delete_user.php",{
 			userid:user_id
 			}, 
