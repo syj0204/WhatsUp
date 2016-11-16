@@ -6,6 +6,28 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		$('#add_temp').click(function(){
+			$('#list20 option').remove();
+			$('#select_temp').hide();
+			$('#delete_temp').hide();
+			$('#list10').hide();
+			$('#add_temp').hide();
+			$('#enter_temp').show();
+			$('#Temp_Name').show();
+			$('#close').show();
+			
+		});
+		$('#close').click(function(){
+			$('#list20 option').remove();
+			$('#select_temp').show();
+			$('#delete_temp').show();
+			$('#add_temp').show();
+			$('#list10').show();
+			$('#enter_temp').hide();
+			$('#Temp_Name').hide();
+			$('#close').hide();
+
+		});
 		$('#list1').change(function(){
 			//initSelectBoxes();
 			var selected_category = $('#list1 option:selected').val();
@@ -26,6 +48,7 @@
 			);
 		});
 		$('#select_temp').click(function(){
+
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
@@ -51,8 +74,35 @@
 				}
 			);
 		});
+		$('#delete_temp').click(function(){
+			$('#list20 option').remove();
+		  //  var list_save = new Array();
+		    //var list_string1=""
+			//var list_size = $('#list20 option').size();
+			//alert(list_size);
+			var Temp = $('#list10 option:selected').val();
+			alert(Temp);
+			//for(var j=0 j<list_size; j++){
+			/*	for(var i=0; i<list_size; i++) {
+					 list_save[i] = $('#list20 option:eq('+i+')').val();	
+					 var list_string = list_save[i]+",";
+					 var list_string1 = list_string1 + list_string;
+				}
+			*/	
+			//}
+			 //alert(list_string1);
+			$.post("test5.php",{
+				name:Temp,
+				//category:list_string1
+				}, 
+				function(data,status) {
+					alert(status);
+				}
+			);
+		});
 		
-		/*$('#enter_temp').click(function(){
+		
+		$('#enter_temp').click(function(){
 	    var list_save = new Array();
 	    var list_string1=""
 		var list_size = $('#list20 option').size();
@@ -77,8 +127,9 @@
 				alert(status);
 			}
 		);
+		
 	});
-	*/
+	
 		
 		$('#list2').change(function(){
 			var to_add_item = $('#list2 option:selected').text();
@@ -113,6 +164,9 @@
 			);
 		
 	});
+		$(window).load(function(e){
+
+		});
 
 		
 	});
@@ -192,9 +246,13 @@
 						?>
 					</option>
 			   </select>
-				<button id="enter_temp">enter_temp</button>
-				<button id="select_temp">select_temp</button>
-				<!-- <input type="textbox" id="Temp_Name"></input> -->
+				<input type="textbox" id="Temp_Name" style="display: none"></input><button id="enter_temp" style="display: none" >enter_temp</button></input><button id="close" style="display: none" >close</button>
+				<br><button id="select_temp">select_temp</button>
+				<button id="delete_temp">delete_temp</button>
+				<button id="add_temp">add_temp</button>
+				
+				
+
 				<select name="list20" id="list20" class="form-control" size="25"></select>
 				
 				

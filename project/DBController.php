@@ -507,6 +507,15 @@ Class DBController{
 			return $statement;
 		}
 	}
+	function delete_template($update_temp_id) {
+		if($this->connection) {
+			$query = "delete from template where templateID ='".$update_temp_id."'";
+			$statement = $this->DBObject->executeQuery($query);
+	
+	
+			return $statement;
+		}
+	}
 	
 	
 	function disconnectDB() {
