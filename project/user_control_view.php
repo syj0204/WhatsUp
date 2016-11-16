@@ -126,10 +126,6 @@
 		$.newtr = $("<tr><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 		$('#user_list_table').append($.newtr);
 		document.getElementById("user_list_table").rows.item(1).remove();
-		/* if get 'td' parameter 
-		var index = td.parentElement.parentElement.rowIndex;
-		var td_list = document.getElementById("user_list_table").rows.item(index).cells;*/
-		//alert("New User Added Successfully!!");
 
 		$.post("user.php",{
 			username:new_user_name,
@@ -137,11 +133,7 @@
 			department:new_user_department
 			}, 
 			function(data,status) {
-			//$("div#div1").html(data);
 				alert(data);
-				/*if(data=='success') {
-					alert("New User Added Successfully!!");
-				}*/
 			}
 		);
 	}
