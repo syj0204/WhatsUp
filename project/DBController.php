@@ -394,7 +394,7 @@ Class DBController{
 			else return null;
 				
 		}
-	} //디바이스를 그룹 찾기
+	} //그룹내 디바이스  찾기
 	
 	function getDisPlayNameUser2($nDeviceID) {
 	
