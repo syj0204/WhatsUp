@@ -1,3 +1,4 @@
+
 <?php
 	include "DBController.php"; 
 	$han="템플릿명을 입력하세요";
@@ -12,6 +13,8 @@
 	$han4 = ICONV("EUC-KR","UTF-8",$han4);
 	
 ?>
+<link href="css/multiple-select.css" rel="stylesheet" type="text/css" />
+<script src="js/multiple-select.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -59,6 +62,10 @@ $(function(){
 	
 });
 
+    $('#list1').multipleSelect({
+        isOpen: true,
+        keepOpen: true
+    });
 	
 });
 </script>
@@ -90,9 +97,10 @@ $(function(){
     		<label>Permission Search</label>
 		</div> -->
     	<div class="row">
-        	<div class="col-xs-6">
-        		<label id="list1_title"><?php echo $han2?></label>
-        		<select name="list1" id="list1" class="form-control" size="25" multiple="multiple" >
+        	<div class="col-xs-6" >
+        		<label id="list1_title"><?php echo $han2?></label><br>
+       			<div class="col-xs-8" >
+        		<select multiple="multiple" name="list1" id="list1" class="form-control">
 						<?php $DBControlObject = new DBController();
 							  $rows = $DBControlObject->getUserList();
 								if(count($rows)>0) {		
@@ -106,9 +114,9 @@ $(function(){
 								}
 						?>
 					</option>
-				</select>
-		
-        		</div>
+				</select> 
+				</div>
+			</div>
 			<!-- /.col-xs-4 -->			
 
 			<div class="col-xs-6"> 
@@ -132,14 +140,15 @@ $(function(){
 					   </select>
 					   <span class="input-group-btn"><button id="enter" class="btn btn-success" type="button"><?php echo $han4?></button></span>
 					 </div>
-			</div>
-			<div class="col-xs-6">
+				
+			<div class="col-xs-12">
 				
 				
 				<label id="list20_title"><?php echo $han1?></label>
 				<select name="list20" id="list20" class="form-control" size="23.5"></select>
 				
 				
+			</div>
 			</div>
 			<!-- /.col-xs-4 -->	
 	
@@ -160,3 +169,8 @@ $(function(){
 </div>
 <!-- /.page-wrapper -->				
 				
+
+
+
+
+
