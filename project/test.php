@@ -301,10 +301,3 @@
 
 
 
-
-
-
-IF NOT EXISTS(Select * From Grouptable Where UserID='"&na1&"' and nDeviceID='"&de1&"')""Begin Insert Into Grouptable(UserID,nDeviceID) values('"&na1&"' ,'"&de1&"') End" ELSE Begin update Grouptable set UserID ='"&na1&"' Where UserID='"&na1&"' And nDeviceID='"&de1&"' END"
-set rs = Server.CreateObject("ADODB.Recordset")
-rs.open addsql2, DeCon
-				
