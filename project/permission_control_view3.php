@@ -16,10 +16,54 @@
 	$han5 = ICONV("EUC-KR","UTF-8",$han5);
 	$han6 = ICONV("EUC-KR","UTF-8",$han6);
 ?>
-
+<link href="css/bootstrap-dialog.css" rel="stylesheet" type="text/css" />
+<script src="js/bootstrap-dialog.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+	function delete_permission(td) {
+		var list1_item = $('#list1 option:selected').val();
+		alert(list1_item);
+		var list2_item = $('#list2 option:selected').val();
+		alert(list2_item);
+		var index = td.parentElement.parentElement.rowIndex;
+		alert(index);
+		var td_list = document.getElementById("permission_list_table").rows.item(index).cells;
+		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML+"/"+td_list[3].innerHTML);
+
+		$.post("delete_permission.php",{
+			category:list1_item,
+			item:list2_item,
+			td_id:td_list[0].innerHTML
+			}, 
+			function(data,status) {
+				alert(data);
+				document.getElementById("permission_list_table").rows.item(index).remove();
+			}
+		);
+	}
+	
+	function add_permission() {
+		var list1_item = $('#list1 option:selected').val();
+		alert(list1_item);
+		var list2_item = $('#list2 option:selected').val();
+		alert(list2_item);
+		var index = td.parentElement.parentElement.rowIndex;
+		alert(index);
+		var td_list = document.getElementById("permission_list_table").rows.item(index).cells;
+		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML+"/"+td_list[3].innerHTML);
+
+		$.post("delete_permission.php",{
+			category:list1_item,
+			item:list2_item,
+			td_id:td_list[0].innerHTML
+			}, 
+			function(data,status) {
+				if(data=='success') document.getElementById("permission_list_table").rows.item(index).remove();
+				else alert(data);
+			}
+		);
+	}
 	var isAddMode = -1;
 	var to_add_list = [];
 	var to_add_text_list_ = [];    
@@ -70,6 +114,7 @@
 		$('#list2_title').text("List By Category");
 		$('#list3_title').text("Permission List");
 		$('#permission_list_table tr').remove();
+		$('#permission_search_add_view').hide();
 	}
 
 	$(function(){
@@ -92,6 +137,7 @@
 		});
 
 		$('#list2').change(function(){
+			$('#permission_search_add_view').show();
 			$('#permission_list_table tr').remove();
 			$('#permission_list_table').show();
 			var list1_item = $('#list1 option:selected').val();
@@ -116,7 +162,7 @@
 						for(var i=0; i<data_by_list1.length-1; i++) {
 							var value = data_by_list1[i].split(',');
 							//$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
-							$.newtr = $("<tr><td>"+value[1]+"</td><td></td><td>"+value[2]+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+							$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
 							$('#permission_list_table').append($.newtr);
 						}
 						break;
@@ -126,30 +172,28 @@
 					}
 				}
 			);
-			/*$('#list3 option').remove();
-			$('#list4 option').remove();
-			$('#add_permission').show();
-			$('#delete_permission').show();
-			var selected_category = $('#list1 option:selected').val();
-			var selected_item = $('#list2 option:selected').val();
-
-			$.post("item1.php",{
-				category:selected_category,
-				item:selected_item
-				}, 
-				function(data,status) {
-					var data_by_list1 = data.split('|');
-					for(var i=0; i<data_by_list1.length-1; i++) {
-						var value = data_by_list1[i].split(',');
-						$('#list3').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
-					}
-				}
-			);*/
 		});
 
 		$('#add_permission').click(function(){
+			var list1_item = $('#list1 option:selected').val();
+			var list2_item = $('#list2 option:selected').val();
+			alert(list1_item);
+			alert(list2_item);
+			BootstrapDialog.show({
+				title: "Add Permission",
+	            message: $('<div></div>').load('add_device_permission_dialog.php?category='+list1_item+'&userid='+list2_item),
+	            onhide: function(dialogRef){
+		            alert("abcde"+dialogRef);
+	            	//$("#list1").val("device").prop("selected", true);
+	            	//$("#list2").val(24).prop("selected", true);
+	            	//$("#list2").change();
+	            	//$("#list2").trigger("change"); 
+		            $.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+					$('#permission_list_table').append($.newtr);
+	            }
+	        });
 
-			setAddMode();
+			/*setAddMode();
 
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
@@ -165,7 +209,7 @@
 						$('#list4').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
 					}
 				}
-			);
+			);*/
 		});
 
 		$('#delete_permission').click(function(){
@@ -310,18 +354,19 @@
 		</div>
 		<br />
 	
-		<div class="row">
+		<div id="permission_search_add_view" class="row" style="display:none">
 		<div class="col-lg-6">
    			<div class="input-group">
-      			<input id="user_search_text" type="text" class="form-control" placeholder="<?php echo $han6?>~~">
+      			<input id="permission_search_text" type="text" class="form-control" placeholder="<?php echo $han6?>~~">
      			<span class="input-group-btn">
-        			<button id="search_user" class="btn btn-default" type="button"><?php echo $han3?></button>
+        			<button id="search_permission" class="btn btn-default" type="button"><?php echo $han3?></button>
       			</span>
     		</div>
     		<!-- /input-group -->
+    		<button id="add_permission" class="btn btn-default" type="button"><?php echo $han?></button>
   		</div>
   		<!-- /.col-lg-6 -->
-  		<button id="add_user" class="btn btn-default" type="button"><?php echo $han?></button>
+  		
   		</div>
   		<!-- /.row -->
   		<br />
@@ -329,42 +374,6 @@
   			<table id="permission_list_table" class="table table-bordered table-hover table-striped" style="display: none">
   			</table>
   		</div>
- 
-  		<!-- <div class="table-responsive">
-			<table id="permission_list_table" class="table table-bordered table-hover table-striped" style="display: none">
-				<thead>
-					<tr>
-						<th style="display: none">User ID</th>
-						<th>User Name</th>
-						<th>Cell Phone</th>
-						<th>Department</th>
-						<th>Option</th>
-					</tr>
-				</thead>
-				<tbody>
-
-				<?php 
-					$DBControlObject = new DBController();
-					$rows = $DBControlObject->getUserList();
-					if(count($rows)>0) {
-						for($i=0; $i<count($rows); $i++) {
-							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
-				?>
-					<tr>
-						<td style="display: none"><?php echo $rows[$i][0]?></td>
-						<td><?php echo $user_name?></td>
-						<td><?php echo $rows[$i][2]?></td>
-						<td><?php echo $rows[$i][3]?></td>
-						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td>
-					</tr>
-				<?php
-						}
-					}
-				?>
-				</tbody>
-			</table>
-		</div> -->
-		<!-- /table-responsive -->
 	</div>
 	<!-- /.panel-body -->
 </div>
