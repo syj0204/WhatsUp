@@ -523,7 +523,13 @@ Class DBController{
 			return $statement;
 		}
 	}
-	
+	function UpdateAction($list_select,$device_ID){
+		if($this->connection) {
+			//$query = "Update Device set nActionPolicyID = '".$list_select."' where nDeviceID ='".$device_ID."'";
+			$statement = $this->DBObject->executeQuery($query);
+			return $statement;
+		}
+	}
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
