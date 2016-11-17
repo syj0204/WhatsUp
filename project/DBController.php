@@ -129,7 +129,7 @@ Class DBController{
 	function getDeviceListForUser($user_id) {
 	
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, d.sDisplayName FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID ='".$user_id."'";
+			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
