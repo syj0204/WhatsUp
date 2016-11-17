@@ -2,6 +2,25 @@
 	include "DBController.php"; 
 	$han="템플릿명을 입력하세요";
 	$han = ICONV("EUC-KR","UTF-8",$han);
+	$han1="선택한 템플릿에 저장된 디바이스";
+	$han1 = ICONV("EUC-KR","UTF-8",$han1);
+	$han2="수정";
+	$han2 = ICONV("EUC-KR","UTF-8",$han2);
+	$han3="삭제";
+	$han3 = ICONV("EUC-KR","UTF-8",$han3);
+	$han4="추가";
+	$han4 = ICONV("EUC-KR","UTF-8",$han4);
+	$han5="템플릿 선택";
+	$han5 = ICONV("EUC-KR","UTF-8",$han5);
+	$han6="템플릿 생성";
+	$han6 = ICONV("EUC-KR","UTF-8",$han6);
+	$han7="취소";
+	$han7 = ICONV("EUC-KR","UTF-8",$han7);
+	$han8="디바이스 그룹 선택";
+	$han8 = ICONV("EUC-KR","UTF-8",$han8);
+	$han9="선택한 디바이스 그룹내 리스트";
+	$han9 = ICONV("EUC-KR","UTF-8",$han9);
+	
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -124,7 +143,7 @@
 			category:list_string1
 			}, 
 			function(data,status) {
-				alert(status);
+				alert(data);
 			}
 		);
 		
@@ -185,9 +204,7 @@
 <div class="row">
 <div class="col-lg-12">
 	<h1 class="page-header">Template </h1>
-	<ol class="breadcrumb">
-		<li class="active"><i class="fa fa-dashboard"></i>Template</li>
-	</ol>
+
 </div>
 </div>
 
@@ -207,7 +224,8 @@
 		</div> -->
     	<div class="row">
         	<div class="col-xs-6">
-        		<select name="list1" id="list1" class="form-control"  >
+        	  <label id="list1_title"><?php echo $han8?></label>
+        		<select name="list1" id="list1" class="form-control panel-yellow"  >
         			<option>--Select Device Group --</option>
 						<?php $DBControlObject = new DBController();
 							  $rows = $DBControlObject->DeviceGroupsView();
@@ -225,12 +243,15 @@
 				</select>
 					
 					<br>
-				<select name="list2" id="list2" class="form-control" size="10" ></select>
+				<label id="list2_title"><?php echo $han9?></label>
+				<select name="list2" id="list2" class="form-control" size="25" ></select>
         		</div>
 			<!-- /.col-xs-4 -->			
 
 			<div class="col-xs-6">
-			   <select name="list10" id="list10" class="form-control">
+			<label id="list10_title"><?php echo $han5?></label>
+			 <div class="form-group input-group ">
+			   <select name="list10" id="list10" class="form-control panel-yellow">
         			<option>--Select Template --</option>
 						<?php $DBControlObject = new DBController();
 							  $rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것
@@ -240,19 +261,21 @@
 						?>
 					<option value=<?php echo $rows[$i][0]?>>      		 		
 						<?php
-										echo "Template / " .$device_name." <br> \n";
+										echo $device_name." <br> \n";
 									}
 								}
 						?>
 					</option>
-			   </select>
-				<input type="textbox" id="Temp_Name" style="display: none"></input><button id="enter_temp" style="display: none" >enter_temp</button></input><button id="close" style="display: none" >close</button>
-				<br><button id="select_temp">select_temp</button>
-				<button id="delete_temp">delete_temp</button>
-				<button id="add_temp">add_temp</button>
-				
-				
-
+			   </select><span class="input-group-btn">
+				<button id="select_temp" class="btn btn-success" type="button"><?php echo $han2?></button>
+				<button id="delete_temp" class="btn btn-success" type="button"><?php echo $han3?></button>
+				<button id="add_temp" class="btn btn-success" type="button"><?php echo $han4?></button></span>
+				<input type="textbox" id="Temp_Name" class="form-control panel-yellow" placeholder="Enter Template Name ~" style="display: none"></input>
+				<span class="input-group-btn">
+				<button id="enter_temp" class="btn btn-success" type="button" style="display: none" ><?php echo $han6?></button>
+				<button id="close" class="btn btn-success" type="button" style="display: none" ><?php echo $han7?></button></span>
+				</div>
+				<label id="list20_title"><?php echo $han1?></label>
 				<select name="list20" id="list20" class="form-control" size="25"></select>
 				
 				
@@ -274,5 +297,7 @@
 </div>
 <!-- /.container-fluid -->
 </div>
-<!-- /.page-wrapper -->				
-				
+<!-- /.page-wrapper -->		
+
+
+

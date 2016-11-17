@@ -72,7 +72,8 @@ Class DBController{
 	function addPermission($user_id, $device_id) {
 		if($this->connection) {
 			
-			$query = "INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
+			$query = "IF NOT EXISTS(Select * From Permission Where nUserID='".$user_id."' and nDeviceID='".$device_id."') Begin INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.") End";
+			//"INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
 			$statement = $this->DBObject->executeQuery($query);
@@ -425,21 +426,27 @@ Class DBController{
 	} //디바이스를 이용한 유저 찾기2
 	function tem($temp_name, $temp_string) {
 		if($this->connection) {
-				
-			$query = "INSERT INTO template (templateName, templateString) VALUES('".$temp_name."','".$temp_string."')";
-			$statement = $this->DBObject->executeQuery($query);
-			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
-				$statement = $this->DBObject->executeQuery($query);
-			if(count($statement)>0) $statement = true;
-			else {
-			$query = "INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
-			$statement = $this->DBObject->executeQuery($query);
-			}*/
-			
+			$query = "Insert Into template(templateName,templateString) values('".$temp_name."','".$temp_string."')";
+			$statement = $this->DBObject->executeQuery($query);			
 			return $statement;
-			//$this->DBObject->disconnectDB();
+
 		}
 	}//template에 새롭게 추가하는 쿼리
+	function tem1($temp_name) {
+		if($this->connection) {
+			$query = "Select * From template Where templateName='".$temp_name."'";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+		}
+	}//template 존재 여부 확인실시
 	
 	function getTemplate($template_select) {
 	
@@ -516,7 +523,13 @@ Class DBController{
 			return $statement;
 		}
 	}
-	
+	function UpdateAction($list_select,$device_ID){
+		if($this->connection) {
+			//$query = "Update Device set nActionPolicyID = '".$list_select."' where nDeviceID ='".$device_ID."'";
+			$statement = $this->DBObject->executeQuery($query);
+			return $statement;
+		}
+	}
 	
 	function disconnectDB() {
 		$this->DBObject->disconnectDB();
