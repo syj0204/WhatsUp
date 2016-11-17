@@ -52,11 +52,11 @@
 				$('#ui_view').load("search_view.html");
 				return false;
 			});
-			$('#Search_user_view').click(function(){
+			$('#match').click(function(){
 				$('#ui_view').load("newtest.php");
 				return false;
 			});
-			$('#ajaxtest').click(function(){
+			$('#Template').click(function(){
 				$('#ui_view').load("test.php");
 				return false;
 			});
@@ -196,27 +196,28 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="#" id="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="#" id="dashboard"><i class="fa fa-fw fa-desktop"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="#" id="user"><i class="fa fa-fw fa-edit"></i> User</a>
+                        <a href="#" id="user"><i class="fa fa-fw fa-wrench"></i> User</a>
                     </li>
-                    <li>
-                        <a href="#" id="permission"><i class="fa fa-fw fa-table"></i> Permission</a>
-                    </li>
-              
-               
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Search <i class="fa fa-fw fa-wrench"></i></a>
+                 	<li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Permission </a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="#" id="Search_user_view">User Search</a>
+                                <a href="#" id="permission"><i class="fa fa-fw fa-wrench"></i>Personal settings</a>
                             </li>
                             <li>
-                                <a href="#" id="ajaxtest">Device Search</a>
+                                <a href="#" id="Template"><i class="fa fa-fw fa-wrench"></i>Template settings</a>
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#" id="match"><i class="fa fa-fw fa-wrench"></i>Tmeplate Match</a>
+                    </li>
+              
+               
+   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
