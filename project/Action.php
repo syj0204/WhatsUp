@@ -10,10 +10,10 @@ include "DBController.php";
 			alert(Temp);
 
 			/*$.post("action1.php",{
-				name:Temp,
+				name:Temp
 				}, 
 				function(data,status) {
-					alert(status);
+					alert(data);
 				}
 			);*/
 		});
@@ -21,4 +21,4 @@ include "DBController.php";
 </script>
 
 <button id="add_temp" class="btn btn-success" type="button">enter</button></span>
-<input type="textbox" id="Temp_Name" class="form-control panel-yellow" placeholder="15556"></input>
+<input type="textbox" id="Temp_Name" class="form-control panel-yellow" placeholder="15556" value="15556"></input>

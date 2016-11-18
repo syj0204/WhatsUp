@@ -16,32 +16,32 @@
 <script type="text/javascript">
 $(function(){
 	$('#enter').click(function(){
-		var list_size = $('#list1 option:selected').size();
+		var list_size = $('#list1 option:selected').size();		//list1에 선택된 값의 수를 전달함
 		alert(list_size);
-	    var list_save = new Array();
+	    var list_save = new Array();	// jquery에서  배열을 선언하기 위해서 new릉 이용해서 Array를 생성
 	    var list_string1=""
 		//var list_select = $('#list1').val();
-		for(var i=0; i<list_size; i++) {
+		for(var i=0; i<list_size; i++) {		
 			 list_save[i] = $('#list1 option:eq('+i+')').val();	
 			 var list_string = list_save[i]+",";
 			 var list_string1 = list_string1 + list_string;
-		}
+		}		//list1 에서 선택된 다수의 값을 전달 받기위해서 option:eq를 이용하여서 값을 전달 받음
 		alert(list_string1);
-		var temp_select = $('#list10 option:selected').val();
+		var temp_select = $('#list10 option:selected').val(); //Template 선택한 list에서 값을 전달 받음
 		alert(temp_select);
-		$.post("newtest1.php",{
+		$.post("newtest1.php",{  
 			list:list_string1,
 			size: list_size,
 			temp: temp_select
-			}, 
+			},  //		post를 이용하여 newtest1.php -> 3개의 값을 전달
 		
 			function(data,status) {
-				alert(data);
+				alert(data);		//전송 여부를 위해서  alert를 띄어서 확인
 			}
 		);
 	});
 
-	$('#list10').change(function(){
+	$('#list10').change(function(){		// Template른 선택하기 위한 list
 		var template_select = $('#list10 option:selected').val();
 		$('#list20 option').remove();
 		alert(template_select);
@@ -49,10 +49,10 @@ $(function(){
 			category:template_select
 			}, 
 			function(data,status) {
-				var data_by_list1 = data.split('|');
+				var data_by_list1 = data.split('|'); // DB에서 받은 값을 |을 구분으로 나눠서 저장
 				for(var i=0; i<data_by_list1.length-1; i++) {
-					var value = data_by_list1[i].split(',');
-					$('#list20').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+					var value = data_by_list1[i].split(','); // 한번 나눠진 값을 다시 ,으로 구분하여서 나눠 저장
+					$('#list20').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");		// 저장된 값을 list20에 나눠서 표시함
 				}
 			}
 		);
@@ -104,7 +104,7 @@ $(function(){
 										echo $device_name." <br> \n";
 									}
 								}
-						?>
+						?> <!-- 사용자 리스트를 띄우기 위해 DB에 접근하여 리스트 호출 -->
 					</option>
 				</select>
 		
