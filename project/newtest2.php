@@ -5,7 +5,7 @@
 	$han = ICONV("EUC-KR","UTF-8",$han);
 	$han1="선택한 템플릿에 포함된 디바이스 정보";
 	$han1 = ICONV("EUC-KR","UTF-8",$han1);
-	$han2="사용자 선택(다중선택 Ctrl+클릭)";
+	$han2="사용자 선택";
 	$han2 = ICONV("EUC-KR","UTF-8",$han2);
 	$han3="템블릿 선택";
 	$han3 = ICONV("EUC-KR","UTF-8",$han3);
@@ -64,7 +64,8 @@ $(function(){
 
     $('#list1').multipleSelect({
         isOpen: true,
-        keepOpen: true
+        keepOpen: true,
+        minimumCountSelected: 7
     });
 	
 });
@@ -97,10 +98,10 @@ $(function(){
     		<label>Permission Search</label>
 		</div> -->
     	<div class="row">
-        	<div class="col-xs-6" >
+    	<div class="col-xs-12" >
+        	<div class="col-xs-4" >
         		<label id="list1_title"><?php echo $han2?></label><br>
-       			<div class="col-xs-8" >
-        		<select multiple="multiple" name="list1" id="list1" class="form-control">
+        		<select multiple="multiple" name="list1" id="list1" class="form-control" >
 						<?php $DBControlObject = new DBController();
 							  $rows = $DBControlObject->getUserList();
 								if(count($rows)>0) {		
@@ -115,10 +116,10 @@ $(function(){
 						?>
 					</option>
 				</select> 
-				</div>
 			</div>
 			<!-- /.col-xs-4 -->			
-
+			<div class="col-xs-2"><div><label ></label><br></div>
+			</div>
 			<div class="col-xs-6"> 
 				<label id="list10_title"><?php echo $han3?></label>
 					<div class="form-group input-group">
@@ -147,7 +148,7 @@ $(function(){
 				<label id="list20_title"><?php echo $han1?></label>
 				<select name="list20" id="list20" class="form-control" size="23.5"></select>
 				
-				
+				</div>
 			</div>
 			</div>
 			<!-- /.col-xs-4 -->	
