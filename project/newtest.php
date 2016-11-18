@@ -104,7 +104,7 @@ $(function(){
 										echo $device_name." <br> \n";
 									}
 								}
-						?> <!-- 사용자 리스트를 띄우기 위해 DB에 접근하여 리스트 호출 -->
+						?> <!-- 사용자 리스트를 띄우기 위해 DB에 저 -->
 					</option>
 				</select>
 		
