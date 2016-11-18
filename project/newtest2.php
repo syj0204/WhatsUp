@@ -21,25 +21,28 @@ $(function(){
 	$('#enter').click(function(){
 		var list_size = $('#list1 option:selected').size();
 		alert(list_size);
-	    var list_save = new Array();
-	    var list_string1=""
-		//var list_select = $('#list1').val();
-		for(var i=0; i<list_size; i++) {
-			 list_save[i] = $('#list1 option:eq('+i+')').val();	
+		var list_save = new Array();
+		 var list_string1= ""
+
+		 for(var i=0; i<list_size; i++) {
+			list_save[i] = $('#list1 option:selected:eq('+(i)+')').val();
 			 var list_string = list_save[i]+",";
 			 var list_string1 = list_string1 + list_string;
-		}
-		alert(list_string1);
+			 
+		 }
+		 alert(list_string1);
+
+
 		var temp_select = $('#list10 option:selected').val();
 		alert(temp_select);
 		$.post("newtest1.php",{
-			list:list_string1,
+			list: list_string1,
 			size: list_size,
 			temp: temp_select
 			}, 
 		
 			function(data,status) {
-				alert(data);
+				alert(status);
 			}
 		);
 	});
