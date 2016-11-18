@@ -26,7 +26,7 @@ Class DBController{
 	
 	function deleteUser($user_id) {
 		if($this->connection) {
-			$query = "DELETE FROM Users WHERE nUserID=".$user_id;
+			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 	
 			return $statement;
@@ -313,6 +313,27 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}
+	
+	
+	function getDevicesByUserAndDeviceGroup($nUserID, $nDeviceGroupID) {
+	
+		if($this->connection) {
+	
+			$query = "SELECT p.nDeviceID, d.sDisplayName, dg.sGroupName FROM Permission p, Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID=".$nUserID." and pdg.nDeviceGroupID=".$nDeviceGroupID;
+			$statement = $this->DBObject->executeQuery($query);
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}
+	
 	function getUserDisPlayName($sUserName) {
 	
 		if($this->connection) {
