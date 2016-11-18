@@ -3,7 +3,6 @@
 	$category =$_GET["category"];
 	$user_id =$_GET["userid"];
 ?>
-
 <script type="text/javascript">
 
 	$(function(){
@@ -65,7 +64,7 @@
 						} else alert(data);
 					}
 				);
-			} //else alert("Choose Device and User!");			
+			} else alert("Choose Device");	
 			
 		});
 
@@ -100,20 +99,28 @@
 </div>
 <!-- /.col-xs-4 -->
 <div class="col-xs-4">
-	<button type="button" id="toRightAllDevices" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
-	<button type="button" id="toRightSelectedDevices" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
-	<button type="button" id="toLeftSelectedDevices" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
-	<button type="button" id="toLeftAllDevices" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+	<button type="button" id="toRightAllDevices" class="btn btn-default btn-block">Add All Device</button>
+	<button type="button" id="toRightSelectedDevices" class="btn btn-default btn-block">Add Selected Device</button>
 </div>
 <!-- /."col-xs-2" -->
+</div>
+<br />
+<div class="row">
 <div class="col-lg-12">
 	<label>Newly Added Devices List</label>
 </div>
 <div class="col-xs-8">
 	<select name="selected_devices_list" id="selected_devices_list" class="form-control" size="12" multiple="multiple"></select>
 </div>
+<div class="col-xs-4">
+	<button type="button" id="toLeftSelectedDevices" class="btn btn-default btn-block">Cancel Selected Device</button>
+	<button type="button" id="toLeftAllDevices" class="btn btn-default btn-block">Cancel All Device</button>
+</div>
 </div>
 <!-- /.row -->
+<br />
+<div class="row">
 <div class="col-xs-2" align="center">
 	<button id="add_permission_btn" class="btn btn-default" type="button">Add Permission</button>
+</div>
 </div>

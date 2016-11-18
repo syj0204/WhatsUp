@@ -2,10 +2,11 @@
 include "DBController.php";
 
 $user_id =$_POST["userid"];
-$DBControlObject = new DBController();
-$result = $DBControlObject->deleteUser($user_id);
-if($result) echo "success";
-else echo "fail";
-//echo $user_id."/".$result;
+$user_id =intval($user_id);
+//$DBControlObject = new DBController();
+//$result = $DBControlObject->deleteUser($user_id);
+
+
+echo $user_id;
 ?>
 
