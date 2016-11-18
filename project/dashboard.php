@@ -1,6 +1,44 @@
 <?php 
 	include "DBController.php";
 ?>
+  <script src="js/jquery.js"></script>
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+
+		$(function(){
+
+			$('#user1').click(function(){
+				$('#ui_view').load("user_control_view.php");
+				return false;
+			});
+			$('#sin').click(function(){
+				$('#ui_view').load("permission_control_view3.php");
+				return false;
+			});
+			$('#temp').click(function(){
+				$('#ui_view').load("test.php");
+				return false;
+			});
+			$('#temp_user').click(function(){
+				$('#ui_view').load("newtest2.php");
+				return false;
+			});
+
+		});
+		
+
+		$(window).load(function(e){
+	
+		});
+
+	</script>
+
+
 <div id="page-wrapper">
 
             <div class="container-fluid">
@@ -31,7 +69,7 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-5 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <div class="row">
@@ -39,116 +77,121 @@
                                         <!-- <i class="fa fa-comments fa-5x"></i> -->
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
-                                    <div class="col-xs-9 text-right">
+                                    <div class="col-xs-9 text-middle">
                                         <div class="huge">
                                         <?php 
-                                        	$DBControlObject = new DBController();
-                                        	$rows = $DBControlObject->getDeviceList();
-                                        	echo count($rows);
-                                        	 $text = "전체 서버 수";
+                                        	$text = "사용자 추가/수정/삭제";
                                         	$text = ICONV("EUC-KR","UTF-8",$text);
+                                        	echo $text;
                                         ?>
                                         </div>
-                                        <div><?php echo $text?></div>
-                                    </div>
+                                       
+                                   
+                         
+                            		 </div>
                                 </div>
                             </div>
-                            <a href="#" id="device">
+                            <a href="#" id="user1"> 
                                 <div class="panel-footer">
-                                   <!--  <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> -->
+                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-1" >
+                    </div>
+                    <div class="col-lg-5 col-md-6">
                         <div class="panel panel-green">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
-                                    <div class="col-xs-9 text-right">
+                                    <div class="col-xs-9 text-middle">
                                         <div class="huge">
                                         <?php 
-                                        	$rows = $DBControlObject->getUserList();
-                                        	echo count($rows);
-                                        	$text1 = "전체 사용자 수";
+                                        	$text1 = "개별 사용자 권한 설정";
                                         	$text1 = ICONV("EUC-KR","UTF-8",$text1);
+                                        	echo $text1
                                         ?>
                                         </div>
-                                        <div><?php echo $text1?></div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+							<a href="#" id="sin"> 
                                 <div class="panel-footer">
-                                   <!--  <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
+                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    </div>
+                    <div class="row">
+                       <div class="col-lg-5 col-md-6">
                         <div class="panel panel-yellow">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
+                                        <!-- <i class="fa fa-comments fa-5x"></i> -->
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
-                                    <div class="col-xs-9 text-right">
+                                    <div class="col-xs-9 text-middle">
                                         <div class="huge">
-                                        <?php
-                                        	$rows = $DBControlObject->getPermissionList();
-                                        	echo count($rows);
-                                        	$DBControlObject->disconnectDB();
-                                        	$text2 = "권한 설정 수";
-                                        	$text2 = ICONV("EUC-KR","UTF-8",$text2);
+                                        <?php 
+                                        	$text = "템플릿 추가/수정/삭제";
+                                        	$text = ICONV("EUC-KR","UTF-8",$text);
+                                        	echo $text;
                                         ?>
                                         </div>
-                                        <div><?php echo $text2?></div>
-                                    </div>
+                                       
+                                   
+                         
+                            		 </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="#" id="temp"> 
                                 <div class="panel-footer">
-                                   <!--  <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div> -->
+                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
+                                    <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-1" >
+                    </div>
+                    <div class="col-lg-5 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-support fa-5x"></i>
                                     </div>
-                                    <div class="col-xs-9 text-right">
+                                    <div class="col-xs-9 text-middle">
                                         <div class="huge">
-                                        <?php
-                                        	$text3 = "기 타";
-                                        	$text3 = ICONV("EUC-KR","UTF-8",$text3);
-                                        	echo $text3;
-                                        ?></div>
-                                        <div></div>
+                                        <?php 
+                                        	$text1 = "사용자별 템플릿 적용 ";
+                                        	$text1 = ICONV("EUC-KR","UTF-8",$text1);
+                                        	echo $text1
+                                        ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+							<a href="#" id="temp_user"> 
                                 <div class="panel-footer">
-                                    <!-- <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> -->
+                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
-                    </div>
                 </div>
+                
                 <!-- /.row -->
 <!-- 
                 <div class="row">

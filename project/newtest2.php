@@ -102,7 +102,7 @@ $(function(){
 		</div> -->
     	<div class="row">
     	<div class="col-xs-12" >
-        	<div class="col-xs-4" >
+        	<div class="col-xs-5" >
         		<label id="list1_title"><?php echo $han2?></label><br>
         		<select multiple="multiple" name="list1" id="list1" class="form-control" >
 						<?php $DBControlObject = new DBController();
@@ -121,7 +121,7 @@ $(function(){
 				</select> 
 			</div>
 			<!-- /.col-xs-4 -->			
-			<div class="col-xs-2"><div><label ></label><br></div>
+			<div class="col-xs-1"><div><label ></label><br></div>
 			</div>
 			<div class="col-xs-6"> 
 				<label id="list10_title"><?php echo $han3?></label>
