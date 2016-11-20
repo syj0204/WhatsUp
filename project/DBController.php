@@ -127,10 +127,10 @@ Class DBController{
 		}
 	}
 	
-	function getDeviceListForUser($user_id) {
+	function getDeviceListForUser($user_id, $device_group_id) {
 	
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."'";
+			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."' and g.nDeviceGroupID=".$device_group_id;
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
@@ -163,7 +163,27 @@ Class DBController{
 	
 			//$this->DBObject->disconnectDB();
 		}
-	}     
+	}
+	
+	function getDeviceListNotForUserInGroup($user_id, $device_group_id) {
+	
+		if($this->connection) {
+			
+			$query = "SELECT d.nDeviceID, d.sDisplayName FROM Device d, PivotDeviceToGroup pdg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT nDeviceID FROM Permission p, PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.")";
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}
 	
 	function getUserListNotForDevice($device_id) {
 		if($this->connection) {
