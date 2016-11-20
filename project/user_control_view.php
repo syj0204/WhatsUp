@@ -99,16 +99,17 @@
 		var index = td.parentElement.parentElement.rowIndex;
 		alert(index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
+		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML+"/"+td_list[3].innerHTML);
+		alert(typeof(td_list[0].innerHTML)+"/"+typeof(td_list[1].innerHTML)+"/"+typeof(td_list[2].innerHTML)+"/"+typeof(td_list[3].innerHTML));
 		var user_id = td_list[0].innerHTML;
-		alert(user_id);
 		$.post("delete_user.php",{
 			userid:user_id
 			}, 
 			function(data,status) {
 				alert(data);
+				document.getElementById("user_list_table").rows.item(index).remove();
 			}
 		);
-		document.getElementById("user_list_table").rows.item(index).remove();
 	}
 
 	function add_user() {
@@ -213,6 +214,7 @@
 					if(count($rows)>0) {
 						for($i=0; $i<count($rows); $i++) {
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+							//$user_id = intval($rows[$i][0]);
 				?>
 					<tr>
 						<td style="display: none"><?php echo $rows[$i][0]?></td>

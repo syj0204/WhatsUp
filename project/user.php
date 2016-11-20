@@ -9,8 +9,8 @@ $new_user_department =$_POST["department"];
 
 $DBControlObject = new DBController();
 $result = $DBControlObject->addUser($new_user_name, $new_user_cellphone, $new_user_department);
-//if($result) echo "success";
-//else echo "fail";
-echo $result;	
+if($result) echo "success";
+else echo "fail";
+//echo $result;	
 ?>
 
