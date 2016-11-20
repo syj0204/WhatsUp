@@ -7,7 +7,7 @@ $user_id = $_POST["user"];
 $devicegroup_id = $_POST["devicegroup"];
 
 $DBControlObject = new DBController();
-$result = $DBControlObject->getDevicesByUserAndDeviceGroup($user_id, $devicegroup_id);
+$result = $DBControlObject->getDeviceListForUser($user_id, $devicegroup_id);
 
 if($result) {
 	$new_result="";

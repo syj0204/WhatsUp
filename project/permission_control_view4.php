@@ -1,66 +1,40 @@
 <?php
-	include "DBController.php";
-	
-	$han="추가";
-	$han1="수정";
-	$han2="삭제";
-	$han3="검색";
-	$han4="취소";
-	$han5="완료";
-	$han6="이름으로 찾기";
-	$han = ICONV("EUC-KR","UTF-8",$han);
-	$han1 = ICONV("EUC-KR","UTF-8",$han1);
-	$han2 = ICONV("EUC-KR","UTF-8",$han2);
-	$han3 = ICONV("EUC-KR","UTF-8",$han3);
-	$han4 = ICONV("EUC-KR","UTF-8",$han4);
-	$han5 = ICONV("EUC-KR","UTF-8",$han5);
-	$han6 = ICONV("EUC-KR","UTF-8",$han6);
+include "DBController.php";
+
+$han="추가";
+$han1="수정";
+$han2="삭제";
+$han3="검색";
+$han4="취소";
+$han5="완료";
+$han6="이름으로 찾기";
+$han = ICONV("EUC-KR","UTF-8",$han);
+$han1 = ICONV("EUC-KR","UTF-8",$han1);
+$han2 = ICONV("EUC-KR","UTF-8",$han2);
+$han3 = ICONV("EUC-KR","UTF-8",$han3);
+$han4 = ICONV("EUC-KR","UTF-8",$han4);
+$han5 = ICONV("EUC-KR","UTF-8",$han5);
+$han6 = ICONV("EUC-KR","UTF-8",$han6);
 ?>
-<link href="css/bootstrap-dialog.css" rel="stylesheet" type="text/css" />
-<script src="js/bootstrap-dialog.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-	function delete_permission(td) {
-
-		var user_id = $('#list1 option:selected').val();
-		var devicegroup_id = $('#list2 option:selected').val();
-		var index = td.parentElement.parentElement.rowIndex;
-		alert(index);
-		var td_list = document.getElementById("permission_list_table").rows.item(index).cells;
-		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML);
-
-		$.post("delete_permission2.php",{
-			user:user_id,
-			device:td_list[0].innerHTML
-			}, 
-			function(data,status) {
-				alert(data);
-				document.getElementById("permission_list_table").rows.item(index).remove();
-			}
-		);
-	}
 	
 	function initSelectBoxes() {
-		//$('#devicegroup_list').find('option:first').attr('selected', 'selected');  
-		//$('#devicegroup_list option').remove();
 		$('#permission_list_table tr').remove();
 		$('#permission_search_add_view').hide();
 	}
-
 	$(function(){
 		$('#user_list').change(function(){
 			initSelectBoxes();
 			var selected_category = $('#user_list option:selected').val();
-			//alert(""+selected_category);
+			alert(""+selected_category);
 		});
-
 		$('#devicegroup_list').change(function(){
 			var selected_category = $('#devicegroup_list option:selected').val();
-			//alert(""+selected_category);
-
+			alert(selected_category);
+			alert(""+selected_category);
+			
 			$('#permission_list_table tr').remove();
-			//$.headtr = $("<tr><th>Device ID</th><th>Device Group</th><th>Device Name</th><th>Option</th></tr>");
 			$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
 			$('#permission_list_table').append($.headtr);
 			
@@ -69,7 +43,6 @@
 			
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
-
 			$.post("get_permission_by_devicegroup.php",{
 				user:user_id,
 				devicegroup:devicegroup_id
@@ -80,7 +53,6 @@
 						alert("Abn");
 						var data_by_list1 = data.split('|');
 						alert(data_by_list1);
-
 						for(var i=0; i<data_by_list1.length-1; i++) {
 							var value = data_by_list1[i].split(',');
 							//$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
@@ -93,54 +65,24 @@
 			);
 			
 		});
-
 		$('#add_permission').click(function(){
 			var list1_item = $('#list1 option:selected').val();
 			var list2_item = $('#list2 option:selected').val();
-			BootstrapDialog.show({
-				title: "Add Permission",
-	            message: $('<div></div>').load('add_device_permission_dialog.php?category='+list1_item+'&userid='+list2_item),
-	            onhide: function(dialogRef){
-		            //alert("abcde"+dialogRef);
-	            	//$("#list2").change();
-	            	//$('#list2').trigger('change'); 
-		            //$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
-					//$('#permission_list_table').append($.newtr);
-	            }
-	        });
+			
 		});
-
-		$('#delete_permission').click(function(){
-			var selected_category = $('#list1 option:selected').val();
-			var selected_item = $('#list2 option:selected').val();
-
-			$.post("get_no_permission_list.php",{
-				category:selected_category,
-				item:selected_item
-				}, 
-				function(data,status) {
-					var data_by_category_item = data.split('|');
-					for(var i=0; i<data_by_category_item.length-1; i++) {
-						var value = data_by_category_item[i].split(',');
-						$('#list4').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
-					}
-				}
-			);
-		});
-
+	
 		$('#search_permission').click(function(){
 			var value = $('#permission_search_text').val(); 
 			
 			$("#permission_list_table tbody tr").each(function(){
 				$row = $(this);
-				var text = $row.find("td:eq(2)").text();
+				var text = $row.find("td:eq(1)").text();
 				if(text.toLowerCase()==value.toLowerCase()) {
 					$row.show();
 				} else $row.hide();
 			});
 		});
 	});
-
 </script>
 
 <div id="page-wrapper">
