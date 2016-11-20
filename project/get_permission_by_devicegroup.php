@@ -9,7 +9,6 @@ $devicegroup_id = $_POST["devicegroup"];
 $DBControlObject = new DBController();
 $result = $DBControlObject->getDevicesByUserAndDeviceGroup($user_id, $devicegroup_id);
 
-//echo json_encode($result);
 if($result) {
 	$new_result="";
 	for($i=0; $i<count($result); $i++) {
@@ -20,5 +19,5 @@ if($result) {
 	}
 	echo $new_result;
 }
-else echo "null";
+else echo -1;
 ?>

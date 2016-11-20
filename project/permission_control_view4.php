@@ -42,35 +42,23 @@
 	}
 	
 	function initSelectBoxes() {
-		$('select').find('option:first').attr('selected', 'selected');  
-		$('#list2 option').remove();
-		$('#list3 option').remove();
-		$('#list2_title').text("List By Category");
-		$('#list3_title').text("Permission List");
+		//$('#devicegroup_list').find('option:first').attr('selected', 'selected');  
+		//$('#devicegroup_list option').remove();
 		$('#permission_list_table tr').remove();
 		$('#permission_search_add_view').hide();
 	}
 
 	$(function(){
-		$('#list1').change(function(){
+		$('#user_list').change(function(){
 			initSelectBoxes();
-			var selected_category = $('#list1 option:selected').val();
-			$('#list2_title').text($('#list1 option:selected').text()+" List");
-			$('#list2').append("<option>-- Select "+$('#list1 option:selected').text()+" --</option>");
-			$.post("category.php",{
-				category:selected_category
-				}, 
-				function(data,status) {
-					var data_by_category = data.split('|');
-					for(var i=0; i<data_by_category.length-1; i++) {
-						var value = data_by_category[i].split(',');
-						$('#list2').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
-					}
-				}
-			);
+			var selected_category = $('#user_list option:selected').val();
+			//alert(""+selected_category);
 		});
 
-		$('#list2').change(function(){
+		$('#devicegroup_list').change(function(){
+			var selected_category = $('#devicegroup_list option:selected').val();
+			//alert(""+selected_category);
+
 			$('#permission_list_table tr').remove();
 			//$.headtr = $("<tr><th>Device ID</th><th>Device Group</th><th>Device Name</th><th>Option</th></tr>");
 			$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
@@ -79,8 +67,8 @@
 			$('#permission_search_add_view').show();
 			$('#permission_list_table').show();
 			
-			var user_id = $('#list1 option:selected').val();
-			var devicegroup_id = $('#list2 option:selected').val();
+			var user_id = $('#user_list option:selected').val();
+			var devicegroup_id = $('#devicegroup_list option:selected').val();
 
 			$.post("get_permission_by_devicegroup.php",{
 				user:user_id,
@@ -88,7 +76,8 @@
 				}, 
 				function(data,status) {
 					alert(data);
-					if(data!=null) {
+					if(data!=-1) {
+						alert("Abn");
 						var data_by_list1 = data.split('|');
 						alert(data_by_list1);
 
@@ -102,6 +91,7 @@
 					} else alert("No Permission in this group!!");
 				}
 			);
+			
 		});
 
 		$('#add_permission').click(function(){
@@ -160,7 +150,7 @@
 <!-- Page Heading -->
 <div class="row">
 <div class="col-lg-12">
-	<h1 class="page-header">User</h1>
+	<h1 class="page-header">Permission</h1>
 </div>
 </div>
 
@@ -176,7 +166,7 @@
 		<div class="form-group">
 			<!-- <label for="list1" class="col-sm-2 control-label">Search Category</label> -->
 			<div class="col-sm-2">
-			<label id="list1_title">Select User</label>
+			<label>Select User</label>
 	    	<select name="user_list" id="user_list" class="form-control selcls">
 	    		<option> -- Select User -- </option>
 				<?php
@@ -199,7 +189,7 @@
 			</select>
 			</div>
 			<div class="col-xs-2">
-				<label id="list2_title">Select Device Group</label>
+				<label>Select Device Group</label>
 	    		<select name="devicegroup_list" id="devicegroup_list" class="form-control selcls">
 	    			<option> -- Select Device Group -- </option>
 		    		<?php
