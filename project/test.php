@@ -122,6 +122,7 @@
 		
 		
 		$('#enter_temp').click(function(){
+
 	    var list_save = new Array();
 	    var list_string1=""
 		var list_size = $('#list20 option').size();
@@ -140,13 +141,24 @@
 		 alert(list_string1);
 		$.post("test2.php",{
 			name:Temp,
+			size:list_size,
 			category:list_string1
 			}, 
 			function(data,status) {
 				alert(data);
 			}
 		);
-		
+
+
+		$('#select_temp').show();
+		$('#delete_temp').show();
+		$('#add_temp').show();
+		$('#list10').show();
+		$('#enter_temp').hide();
+		$('#Temp_Name').hide();
+		$('#close').hide();
+		$('#Temp_Name').remove();
+		$('#list20 option').remove();
 	});
 	
 		
