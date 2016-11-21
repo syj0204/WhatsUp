@@ -16,8 +16,13 @@ $han4 = ICONV("EUC-KR","UTF-8",$han4);
 $han5 = ICONV("EUC-KR","UTF-8",$han5);
 $han6 = ICONV("EUC-KR","UTF-8",$han6);
 ?>
+<link rel="stylesheet" href="jquery.auto-complete.css">
+<script src="js/jquery.auto-complete.js"></script>
+<script src="js/jquery.auto-complete.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+	var available_tags=[];
 	
 	function initSelectBoxes() {
 		$('#permission_list_table tr').remove();
@@ -55,7 +60,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			$('#permission_list_table tr').remove();
 			$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
 			$('#permission_list_table').append($.headtr);
-			
+
 			$('#permission_search_add_view').show();
 			$('#permission_list_table').show();
 			
@@ -72,6 +77,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 							var value = data_by_list1[i].split(',');
 							$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
 							$('#permission_list_table').append($.newtr);
+							available_tags.push(value[3]);
 						}
 					} else alert("No Permission in this group!!");
 				}
@@ -85,15 +91,15 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
 
-			alert(user_id);
-			alert(devicegroup_id);
+			//alert(user_id);
+			//alert(devicegroup_id);
 
 			$.post("get_no_permission_by_devicegroup.php",{
 				user:user_id,
 				devicegroup:devicegroup_id
 				}, 
 				function(data,status) {
-					alert(data);
+					//alert(data);
 					if(data!=-1) {
 						var data_by_list1 = data.split('|');
 						for(var i=0; i<data_by_list1.length-1; i++) {
@@ -102,7 +108,12 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 							$('#available_devices_list').append($.newtr);
 							
 						}
-					} else alert("No Permission in this group!!");
+					} else {
+						//alert("No Permission in this group!!");
+						
+						alert("No Device To Add!!");
+						//$('#myModal').modal().hide();
+					}
 				}
 			);
 
@@ -147,7 +158,17 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			
 		});
 
-		
+		$('#permission_search_text').autoComplete({
+            minChars: 1,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                var choices = available_tags;
+                var suggestions = [];
+                for (i=0;i<choices.length;i++)
+                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                suggest(suggestions);
+            }
+        });
 
 
 
@@ -275,7 +296,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		<div id="permission_search_add_view" class="row" style="display:none">
 		<div class="col-lg-6">
    			<div class="input-group">
-      			<input id="permission_search_text" type="text" class="form-control" placeholder="<?php echo $han6?>~~">
+      			<input id="permission_search_text" class="form-control" type="text" placeholder="<?php echo $han6?>~~">
      			<span class="input-group-btn">
         			<button id="search_permission" class="btn btn-default" type="button"><?php echo $han3?></button>
       			</span>
