@@ -29,7 +29,7 @@ Class DBController{
 			//$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
 			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
-			
+				
 	
 			return $statement;
 		}
@@ -39,7 +39,7 @@ Class DBController{
 			$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
 			//$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
-				
+	
 	
 			return $statement;
 		}
@@ -121,7 +121,7 @@ Class DBController{
 	function getDeviceList() {
 	
 		if($this->connection) {
-			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.bDynamicGroup ='0'and DG.nParentGroupID = '0' and DG.nDeviceGroupID not in (select nDeviceGroupID from DeviceGroup where nDeviceGroupID in (select nParentGroupID from DeviceGroup where nParentGroupID !=''))order by nDeviceID ASC ";
+			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
 			// WhatUp DB시 사용
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
@@ -392,7 +392,7 @@ Class DBController{
 	
 
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
-			$query = "select * from DeviceGroup where bDynamicGroup ='0'and nParentGroupID = '0' and nDeviceGroupID not in (select nDeviceGroupID from DeviceGroup where nDeviceGroupID in (select nParentGroupID from DeviceGroup where nParentGroupID !='')) order by sGroupName ASC";
+			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
 			// 실제 WhatsUp DB 사용시 사용예정
 			
 
