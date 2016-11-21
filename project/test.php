@@ -225,7 +225,7 @@
     	<div class="row">
         	<div class="col-xs-6">
         	  <label id="list1_title"><?php echo $han8?></label>
-        		<select name="list1" id="list1" class="form-control panel-yellow"  >
+        		<select name="list1" id="list1" class="form-control"  >
         			<option>--Select Device Group --</option>
 						<?php $DBControlObject = new DBController();
 							  $rows = $DBControlObject->DeviceGroupsView();
@@ -251,7 +251,7 @@
 			<div class="col-xs-6">
 			<label id="list10_title"><?php echo $han5?></label>
 			 <div class="form-group input-group ">
-			   <select name="list10" id="list10" class="form-control panel-yellow">
+			   <select name="list10" id="list10" class="form-control">
         			<option>--Select Template --</option>
 						<?php $DBControlObject = new DBController();
 							  $rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것

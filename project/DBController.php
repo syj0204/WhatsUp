@@ -26,8 +26,20 @@ Class DBController{
 	
 	function deleteUser($user_id) {
 		if($this->connection) {
+			//$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
 			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
+				
+	
+			return $statement;
+		}
+	}
+	function deleteUser1($user_id) {
+		if($this->connection) {
+			$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
+			//$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
+			$statement = $this->DBObject->executeQuery($query);
+	
 	
 			return $statement;
 		}
@@ -127,10 +139,10 @@ Class DBController{
 		}
 	}
 	
-	function getDeviceListForUser($user_id, $device_group_id) {
+	function getDeviceListForUser($user_id) {
 	
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."' and g.nDeviceGroupID=".$device_group_id;
+			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
@@ -163,27 +175,7 @@ Class DBController{
 	
 			//$this->DBObject->disconnectDB();
 		}
-	}
-	
-	function getDeviceListNotForUserInGroup($user_id, $device_group_id) {
-	
-		if($this->connection) {
-			
-			$query = "SELECT d.nDeviceID, d.sDisplayName FROM Device d, PivotDeviceToGroup pdg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.")";
-			$statement = $this->DBObject->executeQuery($query);
-			$rows = array();
-	
-			if(count($statement)>0) {
-				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
-					$rows[] = $row;
-				}
-				return $rows;
-			}
-			else return null;
-	
-			//$this->DBObject->disconnectDB();
-		}
-	}
+	}     
 	
 	function getUserListNotForDevice($device_id) {
 		if($this->connection) {
@@ -341,7 +333,6 @@ Class DBController{
 	
 			$query = "SELECT p.nDeviceID, d.sDisplayName, dg.sGroupName FROM Permission p, Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID=".$nUserID." and pdg.nDeviceGroupID=".$nDeviceGroupID;
 			$statement = $this->DBObject->executeQuery($query);
-			$rows = array();
 	
 			if(count($statement)>0) {
 				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
@@ -468,7 +459,7 @@ Class DBController{
 	} //디바이스를 이용한 유저 찾기2
 	function tem($temp_name, $temp_string) {
 		if($this->connection) {
-			$query = "Insert Into template(templateName,templateString) values('".$temp_name."','".$temp_string."')";
+			$query = "Insert Into template(templateName,templateString) values(N'".$temp_name."','".$temp_string."')";
 			$statement = $this->DBObject->executeQuery($query);			
 			return $statement;
 
