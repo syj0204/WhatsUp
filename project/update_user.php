@@ -9,8 +9,9 @@ $user_department =$_POST["department"];
 
 $DBControlObject = new DBController();
 $result = $DBControlObject->updateUser($user_id, $user_name, $user_cellphone, $user_department);
-//echo $result;
-if($result==-1) echo "fail";
-else echo $result;
+//if($result==-1) echo "fail";
+//else echo $result;
+
+echo $result;
 ?>
 

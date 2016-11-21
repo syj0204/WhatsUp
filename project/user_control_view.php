@@ -21,10 +21,12 @@
 
 	function edit_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
+		alert("index="+index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		var pre_td_values = new Array(td_list.length);
 		for(var i=0; i<td_list.length; i++) {
 			pre_td_values[i] = td_list[i].innerHTML;
+			alert(td_list[i].innerHTML);
 		}
 		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
@@ -59,9 +61,9 @@
 			function(data,status) {
 				alert(data);
 				var user_info_array = null;
-				if(data!="fail") {
+				if(data!=-1) {
 					user_info_array = data.split(',');
-					//alert(user_info_array);
+					alert(user_info_array);
 					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
 					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
 					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
@@ -106,8 +108,10 @@
 			userid:user_id
 			}, 
 			function(data,status) {
-				alert(data);
-				document.getElementById("user_list_table").rows.item(index).remove();
+				if(data) {
+					document.getElementById("user_list_table").rows.item(index).remove();
+					alert("success!");
+				} else alert("fail!");
 			}
 		);
 	}
@@ -124,11 +128,12 @@
 			department:new_user_department
 			}, 
 			function(data,status) {
-				alert(data);
-				if(data!=null) {
+				//alert(data);
+				if(data) {
 					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 					$('#user_list_table').append($.newtr);
 					document.getElementById("user_list_table").rows.item(1).remove();
+					alert("success!");
 				} else alert("fail");
 				
 			}
