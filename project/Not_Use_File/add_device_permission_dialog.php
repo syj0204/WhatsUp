@@ -1,7 +1,7 @@
 <?php
 	include "DBController.php";
-	$category =$_GET["category"];
-	$user_id =$_GET["userid"];
+	$user_id =$_GET["user"];
+	$devicegroup_id =$_GET["devicegroup"];
 ?>
 <script type="text/javascript">
 
