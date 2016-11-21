@@ -27,12 +27,12 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		$('#user_list').change(function(){
 			initSelectBoxes();
 			var selected_category = $('#user_list option:selected').val();
-			alert(""+selected_category);
+			//alert(""+selected_category);
 		});
 		$('#devicegroup_list').change(function(){
 			var selected_category = $('#devicegroup_list option:selected').val();
-			alert(selected_category);
-			alert(""+selected_category);
+			//alert(selected_category);
+			//alert(""+selected_category);
 			
 			$('#permission_list_table tr').remove();
 			$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
@@ -48,11 +48,11 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				devicegroup:devicegroup_id
 				}, 
 				function(data,status) {
-					alert(data);
+					//alert(data);
 					if(data!=-1) {
-						alert("Abn");
+						//alert("Abn");
 						var data_by_list1 = data.split('|');
-						alert(data_by_list1);
+						//alert(data_by_list1);
 						for(var i=0; i<data_by_list1.length-1; i++) {
 							var value = data_by_list1[i].split(',');
 							//$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
@@ -66,8 +66,29 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			
 		});
 		$('#add_permission').click(function(){
-			var list1_item = $('#list1 option:selected').val();
-			var list2_item = $('#list2 option:selected').val();
+			var user_id = $('#user_list option:selected').val();
+			var devicegroup_id = $('#devicegroup_list option:selected').val();
+
+			alert(user_id);
+			alert(devicegroup_id);
+
+			$.post("get_no_permission_by_devicegroup.php",{
+				user:user_id,
+				devicegroup:devicegroup_id
+				}, 
+				function(data,status) {
+					alert(data);
+					if(data!=-1) {
+						var data_by_list1 = data.split('|');
+						for(var i=0; i<data_by_list1.length-1; i++) {
+							var value = data_by_list1[i].split(',');
+							$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
+							$('#available_devices_list').append($.newtr);
+							
+						}
+					} else alert("No Permission in this group!!");
+				}
+			);
 			
 		});
 	
@@ -166,7 +187,70 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
       			</span>
     		</div>
     		<!-- /input-group -->
-    		<button id="add_permission" class="btn btn-default" type="button"><?php echo $han?></button>
+    		<button id="add_permission" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal"><?php echo $han?></button>
+    		
+    		
+    		<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			      </div>
+			      <div class="modal-body">
+			        
+
+<div class="row">
+<div class="col-lg-12">
+	<label>Available Devices List</label>
+</div>
+<div class="col-xs-8">
+	<select name="available_devices_list" id="available_devices_list" class="form-control" size="10" multiple="multiple">
+	</select>
+</div>
+<!-- /.col-xs-4 -->
+<div class="col-xs-4">
+	<button type="button" id="toRightAllDevices" class="btn btn-default btn-block">Add All Device</button>
+	<button type="button" id="toRightSelectedDevices" class="btn btn-default btn-block">Add Selected Device</button>
+</div>
+<!-- /."col-xs-2" -->
+</div>
+<br />
+<div class="row">
+<div class="col-lg-12">
+	<label>Newly Added Devices List</label>
+</div>
+<div class="col-xs-8">
+	<select name="selected_devices_list" id="selected_devices_list" class="form-control" size="10" multiple="multiple"></select>
+</div>
+<div class="col-xs-4">
+	<button type="button" id="toLeftSelectedDevices" class="btn btn-default btn-block">Cancel Selected Device</button>
+	<button type="button" id="toLeftAllDevices" class="btn btn-default btn-block">Cancel All Device</button>
+</div>
+</div>
+<!-- /.row -->
+
+
+
+
+
+
+
+
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Save changes</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+
+
   		</div>
   		<!-- /.col-lg-6 -->
   		

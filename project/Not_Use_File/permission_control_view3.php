@@ -43,71 +43,6 @@
 		);
 	}
 	
-	function add_permission() {
-		var list1_item = $('#list1 option:selected').val();
-		alert(list1_item);
-		var list2_item = $('#list2 option:selected').val();
-		alert(list2_item);
-		var index = td.parentElement.parentElement.rowIndex;
-		alert(index);
-		var td_list = document.getElementById("permission_list_table").rows.item(index).cells;
-		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML+"/"+td_list[3].innerHTML);
-
-		$.post("delete_permission.php",{
-			category:list1_item,
-			item:list2_item,
-			td_id:td_list[0].innerHTML
-			}, 
-			function(data,status) {
-				if(data=='success') document.getElementById("permission_list_table").rows.item(index).remove();
-				else alert(data);
-			}
-		);
-	}
-	var isAddMode = -1;
-	var to_add_list = [];
-	var to_add_text_list_ = [];    
-	var to_delete_list = [];
-
-	function setAddMode() {
-		isAddMode = 1;
-		//$('#list3').attr( "size", 11 );
-		$('#list4').show();
-		$('#list4_title').show();
-		//$('#edit_permission').text("SAVE");
-		$('#add_permission').hide();
-		$('#delete_permission').hide();
-		$('#save').show();
-		$('#cancel').show();
-		$('#list3_title').text("Current Permission List");
-	}
-
-	function setDeleteMode() {
-		isEditMode = 1;
-		$('#list3').attr( "size", 11 );
-		//$('#list4').show();
-		$('#list4_title').show();
-		//$('#edit_permission').text("SAVE");
-		$('#add_permission').hide();
-		$('#delete_permission').hide();
-		$('#save').show();
-		$('#cancel').show();
-		$('#list3_title').text("Current Permission List");
-	}
-	
-	function setSearchMode() {
-		isAddMode = 0;
-		$('#list4').hide();
-		$('#list4_title').hide();
-		$('#list3').attr( "size", 25 );
-		$('#add_permission').hide();
-		$('#delete_permission').hide();
-		$('#save').hide();
-		$('#cancel').hide();
-		//$('#list2_title').text("List By Category");
-		$('#list3_title').text("Permission List");
-	}
-	
 	function initSelectBoxes() {
 		$('#list2 option').remove();
 		$('#list3 option').remove();
@@ -177,44 +112,20 @@
 		$('#add_permission').click(function(){
 			var list1_item = $('#list1 option:selected').val();
 			var list2_item = $('#list2 option:selected').val();
-			alert(list1_item);
-			alert(list2_item);
 			BootstrapDialog.show({
 				title: "Add Permission",
 	            message: $('<div></div>').load('add_device_permission_dialog.php?category='+list1_item+'&userid='+list2_item),
 	            onhide: function(dialogRef){
-		            alert("abcde"+dialogRef);
-	            	//$("#list1").val("device").prop("selected", true);
-	            	//$("#list2").val(24).prop("selected", true);
+		            //alert("abcde"+dialogRef);
 	            	//$("#list2").change();
-	            	//$("#list2").trigger("change"); 
-		            $.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
-					$('#permission_list_table').append($.newtr);
+	            	//$('#list2').trigger('change'); 
+		            //$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+					//$('#permission_list_table').append($.newtr);
 	            }
 	        });
-
-			/*setAddMode();
-
-			var selected_category = $('#list1 option:selected').val();
-			var selected_item = $('#list2 option:selected').val();
-
-			$.post("get_no_permission_list.php",{
-				category:selected_category,
-				item:selected_item
-				}, 
-				function(data,status) {
-					var data_by_category_item = data.split('|');
-					for(var i=0; i<data_by_category_item.length-1; i++) {
-						var value = data_by_category_item[i].split(',');
-						$('#list4').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
-					}
-				}
-			);*/
 		});
 
 		$('#delete_permission').click(function(){
-
-
 			var selected_category = $('#list1 option:selected').val();
 			var selected_item = $('#list2 option:selected').val();
 
@@ -232,67 +143,16 @@
 			);
 		});
 
-		$('#list3').change(function(){
-			if(isAddMode==1) {
-				var count = $('#list3 option:selected').length;
-				if(count==0) {
-					$('#save').attr('disabled',true);
-					$('#cancel').attr('disabled',true);
-				}
-				else {
-					$('#save').attr('disabled',false);
-					$('#cancel').attr('disabled',false);
-				}
-				
-				var to_delete_item = $('#list3 option:selected').remove().appendTo('#list4').val();
-
-			}
-		});
-
-		$('#list4').change(function(){
-			if(isAddMode==1) {
-				var count = $('#list4 option:selected').length;
-				if(count==0) {
-					$('#save').attr('disabled',true);
-					$('#cancel').attr('disabled',true);
-				}
-				else {
-					$('#save').attr('disabled',false);
-					$('#cancel').attr('disabled',false);
-				}
-			}
-		});
-
-		$('#save').click(function(){
-			var selected_category = $('#list1 option:selected').val();
-			var selected_item = $('#list2 option:selected').val();
-
-			switch(selected_category) {
-				case 'user':
-					//alert('user');
-					$('#list4 option:selected').each(function(){
-						to_add_list.push($(this).val());
-					});
-
-					$.post("update_permission.php",{
-						user:selected_item,
-						addlist:to_add_list
-						}, 
-						function(data,status) {
-							alert(data);
-							if(data=="success") {
-							}
-						}
-					);
-					break;
-				case 'device':
-					alert('device');
-					break;
-				default:
-					alert('devicegroup');
-					break;
-			}
-			setSearchMode();
+		$('#search_permission').click(function(){
+			var value = $('#permission_search_text').val(); 
+			
+			$("#permission_list_table tbody tr").each(function(){
+				$row = $(this);
+				var text = $row.find("td:eq(2)").text();
+				if(text.toLowerCase()==value.toLowerCase()) {
+					$row.show();
+				} else $row.hide();
+			});
 		});
 	});
 
@@ -370,8 +230,9 @@
   		</div>
   		<!-- /.row -->
   		<br />
-  		<div id="permission_table_view">You can check permission! Just Check Each Category Items!!
+  		<div id="permission_table_view">
   			<table id="permission_list_table" class="table table-bordered table-hover table-striped" style="display: none">
+  				<tr><th>Device ID</th><th>Device Group</th><th>Device Name</th><th>Option</th></tr>
   			</table>
   		</div>
 	</div>
