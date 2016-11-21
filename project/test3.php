@@ -21,12 +21,25 @@ if(count($rows)>0) {
 			$rows1 = $DBControlObject1-> getDeviceName($display); ////Template string의 값을 이용해서 디바이스 이름 찾기
 			$new_result="";
 				for($y=0; $y<count($rows1); $y++) {
-					for($j=0; $j<count($rows1[$i]); $j++) {
-						$new_result = $new_result.",".ICONV("EUC-KR","UTF-8",$rows1[$y][$j]);
-					}
+					//for($j=0; $j<count($rows1); $j++) {
+						$new_result = $new_result.",".ICONV("EUC-KR","UTF-8",$rows1[$y][27]);
+						$new_result = $new_result.",".ICONV("EUC-KR","UTF-8",$rows1[$y][0]);
+					//}
+						$new_result = $new_result.",".ICONV("EUC-KR","UTF-8",$rows1[$y][1]);
+						
 					$new_result = $new_result."|";
+					
 				}echo $new_result;
-			
+				//$temp_string = substr($new_result , 0, 1);
+				//echo $temp_string;
+				/*$temp_string  = explode('|', $temp_string );
+
+				sort($temp_string);
+				$new_result1= implode("|", $temp_string);
+				
+				
+				echo $new_result1;
+			*/
 	 	 }
 	}	
 }

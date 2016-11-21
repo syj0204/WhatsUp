@@ -25,14 +25,19 @@ $rows = $DBControlObject-> tem1($temp_name);
 		echo $han;
 	}
 */
+$temp_string = substr($temp_string , 0, -1);
 
-for($i=0; $i<$temp_size; $i++) {
-$result_first = explode(',', $temp_string);
-}
+$result_first = explode(",", $temp_string);
+
+//echo $result_first[1];
 //print_r(natcasesort($result_first));
 sort($result_first);
+//echo $result_first[0];
+$result_first= implode(",", $result_first);
+/*for($i=0; $i<$temp_size; $i++) {
+	$result_first = explode(',', $temp_string);
+}
 
-$test = implode($result_first,",");
-
-echo $test;
+*/$result_first = $result_first.",";
+echo $result_first;
 ?>
