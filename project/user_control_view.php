@@ -21,12 +21,12 @@
 
 	function edit_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
-		alert("index="+index);
+		//alert("index="+index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		var pre_td_values = new Array(td_list.length);
 		for(var i=0; i<td_list.length; i++) {
 			pre_td_values[i] = td_list[i].innerHTML;
-			alert(td_list[i].innerHTML);
+			//alert(td_list[i].innerHTML);
 		}
 		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
@@ -42,15 +42,15 @@
 		//alert(index);
 		//alert(td_list[1].innerHTML);
 		var user_id = document.getElementById("user_id_to_update").value;
-		alert(user_id);
+		//alert(user_id);
 		var user_name_to_update = document.getElementById("user_name_to_update").value;
-		alert(user_name_to_update);
+		//alert(user_name_to_update);
 		var user_cellphone_to_update = document.getElementById("user_cellphone_to_update").value;
-		alert(user_cellphone_to_update);
+		//alert(user_cellphone_to_update);
 		//var user_department_to_update = document.getElementById("user_department_to_update");
 		//user_department_to_update = new_user_department.options[new_user_department.selectedIndex].text;
-		var user_department_to_update = $("#user_department_to_update option:selected").text();
-		alert(user_department_to_update);
+		var user_department_to_update = $("#user_department_to_update option:selected").val();
+		//alert(user_department_to_update);
 		
 		$.post("update_user.php",{
 			userid:user_id,
@@ -59,7 +59,7 @@
 			department:user_department_to_update
 			}, 
 			function(data,status) {
-				alert(data);
+				//alert(data);
 				var user_info_array = null;
 				if(data!=-1) {
 					user_info_array = data.split(',');
