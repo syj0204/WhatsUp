@@ -39,6 +39,7 @@ Class DBController{
 	function updateUser($user_id, $user_name, $user_cellphone, $user_department) {
 		$row = -1;
 		if($this->connection) {
+			
 			$query = "UPDATE Users SET sUserName=N'".$user_name."', nCellNum='".$user_cellphone."', Department='".$user_department."' WHERE nUserID=".$user_id;
 			$statement = $this->DBObject->executeQuery($query);
 				
@@ -46,8 +47,9 @@ Class DBController{
 				$user_name = ICONV("EUC-KR","UTF-8",$user_name);
 				$row = $user_id.",".$user_name.",".$user_cellphone.",".$user_department;
 			}
+			return $row;
 		}
-		return $row;
+		
 	}
 
 	function selectUser($user_id) {
