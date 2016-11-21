@@ -26,6 +26,9 @@ Class DBController{
 
 	function deleteUser($user_id) {
 		if($this->connection) {
+			
+			$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
+			$statement = $this->DBObject->executeQuery($query);
 			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 

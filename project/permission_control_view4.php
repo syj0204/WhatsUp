@@ -100,6 +100,10 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				}, 
 				function(data,status) {
 					//alert(data);
+					$('#available_devices_list option').each(function() {
+						$(this).remove();
+					});
+					
 					if(data!=-1) {
 						var data_by_list1 = data.split('|');
 						for(var i=0; i<data_by_list1.length-1; i++) {
@@ -110,7 +114,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						}
 					} else {
 						//alert("No Permission in this group!!");
-						
 						alert("No Device To Add!!");
 						//$('#myModal').modal().hide();
 					}
