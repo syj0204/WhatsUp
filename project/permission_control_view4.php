@@ -16,7 +16,7 @@ $han4 = ICONV("EUC-KR","UTF-8",$han4);
 $han5 = ICONV("EUC-KR","UTF-8",$han5);
 $han6 = ICONV("EUC-KR","UTF-8",$han6);
 ?>
-<link rel="stylesheet" href="jquery.auto-complete.css">
+<link rel="stylesheet" href="css/jquery.auto-complete.css">
 <script src="js/jquery.auto-complete.js"></script>
 <script src="js/jquery.auto-complete.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -127,7 +127,11 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				$('#selected_devices_list option').each(function() {
 					devices.push($(this).val());
 					devices_name.push($(this).text());
+					$(this).remove();
 				});
+				/*$('#selected_devices_list option').each(function() {
+					$(this).remove();
+				});*/
 				alert(devices);
 				alert(user_id);
 				if(devices.length>0) {
@@ -138,9 +142,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						function(data,status) {
 							if(data==1) {
 								alert("success");
-								$('#selected_devices_list option').each(function() {
-									$(this).remove();
-								});
+								
 							} else alert(data);
 						}
 					);
@@ -156,6 +158,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
 					$('#permission_list_table').append($.newtr);
 				}
+				devices.length=0;
+				devices_name.length=0;
 			});
 
 			
@@ -210,6 +214,18 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				$(this).remove();
 			});
 		});
+
+		$('#permission_search_text').autoComplete({
+            minChars: 1,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                var choices = devices_name;
+                var suggestions = [];
+                for (i=0;i<choices.length;i++)
+                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                suggest(suggestions);
+            }
+        });
 	
 		$('#search_permission').click(function(){
 			var value = $('#permission_search_text').val(); 
