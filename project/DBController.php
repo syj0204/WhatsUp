@@ -109,7 +109,7 @@ Class DBController{
 	function getDeviceList() {
 	
 		if($this->connection) {
-			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
+			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.bDynamicGroup ='0'and DG.nParentGroupID = '0' and DG.nDeviceGroupID not in (select nDeviceGroupID from DeviceGroup where nDeviceGroupID in (select nParentGroupID from DeviceGroup where nParentGroupID !=''))order by nDeviceID ASC ";
 			// WhatUp DB시 사용
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
@@ -127,10 +127,10 @@ Class DBController{
 		}
 	}
 	
-	function getDeviceListForUser($user_id, $device_group_id) {
+	function getDeviceListForUser($user_id) {
 	
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."' and g.nDeviceGroupID=".$device_group_id;
+			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
@@ -163,27 +163,7 @@ Class DBController{
 	
 			//$this->DBObject->disconnectDB();
 		}
-	}
-	
-	function getDeviceListNotForUserInGroup($user_id, $device_group_id) {
-	
-		if($this->connection) {
-			
-			$query = "SELECT d.nDeviceID, d.sDisplayName FROM Device d, PivotDeviceToGroup pdg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.")";
-			$statement = $this->DBObject->executeQuery($query);
-			$rows = array();
-	
-			if(count($statement)>0) {
-				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
-					$rows[] = $row;
-				}
-				return $rows;
-			}
-			else return null;
-	
-			//$this->DBObject->disconnectDB();
-		}
-	}
+	}     
 	
 	function getUserListNotForDevice($device_id) {
 		if($this->connection) {
@@ -341,7 +321,6 @@ Class DBController{
 	
 			$query = "SELECT p.nDeviceID, d.sDisplayName, dg.sGroupName FROM Permission p, Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID=".$nUserID." and pdg.nDeviceGroupID=".$nDeviceGroupID;
 			$statement = $this->DBObject->executeQuery($query);
-			$rows = array();
 	
 			if(count($statement)>0) {
 				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
@@ -401,7 +380,7 @@ Class DBController{
 	
 
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
-			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
+			$query = "select * from DeviceGroup where bDynamicGroup ='0'and nParentGroupID = '0' and nDeviceGroupID not in (select nDeviceGroupID from DeviceGroup where nDeviceGroupID in (select nParentGroupID from DeviceGroup where nParentGroupID !='')) order by sGroupName ASC";
 			// 실제 WhatsUp DB 사용시 사용예정
 			
 
