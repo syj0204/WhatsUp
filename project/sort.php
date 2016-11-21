@@ -1,18 +1,18 @@
 
 <?php
-include "DBController.php";
+/*include "DBController.php";
 $han="템플릿 저장완료";
 $han = ICONV("EUC-KR","UTF-8",$han);
 $han1="템플릿 저장실패(이름 중복을 확인하세요~)";
 $han1 = ICONV("EUC-KR","UTF-8",$han1);
 
+*/
+$temp_size="5";// $_POST["size"];
+//$temp_name= $_POST["name"];
+//$temp_name = ICONV("UTF-8","EUC-KR",$temp_name);
 
-$temp_size= $_POST["size"];
-$temp_name= $_POST["name"];
-$temp_name = ICONV("UTF-8","EUC-KR",$temp_name);
-
-$temp_string=$_POST["category"];
-$DBControlObject = new DBController();
+$temp_string="34,25,26,27,10,";//$_POST["category"];
+/*$DBControlObject = new DBController();
 $rows= null;
 $rows = $DBControlObject-> tem1($temp_name);
 //echo count($rows);
@@ -24,11 +24,15 @@ $rows = $DBControlObject-> tem1($temp_name);
 		$result = $DBControlObject1-> tem($temp_name, $temp_string);
 		echo $han;
 	}
-
+*/
 
 for($i=0; $i<$temp_size; $i++) {
 $result_first = explode(',', $temp_string);
 }
-$sort = natsort($result_first);
-echo $sort;
+//print_r(natcasesort($result_first));
+sort($result_first);
+
+$test = implode($result_first,",");
+
+echo $test;
 ?>

@@ -110,7 +110,7 @@ Class DBController{
 
 		if($this->connection) {
 			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
-			// WhatUp DB½Ã »ç¿ë
+			// WhatUp DB쩍횄 쨩챌쩔챘
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -373,7 +373,7 @@ Class DBController{
 
 		}
 
-	}//À¯Àú¸¦ ÀÌ¿ëÇÑ µð¹ÙÀÌ½º Ã£±â
+	}//�짱�첬쨍짝 �횑쩔챘횉횗 쨉챨쨔횢�횑쩍쨘 횄짙짹창
 	function getDisPlayNameUser($sDisplayName) {
 
 		if($this->connection) {
@@ -394,7 +394,7 @@ Class DBController{
 			else return null;
 				
 		}
-	} //µð¹ÙÀÌ½º¸¦ ÀÌ¿ëÇÑ À¯Àú Ã£±â
+	} //쨉챨쨔횢�횑쩍쨘쨍짝 �횑쩔챘횉횗 �짱�첬 횄짙짹창
 	function DeviceGroupsView() {
 
 		if($this->connection) {
@@ -402,7 +402,7 @@ Class DBController{
 
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
 			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
-			// ½ÇÁ¦ WhatsUp DB »ç¿ë½Ã »ç¿ë¿¹Á¤
+			// 쩍횉횁짝 WhatsUp DB 쨩챌쩔챘쩍횄 쨩챌쩔챘쩔쨔횁짚
 				
 
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
@@ -418,7 +418,7 @@ Class DBController{
 			else return null;
 				
 		}
-	} //µð¹ÙÀÌ½º¸¦ ±×·ì Ã£±â
+	} //쨉챨쨔횢�횑쩍쨘쨍짝 짹횞쨌챙 횄짙짹창
 	function GroupDeviceView($Device_List1) {
 
 		if($this->connection) {
@@ -427,7 +427,7 @@ Class DBController{
 			//$query = "Select D.* from DeviceGroup AS DG INNER JOIN MonitorState AS MS ON DG.nMonitorStateID = MS.nMonitorStateID INNER JOIN Device AS D ON MS.nMonitorStateID = D.nWorstStateID Where nDeviceGroupID='".$Device_List1."'";
 
 			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."' order by nDeviceID ASC";
-			// WhatsUp DB »ç¿ë½Ã »ç¿ë¿¹Á¤
+			// WhatsUp DB 쨩챌쩔챘쩍횄 쨩챌쩔챘쩔쨔횁짚
 
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -441,7 +441,7 @@ Class DBController{
 			else return null;
 
 		}
-	} //±×·ì³» µð¹ÙÀÌ½º  Ã£±â
+	} //짹횞쨌챙쨀쨩 쨉챨쨔횢�횑쩍쨘  횄짙짹창
 
 	function getDisPlayNameUser2($nDeviceID) {
 
@@ -465,15 +465,15 @@ Class DBController{
 			else return null;
 				
 		}
-	} //µð¹ÙÀÌ½º¸¦ ÀÌ¿ëÇÑ À¯Àú Ã£±â2
+	} //쨉챨쨔횢�횑쩍쨘쨍짝 �횑쩔챘횉횗 �짱�첬 횄짙짹창2
 	function tem($temp_name, $temp_string) {
 		if($this->connection) {
-			$query = "Insert Into template(templateName,templateString) values('".$temp_name."','".$temp_string."')";
+			$query = "Insert Into template(templateName,templateString) values(N'".$temp_name."','".$temp_string."')";
 			$statement = $this->DBObject->executeQuery($query);
 			return $statement;
 
 		}
-	}//template¿¡ »õ·Ó°Ô Ãß°¡ÇÏ´Â Äõ¸®
+	}//template쩔징 쨩천쨌횙째횚 횄횩째징횉횕쨈횂 횆천쨍짰
 	function tem1($temp_name) {
 		if($this->connection) {
 			$query = "Select * From template Where templateName='".$temp_name."'";
@@ -488,7 +488,7 @@ Class DBController{
 			}
 			else return null;
 		}
-	}//template Á¸Àç ¿©ºÎ È®ÀÎ½Ç½Ã
+	}//template 횁쨍�챌 쩔짤쨘횓 횊짰�횓쩍횉쩍횄
 
 	function getTemplate($template_select) {
 
@@ -508,7 +508,7 @@ Class DBController{
 
 			//$this->DBObject->disconnectDB();
 		}
-	}// TemplateÅ×ÀÌºí¿¡¼­ StringÀ» È£Ãâ
+	}// Template횇횞�횑쨘챠쩔징쩌짯 String�쨩 횊짙횄창
 	function getSelecttemp() {
 
 		if($this->connection) {
@@ -526,7 +526,7 @@ Class DBController{
 
 			//$this->DBObject->disconnectDB();
 		}
-	}// ÃÊ±â Template select¹®¿¡ ³ªÅ¸³»´Â °Í
+	}// 횄횎짹창 Template select쨔짰쩔징 쨀짧횇쨍쨀쨩쨈횂 째횒
 
 	function getDeviceName($result_first) {
 
@@ -546,7 +546,7 @@ Class DBController{
 
 			//$this->DBObject->disconnectDB();
 		}
-	}//Template stringÀÇ °ªÀ» ÀÌ¿ëÇØ¼­ µð¹ÙÀÌ½º ÀÌ¸§ Ã£±â
+	}//Template string�횉 째짧�쨩 �횑쩔챘횉횠쩌짯 쨉챨쨔횢�횑쩍쨘 �횑쨍짠 횄짙짹창
 	function update_template($update_temp_id, $update_temp_string) {
 		if($this->connection) {
 			$query = "Update Template set templateString = '".$update_temp_string."' where templateID ='".$update_temp_id."'";
