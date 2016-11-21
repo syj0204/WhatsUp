@@ -23,6 +23,26 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		$('#permission_list_table tr').remove();
 		$('#permission_search_add_view').hide();
 	}
+
+	function delete_permission(td) {
+		var user_id = $('#user_list option:selected').val();
+		var devicegroup_id = $('#devicegroup_list option:selected').val();
+		var index = td.parentElement.parentElement.rowIndex;
+		alert(index);
+		var td_list = document.getElementById("permission_list_table").rows.item(index).cells;
+		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML);
+		
+		$.post("delete_permission2.php",{
+			user:user_id,
+			device:td_list[0].innerHTML
+			}, 
+			function(data,status) {
+				alert(data);
+				document.getElementById("permission_list_table").rows.item(index).remove();
+			}
+		);
+	}
+
 	$(function(){
 		$('#user_list').change(function(){
 			initSelectBoxes();
@@ -60,6 +80,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		});
 		
 		$('#add_permission').click(function(){
+			var devices = [];
+			var devices_name = [];
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
 
@@ -83,42 +105,51 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					} else alert("No Permission in this group!!");
 				}
 			);
-		});
 
-		$('#add_permission_save').click(function(){
-			var devices = [];
-			var user_id = $('#user_list option:selected').val();
-			
-			$('#selected_devices_list option').each(function() {
-				devices.push($(this).val());
+
+			$('#add_permission_save').click(function(){
+				var user_id = $('#user_list option:selected').val();
+				
+				$('#selected_devices_list option').each(function() {
+					devices.push($(this).val());
+					devices_name.push($(this).text());
+				});
+				alert(devices);
+				alert(user_id);
+				if(devices.length>0) {
+					$.post("add_permission.php",{
+						user:user_id,
+						devicearray:devices
+						}, 
+						function(data,status) {
+							if(data==1) {
+								alert("success");
+								$('#selected_devices_list option').each(function() {
+									$(this).remove();
+								});
+							} else alert(data);
+						}
+					);
+				} else alert("Choose Device");	
+				
 			});
-			alert(devices);
-			alert(user_id);
-			if(devices.length>0) {
-				$.post("add_permission.php",{
-					user:user_id,
-					devicearray:devices
-					}, 
-					function(data,status) {
-						if(data==1) {
-							alert("success");
-							$('#selected_devices_list option').each(function() {
-								$(this).remove();
-							});
-						} else alert(data);
-					}
-				);
-			} else alert("Choose Device");	
+
+			$('#add_permission_close').click(function(){
+				var user_id = $('#user_list option:selected').val();
+				var devicegroup_id = $('#devicegroup_list option:selected').val();
+
+				for(var i=0; i<devices.length; i++) {
+					$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+					$('#permission_list_table').append($.newtr);
+				}
+			});
+
 			
 		});
 
-		$('#add_permission_close').click(function(){
-			var user_id = $('#user_list option:selected').val();
-			var devicegroup_id = $('#devicegroup_list option:selected').val();
-			$("#user_list").val(user_id).trigger('click');
-			$("#user_list").val(devicegroup_id).trigger('click');
-			
-		});
+		
+
+
 
 		$('#toRightAllDevices').click(function(){
 			$('#available_devices_list option').each(function() {
