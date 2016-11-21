@@ -86,6 +86,7 @@
 			 alert(list_string1);
 			$.post("test4.php",{
 				name:Temp,
+				size:list_size,
 				category:list_string1
 				}, 
 				function(data,status) {
@@ -189,7 +190,10 @@
 					var data_by_list1 = data.split('|');
 					for(var i=0; i<data_by_list1.length-1; i++) {
 						var value = data_by_list1[i].split(',');
-						$('#list20').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+						
+						$('#list20').append("<option value="+value[1]+">"+value[1]+" / "+value[2]+","+value[3]+"</option>");
+						//alert(data);
+						//alert(data);
 					}
 				}
 			);
@@ -270,6 +274,7 @@
 								if(count($rows)>0) {		
 									for($i=0; $i<count($rows); $i++) {
 									$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+									//$device_group_name = ICONV("EUC-KR","UTF-8",$rows[$i][27]);
 						?>
 					<option value=<?php echo $rows[$i][0]?>>      		 		
 						<?php
