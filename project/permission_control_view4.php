@@ -141,6 +141,9 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						}, 
 						function(data,status) {
 							if(data==1) {
+								for(var i=0; i<devices.length; i++) {
+									available_tags.push(devices_name[i]);
+								}
 								alert("success");
 								
 							} else alert(data);
@@ -177,8 +180,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
             }
         });
 
-
-
 		$('#toRightAllDevices').click(function(){
 			$('#available_devices_list option').each(function() {
 				var current_item_value = $(this).val();
@@ -214,18 +215,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				$(this).remove();
 			});
 		});
-
-		$('#permission_search_text').autoComplete({
-            minChars: 1,
-            source: function(term, suggest){
-                term = term.toLowerCase();
-                var choices = devices_name;
-                var suggestions = [];
-                for (i=0;i<choices.length;i++)
-                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-                suggest(suggestions);
-            }
-        });
 	
 		$('#search_permission').click(function(){
 			var value = $('#permission_search_text').val(); 

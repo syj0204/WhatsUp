@@ -16,8 +16,13 @@
 	$han5 = ICONV("EUC-KR","UTF-8",$han5);
 	$han6 = ICONV("EUC-KR","UTF-8",$han6);
 ?>
-
+<link rel="stylesheet" href="css/jquery.auto-complete.css">
+<script src="js/jquery.auto-complete.js"></script>
+<script src="js/jquery.auto-complete.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+	var available_tags = [];
 
 	function edit_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
@@ -120,7 +125,7 @@
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
 		var new_user_department = document.getElementById("user_department_to_add");
-		new_user_department = new_user_department.options[new_user_department.selectedIndex].text;
+		new_user_department = new_user_department.options[new_user_department.selectedIndex].value;
 		
 		$.post("user.php",{
 			username:new_user_name,
@@ -133,6 +138,7 @@
 					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 					$('#user_list_table').append($.newtr);
 					document.getElementById("user_list_table").rows.item(1).remove();
+					available_tags.push(new_user_name);
 					alert("success!");
 				} else alert("fail");
 				
@@ -141,6 +147,23 @@
 	}
 
 	$(function(){
+
+		$(document).ready(function(){
+            $.post("get_userlist.php",
+    			function(data,status) {
+    				alert(data);
+					if(data!=-1) {
+						var data_by_list1 = data.split('|');
+						for(var i=0; i<data_by_list1.length-1; i++) {
+							var value = data_by_list1[i].split(',');
+							//alert(value[2]);
+							available_tags.push(value[2]);
+						}
+					}
+					//alert(available_tags.length);
+    			}
+    		);
+		});
 		
 		$('#search_user').click(function(){
 			var value = $('#user_search_text').val(); 
@@ -154,11 +177,23 @@
 			});
 		});
 
+		$('#user_search_text').autoComplete({
+            minChars: 1,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                var choices = available_tags;
+                var suggestions = [];
+                for (i=0;i<choices.length;i++)
+                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                suggest(suggestions);
+            }
+        });
+
 		$('#add_user').click(function(){
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 			//$.trClone = $('#user_list_table tr:last').clone().html();
 			
-			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='security'>security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'><?php echo $han5?></button></td></tr>");
+			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'><?php echo $han5?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 	});
@@ -219,6 +254,7 @@
 					if(count($rows)>0) {
 						for($i=0; $i<count($rows); $i++) {
 							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+							$users_name[] = $user_name;
 							//$user_id = intval($rows[$i][0]);
 				?>
 					<tr>
