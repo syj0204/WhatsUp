@@ -8,6 +8,8 @@ $han1 = ICONV("EUC-KR","UTF-8",$han1);
 
 
 $temp_name= $_POST["name"];
+$temp_name = ICONV("UTF-8","EUC-KR",$temp_name);
+
 $temp_string=$_POST["category"];
 $DBControlObject = new DBController();
 $rows= null;
