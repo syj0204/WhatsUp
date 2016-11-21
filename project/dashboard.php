@@ -16,8 +16,8 @@
 				$('#ui_view').load("user_control_view.php");
 				return false;
 			});
-			$('#sin').click(function(){
-				$('#ui_view').load("permission_control_view3.php");
+			$('#sin1').click(function(){
+				$('#ui_view').load("permission_control_view4.php");
 				return false;
 			});
 			$('#temp').click(function(){
@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                             </div>
-							<a href="#" id="sin"> 
+							<a href="#" id="sin1"> 
                                 <div class="panel-footer">
                                     <span class="pull-left">Go Match~~!</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 

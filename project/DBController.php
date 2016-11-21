@@ -26,8 +26,20 @@ Class DBController{
 	
 	function deleteUser($user_id) {
 		if($this->connection) {
+			//$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
 			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
+			
+	
+			return $statement;
+		}
+	}
+	function deleteUser1($user_id) {
+		if($this->connection) {
+			$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
+			//$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
+			$statement = $this->DBObject->executeQuery($query);
+				
 	
 			return $statement;
 		}
@@ -447,7 +459,7 @@ Class DBController{
 	} //디바이스를 이용한 유저 찾기2
 	function tem($temp_name, $temp_string) {
 		if($this->connection) {
-			$query = "Insert Into template(templateName,templateString) values('".$temp_name."','".$temp_string."')";
+			$query = "Insert Into template(templateName,templateString) values(N'".$temp_name."','".$temp_string."')";
 			$statement = $this->DBObject->executeQuery($query);			
 			return $statement;
 
