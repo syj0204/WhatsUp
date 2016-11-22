@@ -50,18 +50,33 @@
 		$('#list1').change(function(){
 			//initSelectBoxes();
 			var selected_category = $('#list1 option:selected').val();
+			var bank_size = $('#list20 option').size();
+			var bank_val = new Array();
+			//var bank_val = $('#list20 option:eq(1)').val();
+			//alert(bank_val);
+			var bank_val1="";
+			for(var i=0; i<bank_size; i++) {
+				bank_val[i] = $('#list20 option:eq('+i+')').val();	
+				//alert(bank_val[i]);
+				 var bank_val2 = bank_val[i]+",";
+				 bank_val1 = bank_val1 + bank_val2;
+				
+			} //alert(bank_val1);
+			//alert(bank_size);
+			//alert(bank_val1);
 			$('#list2 option').remove();
 			//$('#list2_title').text($('#list1 option:selected').text()+" List");
 			
-			alert(selected_category);
-			$.post("category.php",{
+			//alert(selected_category);
+			$.post("sort.php",{
+				bank:bank_val1,
 				category:selected_category
 				}, 
 				function(data,status) {
 					var data_by_category = data.split('|');
 					for(var i=0; i<data_by_category.length-1; i++) {
 						var value = data_by_category[i].split(',');
-						$('#list2').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+						$('#list2').append("<option value="+value[1]+">"+value[3]+" / ["+value[2]+"] </option>");
 					}
 				}
 			);
@@ -71,10 +86,10 @@
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
-			alert(list_size);
+			//alert(list_size);
 
 			var Temp = $('#list10 option:selected').val();
-			alert(Temp);
+			//alert(Temp);
 			//for(var j=0 j<list_size; j++){
 				for(var i=0; i<list_size; i++) {
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -83,9 +98,10 @@
 				}
 				
 			//}
-			 alert(list_string1);
+			 //alert(list_string1);
 			$.post("test4.php",{
 				name:Temp,
+				size:list_size,
 				category:list_string1
 				}, 
 				function(data,status) {
@@ -100,7 +116,7 @@
 			//var list_size = $('#list20 option').size();
 			//alert(list_size);
 			var Temp = $('#list10 option:selected').val();
-			alert(Temp);
+			//alert(Temp);
 			//for(var j=0 j<list_size; j++){
 			/*	for(var i=0; i<list_size; i++) {
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -126,10 +142,10 @@
 	    var list_save = new Array();
 	    var list_string1=""
 		var list_size = $('#list20 option').size();
-		alert(list_size);
+		//alert(list_size);
 
 		var Temp = $('#Temp_Name').val();
-		alert(Temp);
+		//alert(Temp);
 		//for(var j=0 j<list_size; j++){
 			for(var i=0; i<list_size; i++) {
 				 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -138,7 +154,7 @@
 			}
 			
 		//}
-		 alert(list_string1);
+		// alert(list_string1);
 		$.post("test2.php",{
 			name:Temp,
 			size:list_size,
@@ -168,39 +184,54 @@
 			//alert(to_add_item);
 			$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
 			//to_add_list.push(to_add_item);
+			$('#list2 option:selected').remove();
 		
 	});
 
 		$('#list20').change(function(){
-			var to_add_item1 = $('#list20 option:selected').remove();
-			//alert(to_add_item);
-			$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
+			var to_add_item2 = $('#list20 option:selected').text();
+			var to_add_item3 = $('#list20 option:selected').val();
+			$('#list2').append("<option value="+to_add_item3+">"+to_add_item2+"</option>");
+			$('#list20 option:selected').remove();
+			//alert(to_add_item2);
+			//alert(to_add_item3);
+			//$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
 			//to_add_list.push(to_add_item);
 		
 	});
 		$('#list10').change(function(){
 			var template_select = $('#list10 option:selected').val();
+			var data_by_category = new Array();
 			$('#list20 option').remove();
-			alert(template_select);
+			$('#list2 option').remove();
+			//alert(template_select);
 			$.post("test3.php",{
 				category:template_select
 				}, 
 				function(data,status) {
-					var data_by_list1 = data.split('|');
-					for(var i=0; i<data_by_list1.length-1; i++) {
-						var value = data_by_list1[i].split(',');
-						$('#list20').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+					var test = data.substring(2);
+					//alert(test);
+					var data_by_category = test.split('|');
+					//alert(data_by_category[3]);
+					data_by_category.sort();
+					for(var i=0; i<data_by_category.length; i++) {
+						
+						var value = data_by_category[i].split(',');
+						$('#list20').append("<option value="+value[1]+">"+value[0]+" / ["+value[2]+"] </option>");
+						//alert(value[1]);
 					}
 				}
+
 			);
-		
+
 	});
+
 		$(window).load(function(e){
 
 		});
 
-		
 	});
+
 		</script>
 
 
@@ -270,6 +301,7 @@
 								if(count($rows)>0) {		
 									for($i=0; $i<count($rows); $i++) {
 									$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
+									//$device_group_name = ICONV("EUC-KR","UTF-8",$rows[$i][27]);
 						?>
 					<option value=<?php echo $rows[$i][0]?>>      		 		
 						<?php

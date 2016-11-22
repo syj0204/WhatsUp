@@ -12,6 +12,14 @@ $temp_name= $_POST["name"];
 $temp_name = ICONV("UTF-8","EUC-KR",$temp_name);
 
 $temp_string=$_POST["category"];
+$temp_string = substr($temp_string , 0, -1);
+$result_first = explode(",", $temp_string);
+sort($result_first);
+$result_first= implode(",", $result_first);
+$result_first = $result_first.",";
+
+
+
 $DBControlObject = new DBController();
 $rows= null;
 $rows = $DBControlObject-> tem1($temp_name);
@@ -21,14 +29,11 @@ $rows = $DBControlObject-> tem1($temp_name);
 	}else {
 		$DBControlObject1 = new DBController();
 		$result = null;
-		$result = $DBControlObject1-> tem($temp_name, $temp_string);
+		$result = $DBControlObject1-> tem($temp_name, $result_first);
 		echo $han;
 	}
+	
 
 
-for($i=0; $i<$temp_size; $i++) {
-$result_first = explode(',', $temp_string);
-}
-$sort = natsort($result_first);
-echo $sort;
 ?>
+
