@@ -28,11 +28,18 @@
 		var index = td.parentElement.parentElement.rowIndex;
 		//alert("index="+index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		var pre_td_values = new Array(td_list.length);
+		var pre_username = td_list[1].innerHTML;
+		for(var i=0; i<available_tags.length; i++) {
+			if(available_tags[i]==pre_username) {
+				available_tags.splice(i,1);
+				break;
+			}
+		}
+		/*var pre_td_values = new Array(td_list.length);
 		for(var i=0; i<td_list.length; i++) {
 			pre_td_values[i] = td_list[i].innerHTML;
-			//alert(td_list[i].innerHTML);
-		}
+			alert(td_list[i].innerHTML);
+		}*/
 		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
 		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
@@ -52,8 +59,6 @@
 		//alert(user_name_to_update);
 		var user_cellphone_to_update = document.getElementById("user_cellphone_to_update").value;
 		//alert(user_cellphone_to_update);
-		//var user_department_to_update = document.getElementById("user_department_to_update");
-		//user_department_to_update = new_user_department.options[new_user_department.selectedIndex].text;
 		var user_department_to_update = $("#user_department_to_update option:selected").val();
 		//alert(user_department_to_update);
 		
@@ -68,13 +73,15 @@
 				var user_info_array = null;
 				if(data!=-1) {
 					user_info_array = data.split(',');
-					alert(user_info_array);
+					//alert(user_info_array);
 					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
 					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
 					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
 					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
 					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
-					+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
+					+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
+
+					available_tags.push(user_info_array[1]);
 				}
 			}
 		);
@@ -98,27 +105,42 @@
 		td_list[2].innerHTML = "<td>"+user_cellphone+"</td>";
 		td_list[3].innerHTML =  "<td>"+user_department+"</td>";
 		td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
-		+ "       <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button>";
-		
+		+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
+		available_tags.push(user_name);
 	}
 
 	function delete_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
-		alert(index);
+		//alert(index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML+"/"+td_list[3].innerHTML);
-		alert(typeof(td_list[0].innerHTML)+"/"+typeof(td_list[1].innerHTML)+"/"+typeof(td_list[2].innerHTML)+"/"+typeof(td_list[3].innerHTML));
+		//alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML+"/"+td_list[3].innerHTML);
+		//alert(typeof(td_list[0].innerHTML)+"/"+typeof(td_list[1].innerHTML)+"/"+typeof(td_list[2].innerHTML)+"/"+typeof(td_list[3].innerHTML));
 		var user_id = td_list[0].innerHTML;
-		$.post("delete_user.php",{
-			userid:user_id
-			}, 
-			function(data,status) {
-				if(data) {
-					document.getElementById("user_list_table").rows.item(index).remove();
-					alert("success!");
-				} else alert("fail!");
-			}
-		);
+		var user_name = td_list[1].innerHTML;
+
+		$("#delete_user_modal").on("click", "#delete_user", function() {
+		    //alert(index);
+			//alert(user_id);
+			//alert(user_name);
+			$.post("delete_user.php",{
+				userid:user_id
+				}, 
+				function(data,status) {
+					//alert(data);
+					if(data) {
+						document.getElementById("user_list_table").rows.item(index).remove();
+						for(var i=0; i<available_tags.length; i++) {
+							if(available_tags[i]==user_name) {
+								available_tags.splice(i,1);
+								break;
+							}
+						}
+						alert("success!");
+						//alert(available_tags);
+					} else alert("fail!");
+				}
+			);
+		});
 	}
 
 	function add_user() {
@@ -134,8 +156,8 @@
 			}, 
 			function(data,status) {
 				//alert(data);
-				if(data) {
-					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button id='delete_user' class='btn btn-default' type='button' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+				if(data!=-1) {
+					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 					$('#user_list_table').append($.newtr);
 					document.getElementById("user_list_table").rows.item(1).remove();
 					available_tags.push(new_user_name);
@@ -151,7 +173,7 @@
 		$(document).ready(function(){
             $.post("get_userlist.php",
     			function(data,status) {
-    				alert(data);
+    				//alert(data);
 					if(data!=-1) {
 						var data_by_list1 = data.split('|');
 						for(var i=0; i<data_by_list1.length-1; i++) {
@@ -262,7 +284,9 @@
 						<td><?php echo $user_name?></td>
 						<td><?php echo $rows[$i][2]?></td>
 						<td><?php echo $rows[$i][3]?></td>
-						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td>
+						<!-- <td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td> -->
+						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#delete_user_modal" onclick="delete_user(this)"><?php echo $han2?></button></td>
+						 
 					</tr>
 				<?php
 						}
@@ -272,6 +296,35 @@
 			</table>
 		</div>
 		<!-- /table-responsive -->
+		
+		<!-- Modal -->
+	  	<div class="modal fade" id="delete_user_modal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Delete Confirm</h4>
+	        </div>
+	        <div class="modal-body">
+	          <p><?php 
+                   $text = "사용자를 삭제하면 현재 보유한 권한까지 모두 삭제 됩니다. 정말 삭제하시겠습니까?";
+                   $text = ICONV("EUC-KR","UTF-8",$text);
+                   echo $text;
+                   ?>
+              </p>
+	        </div>
+	        <div class="modal-footer">
+	          <button id="delete_user" type="button" class="btn btn-primary" data-dismiss="modal">Yes, Delete!</button>
+	          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  	</div>
+  
+  
 	</div>
 	<!-- /.panel-body -->
 </div>
