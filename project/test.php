@@ -61,13 +61,13 @@
 				 var bank_val2 = bank_val[i]+",";
 				 bank_val1 = bank_val1 + bank_val2;
 				
-			} alert(bank_val1);
-			alert(bank_size);
+			} //alert(bank_val1);
+			//alert(bank_size);
 			//alert(bank_val1);
 			$('#list2 option').remove();
 			//$('#list2_title').text($('#list1 option:selected').text()+" List");
 			
-			alert(selected_category);
+			//alert(selected_category);
 			$.post("sort.php",{
 				bank:bank_val1,
 				category:selected_category
@@ -86,10 +86,10 @@
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
-			alert(list_size);
+			//alert(list_size);
 
 			var Temp = $('#list10 option:selected').val();
-			alert(Temp);
+			//alert(Temp);
 			//for(var j=0 j<list_size; j++){
 				for(var i=0; i<list_size; i++) {
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -98,7 +98,7 @@
 				}
 				
 			//}
-			 alert(list_string1);
+			 //alert(list_string1);
 			$.post("test4.php",{
 				name:Temp,
 				size:list_size,
@@ -116,7 +116,7 @@
 			//var list_size = $('#list20 option').size();
 			//alert(list_size);
 			var Temp = $('#list10 option:selected').val();
-			alert(Temp);
+			//alert(Temp);
 			//for(var j=0 j<list_size; j++){
 			/*	for(var i=0; i<list_size; i++) {
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -142,10 +142,10 @@
 	    var list_save = new Array();
 	    var list_string1=""
 		var list_size = $('#list20 option').size();
-		alert(list_size);
+		//alert(list_size);
 
 		var Temp = $('#Temp_Name').val();
-		alert(Temp);
+		//alert(Temp);
 		//for(var j=0 j<list_size; j++){
 			for(var i=0; i<list_size; i++) {
 				 list_save[i] = $('#list20 option:eq('+i+')').val();	
@@ -154,7 +154,7 @@
 			}
 			
 		//}
-		 alert(list_string1);
+		// alert(list_string1);
 		$.post("test2.php",{
 			name:Temp,
 			size:list_size,
@@ -204,7 +204,7 @@
 			var data_by_category = new Array();
 			$('#list20 option').remove();
 			$('#list2 option').remove();
-			alert(template_select);
+			//alert(template_select);
 			$.post("test3.php",{
 				category:template_select
 				}, 
@@ -212,7 +212,7 @@
 					var test = data.substring(2);
 					//alert(test);
 					var data_by_category = test.split('|');
-					alert(data_by_category[3]);
+					//alert(data_by_category[3]);
 					data_by_category.sort();
 					for(var i=0; i<data_by_category.length; i++) {
 						
