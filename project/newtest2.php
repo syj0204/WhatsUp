@@ -20,7 +20,8 @@
 $(function(){
 	$('#enter').click(function(){
 		var list_size = $('#list1 option:selected').size();
-		alert(list_size);
+		//alert(list_size);
+		$('#list20 option').remove();
 		var list_save = new Array();
 		 var list_string1= ""
 
@@ -30,11 +31,11 @@ $(function(){
 			 var list_string1 = list_string1 + list_string;
 			 
 		 }
-		 alert(list_string1);
+		// alert(list_string1);
 
 
 		var temp_select = $('#list10 option:selected').val();
-		alert(temp_select);
+		//alert(temp_select);
 		$.post("newtest1.php",{
 			list: list_string1,
 			size: list_size,
@@ -50,16 +51,21 @@ $(function(){
 	$('#list10').change(function(){
 		var template_select = $('#list10 option:selected').val();
 		$('#list20 option').remove();
-		alert(template_select);
+		//alert(template_select);
 		$.post("test3.php",{
 			category:template_select
 			}, 
 			function(data,status) {
-				
-				var data_by_list1 = data.split('|');
-				for(var i=0; i<data_by_list1.length-1; i++) {
-					var value = data_by_list1[i].split(',');
-					$('#list20').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+				var test = data.substring(2);
+				//alert(test);
+				var data_by_category = test.split('|');
+				//alert(data_by_category[3]);
+				data_by_category.sort();
+				for(var i=0; i<data_by_category.length; i++) {
+					
+					var value = data_by_category[i].split(',');
+					$('#list20').append("<option value="+value[1]+">"+value[0]+" / ["+value[2]+"] </option>");
+					//alert(value[1]);
 				}
 			}
 		);
