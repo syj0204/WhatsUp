@@ -25,7 +25,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 	var available_tags=[];
 	
 	function initSelectBoxes() {
-		$('#permission_list_table tr').remove();
+		$('#permission_list_table tbody tr').remove();
 		$('#permission_search_add_view').hide();
 	}
 
@@ -57,9 +57,9 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		$('#devicegroup_list').change(function(){
 			var selected_category = $('#devicegroup_list option:selected').val();
 			
-			$('#permission_list_table tr').remove();
-			$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
-			$('#permission_list_table').append($.headtr);
+			$('#permission_list_table tbody tr').remove();
+			//$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
+			//$('#permission_list_table').append($.headtr);
 
 			$('#permission_search_add_view').show();
 			$('#permission_list_table').show();
@@ -76,7 +76,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						for(var i=0; i<data_by_list1.length-1; i++) {
 							var value = data_by_list1[i].split(',');
 							$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
-							$('#permission_list_table').append($.newtr);
+							$('#permission_list_table tbody').append($.newtr);
 							available_tags.push(value[3]);
 						}
 					} else alert("No Permission in this group!!");
@@ -141,6 +141,9 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						}, 
 						function(data,status) {
 							if(data==1) {
+								for(var i=0; i<devices.length; i++) {
+									available_tags.push(devices_name[i]);
+								}
 								alert("success");
 								
 							} else alert(data);
@@ -156,7 +159,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 
 				for(var i=0; i<devices.length; i++) {
 					$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
-					$('#permission_list_table').append($.newtr);
+					$('#permission_list_table tbody').append($.newtr);
 				}
 				devices.length=0;
 				devices_name.length=0;
@@ -176,8 +179,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
                 suggest(suggestions);
             }
         });
-
-
 
 		$('#toRightAllDevices').click(function(){
 			$('#available_devices_list option').each(function() {
@@ -214,18 +215,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				$(this).remove();
 			});
 		});
-
-		$('#permission_search_text').autoComplete({
-            minChars: 1,
-            source: function(term, suggest){
-                term = term.toLowerCase();
-                var choices = devices_name;
-                var suggestions = [];
-                for (i=0;i<choices.length;i++)
-                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-                suggest(suggestions);
-            }
-        });
 	
 		$('#search_permission').click(function(){
 			var value = $('#permission_search_text').val(); 
@@ -312,7 +301,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		</div>
 		<br />
 	
-		<div id="permission_search_add_view" class="row" style="display:none">
+		<div id="permission_search_add_view" class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
       			<input id="permission_search_text" class="form-control" type="text" placeholder="<?php echo $han6?>~~">
@@ -387,7 +376,13 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
   		<br />
   		<div id="permission_table_view">
   			<table id="permission_list_table" class="table table-bordered table-hover table-striped" style="display: none">
-  				<!-- <tr><th>Device ID</th><th>Device Group</th><th>Device Name</th><th>Option</th></tr> -->
+  				<thead>
+					<tr>
+						<th>Device ID</th><th>Device Name</th><th>Option</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
   			</table>
   		</div>
 	</div>
