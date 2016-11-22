@@ -2,7 +2,7 @@
 <?php
 include "DBController.php";
 
-$template_select="70";//$_POST["category"];
+$template_select=$_POST["category"];
 
 
 $DBControlObject = new DBController();
