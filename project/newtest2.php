@@ -55,6 +55,7 @@ $(function(){
 			category:template_select
 			}, 
 			function(data,status) {
+				
 				var data_by_list1 = data.split('|');
 				for(var i=0; i<data_by_list1.length-1; i++) {
 					var value = data_by_list1[i].split(',');
