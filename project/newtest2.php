@@ -88,7 +88,7 @@ $(function(){
 <!-- Page Heading -->
 <div class="row">
 <div class="col-lg-12">
-	<h1 class="page-header">Match</h1>
+	<h1 class="page-header">Templates Match</h1>
 
 </div>
 </div>
@@ -98,7 +98,7 @@ $(function(){
 <div class="col-lg-12">
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Match User/Template</h3>
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Templates Match</h3>
 	</div>
 	<div class="panel-body">
 	<!-- <div id="morris-area-chart"></div> -->
@@ -143,7 +143,7 @@ $(function(){
 								?>
 							<option value=<?php echo $rows[$i][0]?>>      		 		
 								<?php
-												echo "Template / " .$device_name." <br> \n";
+												echo $device_name." <br> \n";
 											}
 										}
 								?>

@@ -246,7 +246,7 @@
 <!-- Page Heading -->
 <div class="row">
 <div class="col-lg-12">
-	<h1 class="page-header">Template </h1>
+	<h1 class="page-header">Templates Setting </h1>
 
 </div>
 </div>
@@ -256,7 +256,7 @@
 <div class="col-lg-12">
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Setting Template</h3>
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Templates Setting</h3>
 	</div>
 	<div class="panel-body">
 	<!-- <div id="morris-area-chart"></div> -->
