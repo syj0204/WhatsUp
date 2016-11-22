@@ -54,14 +54,14 @@
 			//$('#list2_title').text($('#list1 option:selected').text()+" List");
 			
 			alert(selected_category);
-			$.post("category.php",{
+			$.post("sort.php",{
 				category:selected_category
 				}, 
 				function(data,status) {
 					var data_by_category = data.split('|');
 					for(var i=0; i<data_by_category.length-1; i++) {
 						var value = data_by_category[i].split(',');
-						$('#list2').append("<option value="+value[1]+">"+value[1]+","+value[2]+"</option>");
+						$('#list2').append("<option value="+value[1]+">"+value[3]+" / ["+value[2]+"] </option>");
 					}
 				}
 			);
@@ -169,42 +169,52 @@
 			//alert(to_add_item);
 			$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
 			//to_add_list.push(to_add_item);
+			$('#list2 option:selected').remove();
 		
 	});
 
 		$('#list20').change(function(){
-			var to_add_item1 = $('#list20 option:selected').remove();
-			//alert(to_add_item);
-			$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
+			var to_add_item2 = $('#list20 option:selected').text();
+			var to_add_item3 = $('#list20 option:selected').val();
+			$('#list2').append("<option value="+to_add_item3+">"+to_add_item2+"</option>");
+			$('#list20 option:selected').remove();
+			//alert(to_add_item2);
+			//alert(to_add_item3);
+			//$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
 			//to_add_list.push(to_add_item);
 		
 	});
 		$('#list10').change(function(){
 			var template_select = $('#list10 option:selected').val();
+			var data_by_category = new Array();
 			$('#list20 option').remove();
 			alert(template_select);
 			$.post("test3.php",{
 				category:template_select
 				}, 
 				function(data,status) {
-					var data_by_list1 = data.split('|');
-					for(var i=0; i<data_by_list1.length-1; i++) {
-						var value = data_by_list1[i].split(',');
+					var test = data.substring(2);
+					//alert(test);
+					var data_by_category = test.split('|');
+					alert(data_by_category[3]);
+					data_by_category.sort();
+					for(var i=0; i<data_by_category.length; i++) {
 						
-						$('#list20').append("<option value="+value[1]+">"+value[1]+" / "+value[2]+","+value[3]+"</option>");
-						//alert(data);
-						//alert(data);
+						var value = data_by_category[i].split(',');
+						$('#list20').append("<option value="+value[1]+">"+value[0]+" / ["+value[2]+"] </option>");
 					}
 				}
+
 			);
-		
+
 	});
+
 		$(window).load(function(e){
 
 		});
 
-		
 	});
+
 		</script>
 
 
