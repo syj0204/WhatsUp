@@ -7,7 +7,7 @@ $han2="삭제";
 $han3="검색";
 $han4="취소";
 $han5="완료";
-$han6="이름으로 찾기";
+$han6="Device 이름으로 검색하세요";
 $han = ICONV("EUC-KR","UTF-8",$han);
 $han1 = ICONV("EUC-KR","UTF-8",$han1);
 $han2 = ICONV("EUC-KR","UTF-8",$han2);
@@ -180,6 +180,28 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
             }
         });
 
+		$('#permission_search_text').keyup(function() {
+			var value = $('#permission_search_text').val();
+			if(value=="") {
+				$("#permission_list_table tbody tr").each(function(){
+					$row = $(this);
+					$row.show();
+				});
+			}
+		});
+	
+		$('#search_permission').click(function(){
+			var value = $('#permission_search_text').val(); 
+			
+			$("#permission_list_table tbody tr").each(function(){
+				$row = $(this);
+				var text = $row.find("td:eq(1)").text();
+				if(text.toLowerCase()==value.toLowerCase()) {
+					$row.show();
+				} else $row.hide();
+			});
+		});
+		
 		$('#toRightAllDevices').click(function(){
 			$('#available_devices_list option').each(function() {
 				var current_item_value = $(this).val();
@@ -215,18 +237,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				$(this).remove();
 			});
 		});
-	
-		$('#search_permission').click(function(){
-			var value = $('#permission_search_text').val(); 
-			
-			$("#permission_list_table tbody tr").each(function(){
-				$row = $(this);
-				var text = $row.find("td:eq(1)").text();
-				if(text.toLowerCase()==value.toLowerCase()) {
-					$row.show();
-				} else $row.hide();
-			});
-		});
 	});
 </script>
 
@@ -251,7 +261,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 	<div class="panel-body">
 		<div class="row">
 		<div class="form-group">
-			<div class="col-sm-2">
+			<!-- <div class="col-sm-2"> -->
+			<div class="col-xs-4">
 			<label>Select User</label>
 	    	<select name="user_list" id="user_list" class="form-control selcls">
 	    		<option> -- Select User -- </option>
@@ -274,7 +285,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				?>
 			</select>
 			</div>
-			<div class="col-xs-2">
+			<!-- <div class="col-xs-2"> -->
+			<div class="col-xs-4">
 				<label>Select Device Group</label>
 	    		<select name="devicegroup_list" id="devicegroup_list" class="form-control selcls">
 	    			<option> -- Select Device Group -- </option>
@@ -304,7 +316,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		<div id="permission_search_add_view" class="row">
 		<div class="col-lg-6">
    			<div class="input-group">
-      			<input id="permission_search_text" class="form-control" type="text" placeholder="<?php echo $han6?>~~">
+      			<input id="permission_search_text" class="form-control" type="text" placeholder="<?php echo $han6?>">
      			<span class="input-group-btn">
         			<button id="search_permission" class="btn btn-default" type="button"><?php echo $han3?></button>
       			</span>
