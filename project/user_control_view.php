@@ -143,7 +143,7 @@
 		});
 	}
 
-	function add_user() {
+	function add_user_save() {
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
 		var new_user_department = document.getElementById("user_department_to_add");
@@ -166,6 +166,10 @@
 				
 			}
 		);
+	}
+
+	function add_user_cancel() {
+		document.getElementById("user_list_table").rows.item(1).remove();
 	}
 
 	$(function(){
@@ -215,7 +219,7 @@
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 			//$.trClone = $('#user_list_table tr:last').clone().html();
 			
-			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select></td><td><button id='add_button' class='btn btn-default' type='button' onclick='add_user()'><?php echo $han5?></button></td></tr>");
+			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select></td><td><button id='add_user_save' class='btn btn-default' type='button' onclick='add_user_save()'><?php echo $han5?></button><button id='add_user_cancel' class='btn btn-default' type='button' onclick='add_user_cancel()'><?php echo $han4?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 	});
@@ -250,9 +254,9 @@
       			</span>
     		</div>
     		<!-- /input-group -->
+    		<button id="add_user" class="btn btn-default" type="button"><?php echo $han?></button>
   		</div>
   		<!-- /.col-lg-6 -->
-  		<button id="add_user" class="btn btn-default" type="button"><?php echo $han?></button>
   		</div>
   		<!-- /.row -->
   		<br />
