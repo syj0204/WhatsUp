@@ -50,11 +50,26 @@
 		$('#list1').change(function(){
 			//initSelectBoxes();
 			var selected_category = $('#list1 option:selected').val();
+			var bank_size = $('#list20 option').size();
+			var bank_val = new Array();
+			//var bank_val = $('#list20 option:eq(1)').val();
+			//alert(bank_val);
+			var bank_val1="";
+			for(var i=0; i<bank_size; i++) {
+				bank_val[i] = $('#list20 option:eq('+i+')').val();	
+				//alert(bank_val[i]);
+				 var bank_val2 = bank_val[i]+",";
+				 bank_val1 = bank_val1 + bank_val2;
+				
+			} alert(bank_val1);
+			alert(bank_size);
+			//alert(bank_val1);
 			$('#list2 option').remove();
 			//$('#list2_title').text($('#list1 option:selected').text()+" List");
 			
 			alert(selected_category);
 			$.post("sort.php",{
+				bank:bank_val1,
 				category:selected_category
 				}, 
 				function(data,status) {
@@ -188,6 +203,7 @@
 			var template_select = $('#list10 option:selected').val();
 			var data_by_category = new Array();
 			$('#list20 option').remove();
+			$('#list2 option').remove();
 			alert(template_select);
 			$.post("test3.php",{
 				category:template_select
@@ -202,6 +218,7 @@
 						
 						var value = data_by_category[i].split(',');
 						$('#list20').append("<option value="+value[1]+">"+value[0]+" / ["+value[2]+"] </option>");
+						//alert(value[1]);
 					}
 				}
 
