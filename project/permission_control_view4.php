@@ -75,7 +75,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			}
 		);
 	}
-	function make_permission_table() {
+	function makePermissionTable() {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
 		toggleAddView(user_id, devicegroup_id);
@@ -94,7 +94,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						available_tags.push(value[3]);
 					}
 				} else {
-					alert("No Permission in this group!!");
+					//alert("No Permission in this group!!");
 				}
 				toggleSearchView();
 			}
@@ -104,14 +104,14 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		$('#user_list').change(function(){
 			resetTableView();
 			//toggleSearchAddView();
-			make_permission_table();
+			makePermissionTable();
 			//toggleTableView();
 		});
 		
 		$('#devicegroup_list').change(function(){
 			resetTableView();
 			//toggleSearchAddView();
-			make_permission_table();
+			makePermissionTable();
 			//toggleTableView();
 			
 			//var user_id = $('#user_list option:selected').val();
@@ -139,8 +139,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		});
 		
 		$('#add_permission').click(function(){
-			var devices = [];
-			var devices_name = [];
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
 			$.post("get_no_permission_by_devicegroup.php",{
@@ -161,50 +159,55 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 							
 						}
 					} else {
-						alert("No Device To Add!!");
+						//alert("No Device To Add!!");
+						//$('#add_permission_dialog').hide();
 					}
 				}
 			);
-			$('#add_permission_save').click(function(){
-				var user_id = $('#user_list option:selected').val();
-				
-				$('#selected_devices_list option').each(function() {
-					devices.push($(this).val());
-					devices_name.push($(this).text());
-					$(this).remove();
-				});
-				if(devices.length>0) {
-					$.post("add_permission.php",{
-						user:user_id,
-						devicearray:devices
-						}, 
-						function(data,status) {
-							if(data==1) {
-								for(var i=0; i<devices.length; i++) {
-									available_tags.push(devices_name[i]);
-								}
-								for(var i=0; i<devices.length; i++) {
-									$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
-									$('#permission_list_table tbody').append($.newtr);
-								}
-								devices.length=0;
-								devices_name.length=0;
-								alert("success");
-								toggleSearchView();
-							} else alert(data);
-						}
-					);
-				} else alert("Choose Device");	
-				
-			});
-					
-			$('#add_permission_close').click(function(){
-				var user_id = $('#user_list option:selected').val();
-				var devicegroup_id = $('#devicegroup_list option:selected').val();
-				//$('#page-wrapper').load("permission_control_view4.php");
-				
-			});
 		});
+		
+		$('#add_permission_save').click(function(){
+			var user_id = $('#user_list option:selected').val();
+			var devices = [];
+			var devices_name = [];
+			devices.length=0;
+			devices_name.length=0;
+			$('#selected_devices_list option').each(function() {
+				devices.push($(this).val());
+				devices_name.push($(this).text());
+				$(this).remove();
+			});
+			alert(devices);
+			if(devices.length>0) {
+				$.post("add_permission.php",{
+					user:user_id,
+					devicearray:devices
+					}, 
+					function(data,status) {
+						if(data==1) {
+							for(var i=0; i<devices.length; i++) {
+								available_tags.push(devices_name[i]);
+							}
+							for(var i=0; i<devices.length; i++) {
+								$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+								$('#permission_list_table tbody').append($.newtr);
+							}
+							alert("success");
+							toggleSearchView();
+						} else alert(data);
+					}
+				);
+			} else alert("Choose Device");	
+			
+		});
+				
+		$('#add_permission_close').click(function(){
+			var user_id = $('#user_list option:selected').val();
+			var devicegroup_id = $('#devicegroup_list option:selected').val();
+			//$('#page-wrapper').load("permission_control_view4.php");
+			
+		});
+		
 		$('#permission_search_text').autoComplete({
             minChars: 1,
             source: function(term, suggest){
@@ -356,13 +359,13 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
       			<input id="permission_search_text" class="form-control" type="text" disabled placeholder="<?php echo $han6?>">
      			<span class="input-group-btn">
         			<button id="search_permission" class="btn btn-default" type="button" disabled><?php echo $han3?></button>
-        			<button id="add_permission" class="btn btn-default" type="button" disabled data-toggle="modal" data-target="#myModal"><?php echo $han?></button>
+        			<button id="add_permission" class="btn btn-default" type="button" disabled data-toggle="modal" data-target="#add_permission_dialog"><?php echo $han?></button>
       			</span>
     		</div>
     		<!-- /input-group -->
 
     		<!-- Modal -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="add_permission_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
