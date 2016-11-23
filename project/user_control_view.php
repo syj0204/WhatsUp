@@ -42,7 +42,7 @@
 		}*/
 		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
-		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone'>";
+		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone(Except -)'>";
 		td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
 		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'><?php echo $han5?></button>"
 		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'><?php echo $han4?></button>";
@@ -231,7 +231,7 @@
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 			//$.trClone = $('#user_list_table tr:last').clone().html();
 			
-			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select></td><td><button id='add_user_save' class='btn btn-default' type='button' onclick='add_user_save()'><?php echo $han5?></button><button id='add_user_cancel' class='btn btn-default' type='button' onclick='add_user_cancel()'><?php echo $han4?></button></td></tr>");
+			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone(Except -)'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select></td><td><button id='add_user_save' class='btn btn-default' type='button' onclick='add_user_save()'><?php echo $han5?></button><button id='add_user_cancel' class='btn btn-default' type='button' onclick='add_user_cancel()'><?php echo $han4?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 	});
@@ -263,10 +263,10 @@
       			<input id="user_search_text" type="text" class="form-control" placeholder="<?php echo $han6?>~~">
      			<span class="input-group-btn">
         			<button id="search_user" class="btn btn-default" type="button"><?php echo $han3?></button>
+        			<button id="add_user" class="btn btn-default" type="button"><?php echo $han?></button>
       			</span>
     		</div>
     		<!-- /input-group -->
-    		<button id="add_user" class="btn btn-default" type="button"><?php echo $han?></button>
   		</div>
   		<!-- /.col-lg-6 -->
   		</div>
