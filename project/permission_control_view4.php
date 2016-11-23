@@ -1,6 +1,5 @@
 <?php
 include "DBController.php";
-
 $han="추가";
 $han1="수정";
 $han2="삭제";
@@ -21,7 +20,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 <script src="js/jquery.auto-complete.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
-
 	var available_tags=[];
 	
 	function resetTableView() {
@@ -29,7 +27,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		available_tags.length=0;
 		$('#initial_view').show();
 	}
-
 	function toggleAddView(user_id, devicegroup_id) {
 		if(user_id>0 && devicegroup_id>0) {
 			//$('#permission_search_text').removeAttr('disabled');
@@ -43,7 +40,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			$('#initial_view').show();
 		}
 	}
-
 	function toggleSearchView() {
 		var permission_table_rows = $('#permission_list_table tbody tr').length;
 		if(permission_table_rows>0) {
@@ -57,7 +53,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			//$('#initial_view').html("<p>No Permission</p>");
 		} 
 	}
-
 	function delete_permission(td) {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
@@ -76,14 +71,13 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					}
 				}
 				document.getElementById("permission_list_table").rows.item(index).remove();
+				toggleSearchView();
 			}
 		);
 	}
-
 	function make_permission_table() {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
-
 		toggleAddView(user_id, devicegroup_id);
 		
 		$.post("get_permission_by_devicegroup.php",{
@@ -106,7 +100,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			}
 		);
 	}
-
 	$(function(){
 		$('#user_list').change(function(){
 			resetTableView();
@@ -150,7 +143,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			var devices_name = [];
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
-
 			$.post("get_no_permission_by_devicegroup.php",{
 				user:user_id,
 				devicegroup:devicegroup_id
@@ -173,8 +165,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					}
 				}
 			);
-
-
 			$('#add_permission_save').click(function(){
 				var user_id = $('#user_list option:selected').val();
 				
@@ -193,7 +183,14 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 								for(var i=0; i<devices.length; i++) {
 									available_tags.push(devices_name[i]);
 								}
+								for(var i=0; i<devices.length; i++) {
+									$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+									$('#permission_list_table tbody').append($.newtr);
+								}
+								devices.length=0;
+								devices_name.length=0;
 								alert("success");
+								
 								toggleSearchView();
 							} else alert(data);
 						}
@@ -201,22 +198,13 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				} else alert("Choose Device");	
 				
 			});
-
 			$('#add_permission_close').click(function(){
 				var user_id = $('#user_list option:selected').val();
 				var devicegroup_id = $('#devicegroup_list option:selected').val();
-
 				//$('#page-wrapper').load("permission_control_view4.php");
-
-				for(var i=0; i<devices.length; i++) {
-					$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
-					$('#permission_list_table tbody').append($.newtr);
-				}
-				devices.length=0;
-				devices_name.length=0;
+				
 			});
 s		});
-
 		$('#permission_search_text').autoComplete({
             minChars: 1,
             source: function(term, suggest){
@@ -228,7 +216,6 @@ s		});
                 suggest(suggestions);
             }
         });
-
 		$('#permission_search_text').keyup(function() {
 			var value = $('#permission_search_text').val();
 			if(value=="") {
@@ -382,7 +369,7 @@ s		});
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
-			        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			        <h4 class="modal-title" id="myModalLabel">Add New Permission</h4>
 			      </div>
 			      <div class="modal-body">
 			        
