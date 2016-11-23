@@ -190,7 +190,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 								devices.length=0;
 								devices_name.length=0;
 								alert("success");
-								
 								toggleSearchView();
 							} else alert(data);
 						}
@@ -198,13 +197,14 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				} else alert("Choose Device");	
 				
 			});
+					
 			$('#add_permission_close').click(function(){
 				var user_id = $('#user_list option:selected').val();
 				var devicegroup_id = $('#devicegroup_list option:selected').val();
 				//$('#page-wrapper').load("permission_control_view4.php");
 				
 			});
-s		});
+		});
 		$('#permission_search_text').autoComplete({
             minChars: 1,
             source: function(term, suggest){
