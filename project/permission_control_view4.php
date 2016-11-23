@@ -27,6 +27,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 	function initSelectBoxes() {
 		$('#permission_list_table tbody tr').remove();
 		$('#permission_search_add_view').hide();
+		$('#initial_view').show();
 	}
 
 	function delete_permission(td) {
@@ -42,6 +43,12 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			device:td_list[0].innerHTML
 			}, 
 			function(data,status) {
+				for(var i=0; i<available_tags.length; i++) {
+					if(available_tags[i]==td_list[0].innerHTML) {
+						available_tags.splice(i,1);
+						break;
+					}
+				}
 				alert(data);
 				document.getElementById("permission_list_table").rows.item(index).remove();
 			}
@@ -58,11 +65,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			var selected_category = $('#devicegroup_list option:selected').val();
 			
 			$('#permission_list_table tbody tr').remove();
-			//$.headtr = $("<tr><th>Device ID</th><th>Device Name</th><th>Option</th></tr>");
-			//$('#permission_list_table').append($.headtr);
-
+			$('#initial_view').hide();
 			$('#permission_search_add_view').show();
-			$('#permission_list_table').show();
 			
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
@@ -91,15 +95,11 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
 
-			//alert(user_id);
-			//alert(devicegroup_id);
-
 			$.post("get_no_permission_by_devicegroup.php",{
 				user:user_id,
 				devicegroup:devicegroup_id
 				}, 
 				function(data,status) {
-					//alert(data);
 					$('#available_devices_list option').each(function() {
 						$(this).remove();
 					});
@@ -113,9 +113,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 							
 						}
 					} else {
-						//alert("No Permission in this group!!");
 						alert("No Device To Add!!");
-						//$('#myModal').modal().hide();
 					}
 				}
 			);
@@ -129,11 +127,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					devices_name.push($(this).text());
 					$(this).remove();
 				});
-				/*$('#selected_devices_list option').each(function() {
-					$(this).remove();
-				});*/
-				alert(devices);
-				alert(user_id);
 				if(devices.length>0) {
 					$.post("add_permission.php",{
 						user:user_id,
@@ -172,8 +165,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
             minChars: 1,
             source: function(term, suggest){
                 term = term.toLowerCase();
-                var choices = available_tags;
                 var suggestions = [];
+                var choices = available_tags;
                 for (i=0;i<choices.length;i++)
                     if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
                 suggest(suggestions);
@@ -256,7 +249,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 <div class="col-lg-12">
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Permission List</h3>
+		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Personal Setting</h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
@@ -313,18 +306,17 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		</div>
 		<br />
 	
-		<div id="permission_search_add_view" class="row">
+		<div class="row">
 		<div class="col-lg-6">
-   			<div class="input-group">
+   			<div id="permission_search_add_view" class="input-group" style="display: none">
       			<input id="permission_search_text" class="form-control" type="text" placeholder="<?php echo $han6?>">
      			<span class="input-group-btn">
         			<button id="search_permission" class="btn btn-default" type="button"><?php echo $han3?></button>
+        			<button id="add_permission" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal"><?php echo $han?></button>
       			</span>
     		</div>
     		<!-- /input-group -->
-    		<button id="add_permission" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal"><?php echo $han?></button>
-    		
-    		
+
     		<!-- Modal -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
@@ -387,7 +379,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
   		<!-- /.row -->
   		<br />
   		<div id="permission_table_view">
-  			<table id="permission_list_table" class="table table-bordered table-hover table-striped" style="display: none">
+  			<table id="permission_list_table" class="table table-bordered table-hover table-striped">
   				<thead>
 					<tr>
 						<th>Device ID</th><th>Device Name</th><th>Option</th>
@@ -396,6 +388,14 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				<tbody>
 				</tbody>
   			</table>
+  		</div>
+  		<div id="initial_view">
+  			<p><?php 
+                   $text = "사용자와 그룹을 선택하여 Permission을 확인하세요!!";
+                   $text = ICONV("EUC-KR","UTF-8",$text);
+                   echo $text;
+                   ?>
+             </p>
   		</div>
 	</div>
 	<!-- /.panel-body -->
