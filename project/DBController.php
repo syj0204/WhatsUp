@@ -297,6 +297,25 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}
+	
+	function getPermissionListByUser($nUserID) {
+	
+		if($this->connection) {
+			$query = "SELECT p.nDeviceID, d.sDisplayName FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID=".$nUserID;
+			$statement = $this->DBObject->executeQuery($query);
+			$rows = array();
+	
+			if(count($statement)>0) {
+				while( $row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC)) {
+					$rows[] = $row;
+				}
+				return $rows;
+			}
+			else return null;
+	
+			//$this->DBObject->disconnectDB();
+		}
+	}
 
 	function getPermission($nPermissionID) {
 

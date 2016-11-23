@@ -27,6 +27,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 		available_tags.length=0;
 		$('#initial_view').show();
 	}
+	
 	function toggleAddView(user_id, devicegroup_id) {
 		if(user_id>0 && devicegroup_id>0) {
 			//$('#permission_search_text').removeAttr('disabled');
@@ -75,9 +76,11 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			}
 		);
 	}
-	function makePermissionTable() {
+	
+	function make_permission_table_by_group() {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
+		alert(devicegroup_id);
 		toggleAddView(user_id, devicegroup_id);
 		
 		$.post("get_permission_by_devicegroup.php",{
@@ -100,18 +103,52 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			}
 		);
 	}
+
+	function make_permission_table_all() {
+		var user_id = $('#user_list option:selected').val();
+		//alert(user_id);
+		$('#add_permission').removeAttr('disabled');
+		$('#initial_view').hide();
+		
+		$.post("get_permission_all.php",{
+			user:user_id
+			}, 
+			function(data,status) {
+				if(data!=-1) {
+					var data_by_list1 = data.split('|');
+					for(var i=0; i<data_by_list1.length-1; i++) {
+						var value = data_by_list1[i].split(',');
+						//alert(value[1]);
+						//alert(value[2]);
+						$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[2]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+						$('#permission_list_table tbody').append($.newtr);
+						available_tags.push(value[2]);
+					}
+				} else {
+					//alert("No Permission in this group!!");
+				}
+				toggleSearchView();
+			}
+		);
+	}
+	
 	$(function(){
 		$('#user_list').change(function(){
 			resetTableView();
 			//toggleSearchAddView();
-			makePermissionTable();
+			//make_permission_table();
+			make_permission_table_all();
 			//toggleTableView();
 		});
 		
 		$('#devicegroup_list').change(function(){
 			resetTableView();
 			//toggleSearchAddView();
-			makePermissionTable();
+			var devicegroup_id = $('#devicegroup_list option:selected').val();
+			//alert(devicegroup_id);
+			if(devicegroup_id==-1) make_permission_table_all();
+			else make_permission_table_by_group();
+			
 			//toggleTableView();
 			
 			//var user_id = $('#user_list option:selected').val();
@@ -135,7 +172,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					}
 				}
 			);*/
-			
 		});
 		
 		$('#add_permission').click(function(){
@@ -177,7 +213,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				devices_name.push($(this).text());
 				$(this).remove();
 			});
-			alert(devices);
+			//alert(devices);
 			if(devices.length>0) {
 				$.post("add_permission.php",{
 					user:user_id,
@@ -329,7 +365,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			<div class="col-xs-4">
 				<label>Select Device Group</label>
 	    		<select name="devicegroup_list" id="devicegroup_list" class="form-control selcls">
-	    			<option> -- Select Device Group -- </option>
+	    			<option value=-1> -- Select Device Group -- </option>
 		    		<?php
 						$DBControlObject = new DBController();
 						$rows = $DBControlObject->DeviceGroupsView();
