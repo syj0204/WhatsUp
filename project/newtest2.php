@@ -46,6 +46,7 @@ $(function(){
 				alert(status);
 			}
 		);
+		$('#page-wrapper').load("newtest2.php");
 	});
 
 	$('#list10').change(function(){

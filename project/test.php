@@ -34,6 +34,7 @@
 			$('#enter_temp').show();
 			$('#Temp_Name').show();
 			$('#close').show();
+			$('#list10').val('--Select Template --').attr('selected', 'selected');
 			
 		});
 		$('#close').click(function(){
@@ -45,6 +46,9 @@
 			$('#enter_temp').hide();
 			$('#Temp_Name').hide();
 			$('#close').hide();
+			$('#page-wrapper').load("test.php");
+
+			
 
 		});
 		$('#list1').change(function(){
@@ -82,7 +86,8 @@
 			);
 		});
 		$('#select_temp').click(function(){
-
+			//$('#list10 option:eq(0)').attr("selected", "selected");
+			$('#list1 option:eq(0)').attr("selected", "selected");
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
@@ -108,6 +113,12 @@
 					alert(status);
 				}
 			);
+			$('#list20 option').remove();
+			$('#list2 option').remove();
+			$('#list1').val('--Select Device Group --').attr('selected', 'selected');
+			$('#list10').val('--Select Template --').attr('selected', 'selected');
+
+			
 		});
 		$('#delete_temp').click(function(){
 			$('#list20 option').remove();
@@ -134,6 +145,7 @@
 					alert(status);
 				}
 			);
+			$('#page-wrapper').load("test.php");
 		});
 		
 		
@@ -173,8 +185,9 @@
 		$('#enter_temp').hide();
 		$('#Temp_Name').hide();
 		$('#close').hide();
-		$('#Temp_Name').remove();
 		$('#list20 option').remove();
+		$('#list2 option').remove();
+		$('#page-wrapper').load("test.php");
 	});
 	
 		
@@ -204,6 +217,7 @@
 			var data_by_category = new Array();
 			$('#list20 option').remove();
 			$('#list2 option').remove();
+			$('#list1').val('--Select Device Group --').attr('selected', 'selected');
 			//alert(template_select);
 			$.post("test3.php",{
 				category:template_select
@@ -218,12 +232,14 @@
 						
 						var value = data_by_category[i].split(',');
 						$('#list20').append("<option value="+value[1]+">"+value[0]+" / ["+value[2]+"] </option>");
-						//alert(value[1]);
+
+						 
 					}
 				}
 
 			);
-
+			//location.reload(true);
+			
 	});
 
 		$(window).load(function(e){
@@ -253,7 +269,7 @@
 
 <!-- /.row -->
 <div class="row">
-<div class="col-lg-12">
+<div class="col-lg-12" >
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Templates Setting</h3>
@@ -266,7 +282,7 @@
     		<label>Permission Search</label>
 		</div> -->
     	<div class="row">
-        	<div class="col-xs-6">
+        	<div class="col-xs-6" id= "list_grid">
         	  <label id="list1_title"><?php echo $han8?></label>
         		<select name="list1" id="list1" class="form-control"  >
         			<option>--Select Device Group --</option>
@@ -291,7 +307,7 @@
         		</div>
 			<!-- /.col-xs-4 -->			
 
-			<div class="col-xs-6">
+			<div class="col-xs-6" id="test">
 			<label id="list10_title"><?php echo $han5?></label>
 			 <div class="form-group input-group ">
 			   <select name="list10" id="list10" class="form-control">
