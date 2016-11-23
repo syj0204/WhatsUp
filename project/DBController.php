@@ -14,25 +14,22 @@ Class DBController{
 	function addUser($new_user_name, $new_user_cellphone, $new_user_department) {
 		if($this->connection) { 
 			$query = "INSERT INTO Users (sUserName, nCellNum, Department) VALUES(N'".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
-			$insert_statement = $this->DBObject->executeQuery($query);
+			$statement = $this->DBObject->executeQuery($query);
 				
 			$query = "SELECT nUserID FROM Users WHERE sUserName=N'".$new_user_name."' and nCellNum='".$new_user_cellphone."'";
-			$select_statement = $this->DBObject->executeQuery($query);
-			if($insert_statement && $select_statement) {
-				$row = sqlsrv_fetch_array( $select_statement, SQLSRV_FETCH_NUMERIC);
-				return $row[0];
-			}
+			$statement = $this->DBObject->executeQuery($query);
+			$row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC);
 
-			else return -1;
+			return $row[0];
 		}
 	}
 
 	function deleteUser($user_id) {
 		if($this->connection) {
 			
-			$query = "DELETE FROM Permission WHERE nUserID=".$user_id."";
+			$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
-			$query = "DELETE FROM Users WHERE nUserID=".$user_id."";
+			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 
 			return $statement;
@@ -115,9 +112,10 @@ Class DBController{
 	}
 
 	function getDeviceList() {
-
+/// 이거 고쳐야함
 		if($this->connection) {
-			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
+			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
+			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where DG.nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by nDeviceID ASC ";
 			// WhatUp DB쩍횄 쨩챌쩔챘
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
@@ -404,12 +402,12 @@ Class DBController{
 		}
 	} //쨉챨쨔횢�횑쩍쨘쨍짝 �횑쩔챘횉횗 �짱�첬 횄짙짹창
 	function DeviceGroupsView() {
-
+// 이것도 고쳐야함
 		if($this->connection) {
 
 
-			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' order by sGroupName ASC";
-			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
+			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and bDynamicGroup ='0' and nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by sGroupName ASC";
+			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
 			// 쩍횉횁짝 WhatsUp DB 쨩챌쩔챘쩍횄 쨩챌쩔챘쩔쨔횁짚
 				
 
