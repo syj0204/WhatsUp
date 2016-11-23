@@ -80,7 +80,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 	function make_permission_table_by_group() {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
-		alert(devicegroup_id);
+		//alert(devicegroup_id);
 		toggleAddView(user_id, devicegroup_id);
 		
 		$.post("get_permission_by_devicegroup.php",{
