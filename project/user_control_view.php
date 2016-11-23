@@ -157,11 +157,12 @@
 			function(data,status) {
 				//alert(data);
 				if(data!=-1) {
-					$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+					/*$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 					$('#user_list_table').append($.newtr);
 					document.getElementById("user_list_table").rows.item(1).remove();
-					available_tags.push(new_user_name);
+					available_tags.push(new_user_name);*/
 					alert("success!");
+					$('#page-wrapper').load("user_control_view.php");
 				} else alert("fail");
 				
 			}
@@ -214,6 +215,16 @@
                 suggest(suggestions);
             }
         });
+
+		$('#user_search_text').keyup(function() {
+			var value = $('#user_search_text').val();
+			if(value=="") {
+				$("#user_list_table tbody tr").each(function(){
+					$row = $(this);
+					$row.show();
+				});
+			}
+		});
 
 		$('#add_user').click(function(){
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');

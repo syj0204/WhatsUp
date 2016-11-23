@@ -7,7 +7,7 @@ $han2="삭제";
 $han3="검색";
 $han4="취소";
 $han5="완료";
-$han6="Device 이름으로 검색하세요";
+$han6="Device Name 으로 검색하세요";
 $han = ICONV("EUC-KR","UTF-8",$han);
 $han1 = ICONV("EUC-KR","UTF-8",$han1);
 $han2 = ICONV("EUC-KR","UTF-8",$han2);
@@ -24,19 +24,45 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 
 	var available_tags=[];
 	
-	function initSelectBoxes() {
+	function resetTableView() {
 		$('#permission_list_table tbody tr').remove();
-		$('#permission_search_add_view').hide();
+		available_tags.length=0;
 		$('#initial_view').show();
+	}
+
+	function toggleAddView(user_id, devicegroup_id) {
+		if(user_id>0 && devicegroup_id>0) {
+			//$('#permission_search_text').removeAttr('disabled');
+			//$('#search_permission').removeAttr('disabled');
+			$('#add_permission').removeAttr('disabled');
+			$('#initial_view').hide();
+		} else {
+			//$('#permission_search_text').attr('disabled', 'true');
+			//$('#search_permission').attr('disabled', 'true');
+			$('#add_permission').attr('disabled', 'true');
+			$('#initial_view').show();
+		}
+	}
+
+	function toggleSearchView() {
+		var permission_table_rows = $('#permission_list_table tbody tr').length;
+		if(permission_table_rows>0) {
+			$('#permission_search_text').removeAttr('disabled');
+			$('#search_permission').removeAttr('disabled');
+			$('#initial_view').hide();
+		}
+		else {
+			$('#permission_search_text').attr('disabled', 'true');
+			$('#search_permission').attr('disabled', 'true');
+			//$('#initial_view').html("<p>No Permission</p>");
+		} 
 	}
 
 	function delete_permission(td) {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
 		var index = td.parentElement.parentElement.rowIndex;
-		alert(index);
 		var td_list = document.getElementById("permission_list_table").rows.item(index).cells;
-		alert(td_list[0].innerHTML+"/"+td_list[1].innerHTML+"/"+td_list[2].innerHTML);
 		
 		$.post("delete_permission2.php",{
 			user:user_id,
@@ -49,28 +75,55 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 						break;
 					}
 				}
-				alert(data);
 				document.getElementById("permission_list_table").rows.item(index).remove();
+			}
+		);
+	}
+
+	function make_permission_table() {
+		var user_id = $('#user_list option:selected').val();
+		var devicegroup_id = $('#devicegroup_list option:selected').val();
+
+		toggleAddView(user_id, devicegroup_id);
+		
+		$.post("get_permission_by_devicegroup.php",{
+			user:user_id,
+			devicegroup:devicegroup_id
+			}, 
+			function(data,status) {
+				if(data!=-1) {
+					var data_by_list1 = data.split('|');
+					for(var i=0; i<data_by_list1.length-1; i++) {
+						var value = data_by_list1[i].split(',');
+						$.newtr = $("<tr><td>"+value[1]+"</td><td>"+value[3]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
+						$('#permission_list_table tbody').append($.newtr);
+						available_tags.push(value[3]);
+					}
+				} else {
+					alert("No Permission in this group!!");
+				}
+				toggleSearchView();
 			}
 		);
 	}
 
 	$(function(){
 		$('#user_list').change(function(){
-			initSelectBoxes();
-			var selected_category = $('#user_list option:selected').val();
+			resetTableView();
+			//toggleSearchAddView();
+			make_permission_table();
+			//toggleTableView();
 		});
 		
 		$('#devicegroup_list').change(function(){
-			var selected_category = $('#devicegroup_list option:selected').val();
+			resetTableView();
+			//toggleSearchAddView();
+			make_permission_table();
+			//toggleTableView();
 			
-			$('#permission_list_table tbody tr').remove();
-			$('#initial_view').hide();
-			$('#permission_search_add_view').show();
-			
-			var user_id = $('#user_list option:selected').val();
-			var devicegroup_id = $('#devicegroup_list option:selected').val();
-			$.post("get_permission_by_devicegroup.php",{
+			//var user_id = $('#user_list option:selected').val();
+			//var devicegroup_id = $('#devicegroup_list option:selected').val();
+			/*$.post("get_permission_by_devicegroup.php",{
 				user:user_id,
 				devicegroup:devicegroup_id
 				}, 
@@ -83,9 +136,12 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 							$('#permission_list_table tbody').append($.newtr);
 							available_tags.push(value[3]);
 						}
-					} else alert("No Permission in this group!!");
+						alert(available_tags);
+					} else {
+						alert("No Permission in this group!!");
+					}
 				}
-			);
+			);*/
 			
 		});
 		
@@ -138,7 +194,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 									available_tags.push(devices_name[i]);
 								}
 								alert("success");
-								
+								toggleSearchView();
 							} else alert(data);
 						}
 					);
@@ -150,6 +206,8 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				var user_id = $('#user_list option:selected').val();
 				var devicegroup_id = $('#devicegroup_list option:selected').val();
 
+				//$('#page-wrapper').load("permission_control_view4.php");
+
 				for(var i=0; i<devices.length; i++) {
 					$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
 					$('#permission_list_table tbody').append($.newtr);
@@ -157,9 +215,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				devices.length=0;
 				devices_name.length=0;
 			});
-
-			
-		});
+s		});
 
 		$('#permission_search_text').autoComplete({
             minChars: 1,
@@ -230,6 +286,7 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 				$(this).remove();
 			});
 		});
+		 
 	});
 </script>
 
@@ -308,11 +365,11 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 	
 		<div class="row">
 		<div class="col-lg-6">
-   			<div id="permission_search_add_view" class="input-group" style="display: none">
-      			<input id="permission_search_text" class="form-control" type="text" placeholder="<?php echo $han6?>">
+   			<div id="permission_search_add_view" class="input-group" disabled>
+      			<input id="permission_search_text" class="form-control" type="text" disabled placeholder="<?php echo $han6?>">
      			<span class="input-group-btn">
-        			<button id="search_permission" class="btn btn-default" type="button"><?php echo $han3?></button>
-        			<button id="add_permission" class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal"><?php echo $han?></button>
+        			<button id="search_permission" class="btn btn-default" type="button" disabled><?php echo $han3?></button>
+        			<button id="add_permission" class="btn btn-default" type="button" disabled data-toggle="modal" data-target="#myModal"><?php echo $han?></button>
       			</span>
     		</div>
     		<!-- /input-group -->
@@ -390,12 +447,12 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
   			</table>
   		</div>
   		<div id="initial_view">
-  			<p><?php 
+  			<strong><?php 
                    $text = "사용자와 그룹을 선택하여 Permission을 확인하세요!!";
                    $text = ICONV("EUC-KR","UTF-8",$text);
                    echo $text;
                    ?>
-             </p>
+            </strong>
   		</div>
 	</div>
 	<!-- /.panel-body -->
