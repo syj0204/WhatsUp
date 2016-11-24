@@ -13,10 +13,10 @@ Class DBController{
 
 	function addUser($new_user_name, $new_user_cellphone, $new_user_department) {
 		if($this->connection) { 
-			$query = "INSERT INTO Users (sUserName, nCellNum, Department) VALUES(N'".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
+			$query = "INSERT INTO SMSDB.dbo.Users (sUserName, nCellNum, Department) VALUES(N'".$new_user_name."','".$new_user_cellphone."','".$new_user_department."')";
 			$statement = $this->DBObject->executeQuery($query);
 				
-			$query = "SELECT nUserID FROM Users WHERE sUserName=N'".$new_user_name."' and nCellNum='".$new_user_cellphone."'";
+			$query = "SELECT nUserID FROM SMSDB.dbo.Users WHERE sUserName=N'".$new_user_name."' and nCellNum='".$new_user_cellphone."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC);
 
@@ -27,9 +27,9 @@ Class DBController{
 	function deleteUser($user_id) {
 		if($this->connection) {
 			
-			$query = "DELETE FROM Permission WHERE nUserID='".$user_id."'";
+			$query = "DELETE FROM SMSDB.dbo.Permission WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
-			$query = "DELETE FROM Users WHERE nUserID='".$user_id."'";
+			$query = "DELETE FROM SMSDB.dbo.Users WHERE nUserID='".$user_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 
 			return $statement;
@@ -40,7 +40,7 @@ Class DBController{
 		$row = -1;
 		if($this->connection) {
 			
-			$query = "UPDATE Users SET sUserName=N'".$user_name."', nCellNum='".$user_cellphone."', Department='".$user_department."' WHERE nUserID=".$user_id;
+			$query = "UPDATE SMSDB.dbo.Users SET sUserName=N'".$user_name."', nCellNum='".$user_cellphone."', Department='".$user_department."' WHERE nUserID=".$user_id;
 			$statement = $this->DBObject->executeQuery($query);
 				
 			if($statement) {
@@ -77,7 +77,7 @@ Class DBController{
 	function addPermission($user_id, $device_id) {
 		if($this->connection) {
 				
-			$query = "IF NOT EXISTS(Select * From Permission Where nUserID='".$user_id."' and nDeviceID='".$device_id."') Begin INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.") End";
+			$query = "IF NOT EXISTS(Select * From SMSDB.dbo.Permission Where nUserID='".$user_id."' and nDeviceID='".$device_id."') Begin INSERT INTO SMSDB.DBO.Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.") End";
 			//"INSERT INTO Permission (nUserID, nDeviceID) VALUES(".$user_id.",".$device_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
@@ -96,7 +96,7 @@ Class DBController{
 	function deletePermission($user_id, $device_id) {
 		if($this->connection) {
 
-			$query = "DELETE FROM Permission WHERE nUserID=".$user_id."and nDeviceID=".$device_id;
+			$query = "DELETE FROM SMSDB.dbo.Permission WHERE nUserID=".$user_id."and nDeviceID=".$device_id;
 			$statement = $this->DBObject->executeQuery($query);
 			/*$query = "SELECT * FROM Permission WHERE nUserID=".$user_id." and nDeviceID=".$device_id.")";
 				$statement = $this->DBObject->executeQuery($query);
@@ -110,31 +110,13 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}
-	
-	function deletePermissionMultiple($user_id, $device_id_list) {
-		if($this->connection) {
-			
-			//$device_id_list =explode(',' , $device_id_list);
-			$device_id_list_length = count($device_id_list);
-			$count=0;
-			
-			for($i = 0 ; $i < $device_id_list_length ; $i++){
-				$query = "DELETE FROM Permission WHERE nUserID=".$user_id."and nDeviceID=".$device_id_list[$i];
-				$statement = $this->DBObject->executeQuery($query);
-				if($statement) $count++;
-			}
-	
-			return $count;
-			//$this->DBObject->disconnectDB();
-		}
-	}
 
 	function getDeviceList() {
-/// �씠嫄� 怨좎퀜�빞�븿
+/// 이거 고쳐야함
 		if($this->connection) {
 			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
 			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where DG.nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by nDeviceID ASC ";
-			// WhatUp DB姨랁쉪 夷⑹콐姨붿콠
+			// WhatUp DB쩍횄 쨩챌쩔챘
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -154,7 +136,7 @@ Class DBController{
 	function getDeviceListForUser($user_id, $device_group_id) {
 
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM Permission p, Device d, PivotDeviceToGroup g, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."' and g.nDeviceGroupID=".$device_group_id;
+			$query = "SELECT p.nDeviceID, dg.sGroupName, d.sDisplayName FROM SMSDB.dbo.Permission p, WhatsUp.dbo.Device d, WhatsUp.dbo.PivotDeviceToGroup g, WhatsUp.dbo.DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=g.nDeviceID and g.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID ='".$user_id."' and g.nDeviceGroupID=".$device_group_id;
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -193,7 +175,7 @@ Class DBController{
 
 		if($this->connection) {
 				
-			$query = "SELECT d.nDeviceID, d.sDisplayName FROM Device d, PivotDeviceToGroup pdg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.")";
+			$query = "SELECT d.nDeviceID, d.sDisplayName FROM WhatsUp.dbo.Device d, WhatsUp.dbo.PivotDeviceToGroup pdg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT p.nDeviceID FROM SMSDB.dbo.Permission p, WhatsUp.dbo.PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -263,8 +245,9 @@ Class DBController{
 	function getUserList() {
 
 		if($this->connection) {
-			$query = "SELECT * FROM Users";
+			$query = "select * from SMSDB.dbo.Users";
 			$statement = $this->DBObject->executeQuery($query);
+
 			$rows = array();
 
 			if(count($statement)>0) {
@@ -319,7 +302,7 @@ Class DBController{
 	function getPermissionListByUser($nUserID) {
 	
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, d.sDisplayName FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID=".$nUserID;
+			$query = "SELECT p.nDeviceID, d.sDisplayName FROM SMSDB.dbo.Permission p, WhatsUp.dbo.Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID=".$nUserID;
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
@@ -416,7 +399,7 @@ Class DBController{
 
 		}
 
-	}//占쎌㎟占쎌껄夷띿쭩 占쏀쉻姨붿콠�쉲�슅 夷됱괩夷뷀슓占쏀쉻姨띿쮼 �쉪吏숈㏏李�
+	}//�짱�첬쨍짝 �횑쩔챘횉횗 쨉챨쨔횢�횑쩍쨘 횄짙짹창
 	function getDisPlayNameUser($sDisplayName) {
 
 		if($this->connection) {
@@ -437,15 +420,15 @@ Class DBController{
 			else return null;
 				
 		}
-	} //夷됱괩夷뷀슓占쏀쉻姨띿쮼夷띿쭩 占쏀쉻姨붿콠�쉲�슅 占쎌㎟占쎌껄 �쉪吏숈㏏李�
+	} //쨉챨쨔횢�횑쩍쨘쨍짝 �횑쩔챘횉횗 �짱�첬 횄짙짹창
 	function DeviceGroupsView() {
-// �씠寃껊룄 怨좎퀜�빞�븿
+// 이것도 고쳐야함
 		if($this->connection) {
 
 
-			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and bDynamicGroup ='0' and nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by sGroupName ASC";
+			$query = "Select DG.* from WhatsUp.dbo.DeviceGroup AS DG Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select DG.nDeviceGroupID from WhatsUp.dbo.DeviceGroup AS DG Where DG.nDeviceGroupID in (Select DG.nParentGroupID from WhatsUp.dbo.DeviceGroup AS DG)) order by DG.sGroupName ASC";
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
-			// 姨랁쉲�쉧吏� WhatsUp DB 夷⑹콐姨붿콠姨랁쉪 夷⑹콐姨붿콠姨붿쮷�쉧吏�
+			// 쩍횉횁짝 WhatsUp DB 쨩챌쩔챘쩍횄 쨩챌쩔챘쩔쨔횁짚
 				
 
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
@@ -461,15 +444,15 @@ Class DBController{
 			else return null;
 				
 		}
-	} //夷됱괩夷뷀슓占쏀쉻姨띿쮼夷띿쭩 吏뱁슎夷뚯콡 �쉪吏숈㏏李�
+	} //쨉챨쨔횢�횑쩍쨘쨍짝 짹횞쨌챙 횄짙짹창
 	function GroupDeviceView($Device_List1) {
 
 		if($this->connection) {
 
 
-			$query = "SELECT D.*, DG.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."'";
+			$query = "SELECT D.*, DG.* from  WhatsUp.dbo.DeviceGroup AS DG INNER JOIN WhatsUp.dbo.PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN WhatsUp.dbo.Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."'";
 			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID='".$Device_List1."'";
-			// WhatsUp DB 夷⑹콐姨붿콠姨랁쉪 夷⑹콐姨붿콠姨붿쮷�쉧吏�
+			// WhatsUp DB 쨩챌쩔챘쩍횄 쨩챌쩔챘쩔쨔횁짚
 
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -483,7 +466,7 @@ Class DBController{
 			else return null;
 
 		}
-	} //吏뱁슎夷뚯콡夷�夷� 夷됱괩夷뷀슓占쏀쉻姨띿쮼  �쉪吏숈㏏李�
+	} //짹횞쨌챙쨀쨩 쨉챨쨔횢�횑쩍쨘  횄짙짹창
 
 	function getDisPlayNameUser2($nDeviceID) {
 
@@ -507,18 +490,18 @@ Class DBController{
 			else return null;
 				
 		}
-	} //夷됱괩夷뷀슓占쏀쉻姨띿쮼夷띿쭩 占쏀쉻姨붿콠�쉲�슅 占쎌㎟占쎌껄 �쉪吏숈㏏李�2
+	} //쨉챨쨔횢�횑쩍쨘쨍짝 �횑쩔챘횉횗 �짱�첬 횄짙짹창2
 	function tem($temp_name, $temp_string) {
 		if($this->connection) {
-			$query = "Insert Into template(templateName,templateString) values(N'".$temp_name."','".$temp_string."')";
+			$query = "Insert Into SMSDB.dbo.template(templateName,templateString) values(N'".$temp_name."','".$temp_string."')";
 			$statement = $this->DBObject->executeQuery($query);
 			return $statement;
 
 		}
-	}//template姨붿쭠 夷⑹쿇夷뚰슇吏명슊 �쉪�슜吏몄쭠�쉲�슃夷덊쉨 �쉮泥쒖쮰吏�
+	}//template쩔징 쨩천쨌횙째횚 횄횩째징횉횕쨈횂 횆천쨍짰
 	function tem1($temp_name) {
 		if($this->connection) {
-			$query = "Select * From template Where templateName='".$temp_name."'";
+			$query = "Select * From SMSDB.dbo.template Where templateName='".$temp_name."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -530,13 +513,13 @@ Class DBController{
 			}
 			else return null;
 		}
-	}//template �쉧夷랃옙梨� 姨붿ℓ夷섑슀 �쉳吏곤옙�슀姨랁쉲姨랁쉪
+	}//template 횁쨍�챌 쩔짤쨘횓 횊짰�횓쩍횉쩍횄
 
 	function getTemplate($template_select) {
 
 		if($this->connection) {
 				
-			$query = "SELECT * FROM Template where templateId ='".$template_select."'";
+			$query = "SELECT * FROM SMSDB.dbo.Template where templateId ='".$template_select."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -550,11 +533,11 @@ Class DBController{
 
 			//$this->DBObject->disconnectDB();
 		}
-	}// Template�쉯�슎占쏀쉻夷섏콬姨붿쭠姨뚯㎝ String占쎌Ł �쉳吏숉쉪李�
+	}// Template횇횞�횑쨘챠쩔징쩌짯 String�쨩 횊짙횄창
 	function getSelecttemp() {
 
 		if($this->connection) {
-			$query = "SELECT * FROM Template";
+			$query = "SELECT * FROM SMSDB.dbo.Template";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -568,12 +551,12 @@ Class DBController{
 
 			//$this->DBObject->disconnectDB();
 		}
-	}// �쉪�쉸吏뱀갹 Template select夷붿㎞姨붿쭠 夷�吏㏉쉯夷띿�夷⑹쮫�쉨 吏명쉾
+	}// 횄횎짹창 Template select쨔짰쩔징 쨀짧횇쨍쨀쨩쨈횂 째횒
 
 	function getDeviceName($result_first) {
 
 		if($this->connection) {
-            $query = "SELECT D.*, DG.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where D.nDeviceID ='".$result_first."'";
+            $query = "SELECT D.*, DG.* from  WhatsUp.dbo.DeviceGroup AS DG INNER JOIN WhatsUp.dbo.PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN WhatsUp.dbo.Device AS D ON PD.nDeviceID = D.nDeviceID Where D.nDeviceID ='".$result_first."'";
 			//$query = "SELECT * FROM Device WHERE nDeviceID='".$result_first."' order by nDeviceID ASC";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
@@ -588,10 +571,10 @@ Class DBController{
 
 			//$this->DBObject->disconnectDB();
 		}
-	}//Template string占쏀쉲 吏몄㎣占쎌Ł 占쏀쉻姨붿콠�쉲�슑姨뚯㎝ 夷됱괩夷뷀슓占쏀쉻姨띿쮼 占쏀쉻夷띿쭬 �쉪吏숈㏏李�
+	}//Template string�횉 째짧�쨩 �횑쩔챘횉횠쩌짯 쨉챨쨔횢�횑쩍쨘 �횑쨍짠 횄짙짹창
 	function update_template($update_temp_id, $update_temp_string) {
 		if($this->connection) {
-			$query = "Update Template set templateString = '".$update_temp_string."' where templateID ='".$update_temp_id."'";
+			$query = "Update SMSDB.dbo.Template set templateString = '".$update_temp_string."' where templateID ='".$update_temp_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 
 
@@ -600,7 +583,7 @@ Class DBController{
 	}
 	function delete_template($update_temp_id) {
 		if($this->connection) {
-			$query = "delete from template where templateID ='".$update_temp_id."'";
+			$query = "delete from SMSDB.dbo.template where templateID ='".$update_temp_id."'";
 			$statement = $this->DBObject->executeQuery($query);
 
 
