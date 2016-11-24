@@ -23,21 +23,55 @@
 <script type="text/javascript">
 
 	var available_tags = [];
+
+	function reload_user_table() {
+		available_tags.length = 0;
+		
+		$("#user_list_table tbody tr").each(function(){
+			$(this).remove();
+		});
+
+		$.post("get_userlist.php",
+	    	function(data,status) {
+				if(data!=-1) {
+					var data_by_list1 = data.split('|');
+					for(var i=0; i<data_by_list1.length-1; i++) {
+						var value = data_by_list1[i].split(',');
+						$.newtr = $("<tr><td style='display: none'>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+						$('#user_list_table').append($.newtr);
+						available_tags.push(value[2]);
+					}
+				}
+	    	}
+	    );
+	}
 	
 	function edit_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		var pre_username = td_list[1].innerHTML;
-		for(var i=0; i<available_tags.length; i++) {
+		//var pre_username = td_list[1].innerHTML;
+		var pre_department = td_list[3].innerHTML;
+		/*for(var i=0; i<available_tags.length; i++) {
 			if(available_tags[i]==pre_username) {
 				available_tags.splice(i,1);
 				break;
 			}
-		}
+		}*/
 		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
 		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone(Except -)'>";
-		td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
+
+		if(pre_department=="infra") {
+			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra' selected>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
+		}
+		else if(pre_department=="Security Network") {
+			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network' selected>Security</option><option value='other'>other</option></select>";
+		}
+		else if(pre_department=="other") {
+			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other' selected>other</option></select>";
+		} 
+
+		//td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
 		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'><?php echo $han5?></button>"
 		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'><?php echo $han4?></button>";
 	}
@@ -45,16 +79,19 @@
 	function edit_user_update(td) {
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
-		//alert(index);
-		//alert(td_list[1].innerHTML);
+		
+		var pre_username = td_list[1].innerHTML;
+		for(var i=0; i<available_tags.length; i++) {
+			if(available_tags[i]==pre_username) {
+				available_tags.splice(i,1);
+				break;
+			}
+		}
+		
 		var user_id = document.getElementById("user_id_to_update").value;
-		//alert(user_id);
 		var user_name_to_update = document.getElementById("user_name_to_update").value;
-		//alert(user_name_to_update);
 		var user_cellphone_to_update = document.getElementById("user_cellphone_to_update").value;
-		//alert(user_cellphone_to_update);
 		var user_department_to_update = $("#user_department_to_update option:selected").val();
-		//alert(user_department_to_update);
 		
 		$.post("update_user.php",{
 			userid:user_id,
@@ -63,19 +100,18 @@
 			department:user_department_to_update
 			}, 
 			function(data,status) {
-				//alert(data);
 				var user_info_array = null;
 				if(data!=-1) {
-					user_info_array = data.split(',');
-					//alert(user_info_array);
-					td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
-					td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
-					td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
-					td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
-					td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
-					+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
+					//user_info_array = data.split(',');
+					//td_list[0].innerHTML = "<td style='display: none'>"+user_info_array[0]+"</td>";
+					//td_list[1].innerHTML = "<td>"+user_info_array[1]+"</td>";
+					//td_list[2].innerHTML = "<td>"+user_info_array[2]+"</td>";
+					//td_list[3].innerHTML =  "<td>"+user_info_array[3]+"</td>";
+					//td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
+					//+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
 
-					available_tags.push(user_info_array[1]);
+					//available_tags.push(user_info_array[1]);
+					reload_user_table();
 				}
 			}
 		);
@@ -100,7 +136,7 @@
 		td_list[3].innerHTML =  "<td>"+user_department+"</td>";
 		td_list[4].innerHTML = "<button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>"
 		+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
-		available_tags.push(user_name);
+		//available_tags.push(user_name);
 	}
 
 	function delete_user(td) {
@@ -151,12 +187,13 @@
 				function(data,status) {
 					//alert(data);
 					if(data!=-1) {
-						$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
-						$('#user_list_table').append($.newtr);
-						document.getElementById("user_list_table").rows.item(1).remove();
-						available_tags.push(new_user_name);
+						///$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+						//$('#user_list_table').append($.newtr);
+						//document.getElementById("user_list_table").rows.item(1).remove();
+						//available_tags.push(new_user_name);
 						alert("success!");
 						//$('#page-wrapper').load("user_control_view.php");
+						reload_user_table();
 					} else alert("fail");
 				}
 			);
@@ -167,10 +204,28 @@
 		document.getElementById("user_list_table").rows.item(1).remove();
 	}
 
+	function getAvailableTags() {
+		available_tags.length = 0;
+        $.post("get_userlist.php",
+    		function(data,status) {
+    			//alert(data);
+				if(data!=-1) {
+					var data_by_list1 = data.split('|');
+					for(var i=0; i<data_by_list1.length-1; i++) {
+						var value = data_by_list1[i].split(',');
+						//alert(value[2]);
+						available_tags.push(value[2]);
+					}
+				}
+				//alert(available_tags.length);
+    		}
+    	);
+	}
+
 	$(function(){
 
 		$(document).ready(function(){
-            $.post("get_userlist.php",
+            /*$.post("get_userlist.php",
     			function(data,status) {
     				//alert(data);
 					if(data!=-1) {
@@ -183,7 +238,8 @@
 					}
 					//alert(available_tags.length);
     			}
-    		);
+    		);*/
+			getAvailableTags();
 		});
 		
 		$('#search_user').click(function(){
