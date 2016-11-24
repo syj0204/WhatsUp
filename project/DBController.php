@@ -110,6 +110,24 @@ Class DBController{
 			//$this->DBObject->disconnectDB();
 		}
 	}
+	
+	function deletePermissionMultiple($user_id, $device_id_list) {
+		if($this->connection) {
+			
+			//$device_id_list =explode(',' , $device_id_list);
+			$device_id_list_length = count($device_id_list);
+			$count=0;
+			
+			for($i = 0 ; $i < $device_id_list_length ; $i++){
+				$query = "DELETE FROM Permission WHERE nUserID=".$user_id."and nDeviceID=".$device_id_list[$i];
+				$statement = $this->DBObject->executeQuery($query);
+				if($statement) $count++;
+			}
+	
+			return $count;
+			//$this->DBObject->disconnectDB();
+		}
+	}
 
 	function getDeviceList() {
 /// 이거 고쳐야함

@@ -11,11 +11,13 @@
 	var available_tags = [];
 
 	function load_user_table() {
-		available_tags.length = 0;
+		/*available_tags.length = 0;
 		
 		$("#user_list_table tbody tr").each(function(){
 			$(this).remove();
-		});
+		});*/
+
+		reset_user_table();
 
 		$.post("get_userlist.php",
 	    	function(data,status) {
@@ -30,6 +32,11 @@
 				}
 	    	}
 	    );
+	}
+
+	function reset_user_table() {
+		$('#user_list_table tbody tr').remove();
+		available_tags.length=0;
 	}
 	
 	function edit_user(td) {
@@ -212,22 +219,7 @@
 	$(function(){
 
 		$(document).ready(function(){
-            /*$.post("get_userlist.php",
-    			function(data,status) {
-    				//alert(data);
-					if(data!=-1) {
-						var data_by_list1 = data.split('|');
-						for(var i=0; i<data_by_list1.length-1; i++) {
-							var value = data_by_list1[i].split(',');
-							//alert(value[2]);
-							available_tags.push(value[2]);
-						}
-					}
-					//alert(available_tags.length);
-    			}
-    		);*/
     		load_user_table();
-			//getAvailableTags();
 		});
 		
 		$('#search_user').click(function(){
