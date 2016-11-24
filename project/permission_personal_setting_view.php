@@ -1,19 +1,6 @@
 <?php
-include "DBController.php";
-$han="추가";
-$han1="수정";
-$han2="삭제";
-$han3="검색";
-$han4="취소";
-$han5="완료";
-$han6="Device Name 으로 검색하세요";
-$han = ICONV("EUC-KR","UTF-8",$han);
-$han1 = ICONV("EUC-KR","UTF-8",$han1);
-$han2 = ICONV("EUC-KR","UTF-8",$han2);
-$han3 = ICONV("EUC-KR","UTF-8",$han3);
-$han4 = ICONV("EUC-KR","UTF-8",$han4);
-$han5 = ICONV("EUC-KR","UTF-8",$han5);
-$han6 = ICONV("EUC-KR","UTF-8",$han6);
+	include "DBController.php";
+	include "String.php";
 ?>
 <link rel="stylesheet" href="css/jquery.auto-complete.css">
 <script src="js/jquery.auto-complete.js"></script>
@@ -470,9 +457,6 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			    </div>
 			  </div>
 			</div>
-
-
-
   		</div>
   		<!-- /.col-lg-6 -->
   		
@@ -491,11 +475,12 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
   			</table>
   		</div>
   		<div id="initial_view">
-  			<strong><?php 
+  			<strong>
+  				<?php 
                    $text = "사용자와 그룹을 선택하여 Permission을 확인하세요!!";
                    $text = ICONV("EUC-KR","UTF-8",$text);
                    echo $text;
-                   ?>
+            	?>
             </strong>
   		</div>
 	</div>
