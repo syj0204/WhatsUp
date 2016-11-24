@@ -130,19 +130,27 @@
 	function delete_permission_multiple(devicelist) {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
-		alert(devicelist);
+		//alert(devicelist);
 		$.post("delete_permission3.php",{
 			user:user_id,
 			devicelist:devicelist
 			}, 
 			function(data,status) {
-				alert(data);
+				//alert(data);
 				if(data!=-1) {
 					load_permission_table();
 					toggleSearchView();
 					toggleAddView(user_id, devicegroup_id);
-					$("#permission_list_table thead tr").find('th').eq(0).remove();
+					
 				} else alert("fail!");
+
+				$("#permission_list_table thead tr").find('th').eq(0).remove();
+				$('#delete_permission_multiple_save').hide();
+				$('#delete_permission_multiple').show();
+				$("#permission_list_table thead tr").find('th').eq(2).show();
+				$("#permission_list_table tbody tr").each(function(){
+					$(this).find('td').eq(2).show();
+				});
 			}
 		);
 	}
@@ -312,7 +320,12 @@
 			
 			//var delete_permission_multiple = document.getElementById("delete_permission_multiple");
 			//delete_permission_multiple.innerHTML = "<button id='delete_permission_multiple_save' class='btn btn-default' type='button' onclick='delete_permission_multiple_save()'><?php echo $han5?></button>"
+			$("#permission_list_table thead tr").find('th').eq(2).hide();
+			$("#permission_list_table tbody tr").each(function(){
+				$(this).find('td').eq(2).hide();
+			});
 			$("#permission_list_table thead tr").prepend("<th><input type='checkbox' onchange='toggle_all_check(this)' /></th>");
+			
 
 			$("#permission_list_table tbody tr").each(function(){
 				$(this).prepend("<td><input type='checkbox' onchange='toggle_each_check(this)' /></td>");
@@ -327,7 +340,7 @@
 			$("#permission_list_table tbody tr td input[type='checkbox']").each(function(){
 				if($(this).is(':checked')) {
 					device = $(this).closest("tr").find('td:nth-child(2)').html();
-					alert(device);
+					//alert(device);
 					checklist_to_delete.push(device);
 				}
 			});
