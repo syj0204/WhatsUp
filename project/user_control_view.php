@@ -158,13 +158,14 @@
 				function(data,status) {
 					//alert(data);
 					if(data) {
-						document.getElementById("user_list_table").rows.item(index).remove();
+						//document.getElementById("user_list_table").rows.item(index).remove();
 						for(var i=0; i<available_tags.length; i++) {
 							if(available_tags[i]==user_name) {
 								available_tags.splice(i,1);
 								break;
 							}
 						}
+						reload_user_table();
 						alert("success!");
 						//alert(available_tags);
 					} else alert("fail!");
@@ -239,7 +240,8 @@
 					//alert(available_tags.length);
     			}
     		);*/
-			getAvailableTags();
+    		reload_user_table();
+			//getAvailableTags();
 		});
 		
 		$('#search_user').click(function(){
@@ -335,28 +337,7 @@
 				</thead>
 				<tbody>
 
-				<?php 
-					$DBControlObject = new DBController();
-					$rows = $DBControlObject->getUserList();
-					if(count($rows)>0) {
-						for($i=0; $i<count($rows); $i++) {
-							$user_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
-							$users_name[] = $user_name;
-							//$user_id = intval($rows[$i][0]);
-				?>
-					<tr>
-						<td style="display: none"><?php echo $rows[$i][0]?></td>
-						<td><?php echo $user_name?></td>
-						<td><?php echo $rows[$i][2]?></td>
-						<td><?php echo $rows[$i][3]?></td>
-						<!-- <td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button id="delete_user" class="btn btn-default" type="button" onclick="delete_user(this)"><?php echo $han2?></button></td> -->
-						<td><button id="edit_user" class="btn btn-default" type="button" onclick="edit_user(this)"><?php echo $han1?></button>      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#delete_user_modal" onclick="delete_user(this)"><?php echo $han2?></button></td>
-						 
-					</tr>
-				<?php
-						}
-					}
-				?>
+				
 				</tbody>
 			</table>
 		</div>
