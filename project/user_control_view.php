@@ -23,10 +23,9 @@
 <script type="text/javascript">
 
 	var available_tags = [];
-
+	
 	function edit_user(td) {
 		var index = td.parentElement.parentElement.rowIndex;
-		//alert("index="+index);
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		var pre_username = td_list[1].innerHTML;
 		for(var i=0; i<available_tags.length; i++) {
@@ -35,11 +34,6 @@
 				break;
 			}
 		}
-		/*var pre_td_values = new Array(td_list.length);
-		for(var i=0; i<td_list.length; i++) {
-			pre_td_values[i] = td_list[i].innerHTML;
-			alert(td_list[i].innerHTML);
-		}*/
 		td_list[0].innerHTML = "<input type='text' style='display: none' id='user_id_to_update' value="+td_list[0].innerHTML+">";
 		td_list[1].innerHTML = "<input type='text' class='form-control' id='user_name_to_update' value='"+td_list[1].innerHTML+"' placeholder='Enter User Name'>";
 		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone(Except -)'>";
@@ -47,7 +41,7 @@
 		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'><?php echo $han5?></button>"
 		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'><?php echo $han4?></button>";
 	}
-
+	
 	function edit_user_update(td) {
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
@@ -86,7 +80,7 @@
 			}
 		);
 	}
-	
+
 	function edit_user_cancel(td) {
 		var index = td.parentElement.parentElement.rowIndex;
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
@@ -142,7 +136,7 @@
 			);
 		});
 	}
-
+		
 	function add_user_save() {
 		var new_user_name = document.getElementById("user_name_to_add").value;
 		var new_user_cellphone = document.getElementById("user_cellphone_to_add").value;
@@ -157,14 +151,13 @@
 				function(data,status) {
 					//alert(data);
 					if(data!=-1) {
-						/*$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
+						$.newtr = $("<tr><td style='display: none'>"+data+"</td><td>"+new_user_name+"</td><td>"+new_user_cellphone+"</td><td>"+new_user_department+"</td><td><button id='edit_user' class='btn btn-default' type='button' onclick='edit_user(this)'><?php echo $han1?></button>      <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button></td></tr>");
 						$('#user_list_table').append($.newtr);
 						document.getElementById("user_list_table").rows.item(1).remove();
-						available_tags.push(new_user_name);*/
+						available_tags.push(new_user_name);
 						alert("success!");
-						$('#page-wrapper').load("user_control_view.php");
+						//$('#page-wrapper').load("user_control_view.php");
 					} else alert("fail");
-					
 				}
 			);
 		} else alert("Fill Blank!!");
@@ -211,7 +204,7 @@
                 term = term.toLowerCase();
                 var choices = available_tags;
                 var suggestions = [];
-                for (i=0;i<choices.length;i++)
+                for (var i=0;i<choices.length;i++)
                     if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
                 suggest(suggestions);
             }
@@ -226,7 +219,7 @@
 				});
 			}
 		});
-
+		
 		$('#add_user').click(function(){
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 			//$.trClone = $('#user_list_table tr:last').clone().html();
