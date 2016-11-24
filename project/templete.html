@@ -41,13 +41,13 @@
 			$('#dashboard').click(function(){
 				$('#ui_view').load("dashboard.php");
 				return false;
-			});
+			})
 			$('#user').click(function(){
-				$('#ui_view').load("user_control_view.php");
+				$('#ui_view').load("user_setting_view.php");
 				return false;
 			});
 			$('#permission').click(function(){
-				$('#ui_view').load("permission_control_view4.php");
+				$('#ui_view').load("permission_personal_setting_view.php");
 				return false;
 			});
 			$('#search').click(function(){
@@ -90,8 +90,8 @@
                 <a class="navbar-brand" href="templete.html">WhatsUp SMS</a>
             </div>
             <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-               <!--  <li class="dropdown">
+            <!--  <ul class="nav navbar-right top-nav">
+               <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
                         <li class="message-preview">
@@ -217,22 +217,12 @@
                     		</li>
                         </ul>
                     </li>
-                       
-                    
-	
-               
-   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </nav>
 
         <div id="ui_view"></div>
-
-            
-
-        </div>
-        <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->

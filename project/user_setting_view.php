@@ -1,20 +1,6 @@
 <?php
 	include "DBController.php";
-	
-	$han="사용자 추가";
-	$han1="수정";
-	$han2="삭제";
-	$han3="검색";
-	$han4="취소";
-	$han5="완료";
-	$han6="이름으로 찾기";
-	$han = ICONV("EUC-KR","UTF-8",$han);
-	$han1 = ICONV("EUC-KR","UTF-8",$han1);
-	$han2 = ICONV("EUC-KR","UTF-8",$han2);
-	$han3 = ICONV("EUC-KR","UTF-8",$han3);
-	$han4 = ICONV("EUC-KR","UTF-8",$han4);
-	$han5 = ICONV("EUC-KR","UTF-8",$han5);
-	$han6 = ICONV("EUC-KR","UTF-8",$han6);
+	include "String.php";
 ?>
 <link rel="stylesheet" href="css/jquery.auto-complete.css">
 <script src="js/jquery.auto-complete.js"></script>
@@ -24,12 +10,14 @@
 
 	var available_tags = [];
 
-	function reload_user_table() {
-		available_tags.length = 0;
+	function load_user_table() {
+		/*available_tags.length = 0;
 		
 		$("#user_list_table tbody tr").each(function(){
 			$(this).remove();
-		});
+		});*/
+
+		reset_user_table();
 
 		$.post("get_userlist.php",
 	    	function(data,status) {
@@ -44,6 +32,11 @@
 				}
 	    	}
 	    );
+	}
+
+	function reset_user_table() {
+		$('#user_list_table tbody tr').remove();
+		available_tags.length=0;
 	}
 	
 	function edit_user(td) {
@@ -111,7 +104,7 @@
 					//+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
 
 					//available_tags.push(user_info_array[1]);
-					reload_user_table();
+					load_user_table();
 				}
 			}
 		);
@@ -165,7 +158,7 @@
 								break;
 							}
 						}
-						reload_user_table();
+						load_user_table();
 						alert("success!");
 						//alert(available_tags);
 					} else alert("fail!");
@@ -194,7 +187,7 @@
 						//available_tags.push(new_user_name);
 						alert("success!");
 						//$('#page-wrapper').load("user_control_view.php");
-						reload_user_table();
+						load_user_table();
 					} else alert("fail");
 				}
 			);
@@ -226,34 +219,21 @@
 	$(function(){
 
 		$(document).ready(function(){
-            /*$.post("get_userlist.php",
-    			function(data,status) {
-    				//alert(data);
-					if(data!=-1) {
-						var data_by_list1 = data.split('|');
-						for(var i=0; i<data_by_list1.length-1; i++) {
-							var value = data_by_list1[i].split(',');
-							//alert(value[2]);
-							available_tags.push(value[2]);
-						}
-					}
-					//alert(available_tags.length);
-    			}
-    		);*/
-    		reload_user_table();
-			//getAvailableTags();
+    		load_user_table();
 		});
 		
 		$('#search_user').click(function(){
 			var value = $('#user_search_text').val(); 
-			
-			$("#user_list_table tbody tr").each(function(){
-				$row = $(this);
-				var text = $row.find("td:eq(1)").text();
-				if(text.toLowerCase()==value.toLowerCase()) {
-					$row.show();
-				} else $row.hide();
-			});
+
+			if(value.length>0) {
+				$("#user_list_table tbody tr").each(function(){
+					$row = $(this);
+					var text = $row.find("td:eq(1)").text();
+					if(text.toLowerCase()==value.toLowerCase()) {
+						$row.show();
+					} else $row.hide();
+				});
+			}
 		});
 
 		$('#user_search_text').autoComplete({
