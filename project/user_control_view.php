@@ -246,14 +246,16 @@
 		
 		$('#search_user').click(function(){
 			var value = $('#user_search_text').val(); 
-			
-			$("#user_list_table tbody tr").each(function(){
-				$row = $(this);
-				var text = $row.find("td:eq(1)").text();
-				if(text.toLowerCase()==value.toLowerCase()) {
-					$row.show();
-				} else $row.hide();
-			});
+
+			if(value.length>0) {
+				$("#user_list_table tbody tr").each(function(){
+					$row = $(this);
+					var text = $row.find("td:eq(1)").text();
+					if(text.toLowerCase()==value.toLowerCase()) {
+						$row.show();
+					} else $row.hide();
+				});
+			}
 		});
 
 		$('#user_search_text').autoComplete({

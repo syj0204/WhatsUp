@@ -284,14 +284,15 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 	
 		$('#search_permission').click(function(){
 			var value = $('#permission_search_text').val(); 
-			
-			$("#permission_list_table tbody tr").each(function(){
-				$row = $(this);
-				var text = $row.find("td:eq(1)").text();
-				if(text.toLowerCase()==value.toLowerCase()) {
-					$row.show();
-				} else $row.hide();
-			});
+			if(value.length>0) {
+				$("#permission_list_table tbody tr").each(function(){
+					$row = $(this);
+					var text = $row.find("td:eq(1)").text();
+					if(text.toLowerCase()==value.toLowerCase()) {
+						$row.show();
+					} else $row.hide();
+				});
+			}
 		});
 		
 		$('#toRightAllDevices').click(function(){
