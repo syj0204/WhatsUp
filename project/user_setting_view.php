@@ -44,6 +44,7 @@
 		var td_list = document.getElementById("user_list_table").rows.item(index).cells;
 		//var pre_username = td_list[1].innerHTML;
 		var pre_department = td_list[3].innerHTML;
+		//alert(pre_department);
 		/*for(var i=0; i<available_tags.length; i++) {
 			if(available_tags[i]==pre_username) {
 				available_tags.splice(i,1);
@@ -55,16 +56,16 @@
 		td_list[2].innerHTML = "<input type='text' class='form-control' id='user_cellphone_to_update' value='"+td_list[2].innerHTML+"' placeholder='Enter User Cellphone(Except -)'>";
 
 		if(pre_department=="infra") {
-			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra' selected>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
+			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra' selected>infra</option><option value='Security NetWork'>Security</option><option value='other'>other</option></select>";
 		}
-		else if(pre_department=="Security Network") {
-			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network' selected>Security</option><option value='other'>other</option></select>";
+		else if(pre_department=="Security NetWork") {
+			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security NetWork' selected>Security</option><option value='other'>other</option></select>";
 		}
 		else if(pre_department=="other") {
-			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other' selected>other</option></select>";
+			td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security NetWork'>Security</option><option value='other' selected>other</option></select>";
 		} 
 
-		//td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select>";
+		//td_list[3].innerHTML = "<select id='user_department_to_update' class='form-control'><option value='infra'>infra</option><option value='Security NetWork'>Security</option><option value='other'>other</option></select>";
 		td_list[4].innerHTML = "<button id='update_button' class='btn btn-default' type='button' onclick='edit_user_update(this)'><?php echo $han5?></button>"
 		+ "       <button id='cancel_button' class='btn btn-default' type='button' onclick='edit_user_cancel(this)'><?php echo $han4?></button>";
 	}
@@ -173,7 +174,7 @@
 		var new_user_department = document.getElementById("user_department_to_add");
 		new_user_department = new_user_department.options[new_user_department.selectedIndex].value;
 		if(new_user_name.length>0 && new_user_cellphone.length>0 && new_user_department.length>0) {
-			$.post("user.php",{
+			$.post("add_user.php",{
 				username:new_user_name,
 				cellphone:new_user_cellphone,
 				department:new_user_department
@@ -262,7 +263,7 @@
 			//$('#add_user_view').html('<input type="text" name="user_add_name" class="form-control" placeholder="Enter User Name"><br /><input type="text" name="user_add_cellphone" class="form-control" placeholder="Enter User CellPhone"><br />');
 			//$.trClone = $('#user_list_table tr:last').clone().html();
 			
-			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone(Except -)'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security Network'>Security</option><option value='other'>other</option></select></td><td><button id='add_user_save' class='btn btn-default' type='button' onclick='add_user_save()'><?php echo $han5?></button><button id='add_user_cancel' class='btn btn-default' type='button' onclick='add_user_cancel()'><?php echo $han4?></button></td></tr>");
+			$.newtr = $("<tr><td><input type='text' id='user_name_to_add' class='form-control' placeholder='Enter User Name'></td><td><input type='text' id='user_cellphone_to_add' class='form-control' placeholder='Enter User Cellphone(Except -)'></td><td><select id='user_department_to_add'  class='form-control'><option value='infra'>infra</option><option value='Security NetWork'>Security</option><option value='other'>other</option></select></td><td><button id='add_user_save' class='btn btn-default' type='button' onclick='add_user_save()'><?php echo $han5?></button><button id='add_user_cancel' class='btn btn-default' type='button' onclick='add_user_cancel()'><?php echo $han4?></button></td></tr>");
 			$('#user_list_table').prepend($.newtr);
 		});
 	});
