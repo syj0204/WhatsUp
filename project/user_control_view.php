@@ -24,7 +24,7 @@
 
 	var available_tags = [];
 
-	function reload_user_table() {
+	function load_user_table() {
 		available_tags.length = 0;
 		
 		$("#user_list_table tbody tr").each(function(){
@@ -111,7 +111,7 @@
 					//+ "       <button class='btn btn-default' type='button' data-toggle='modal' data-target='#delete_user_modal' onclick='delete_user(this)'><?php echo $han2?></button>";
 
 					//available_tags.push(user_info_array[1]);
-					reload_user_table();
+					load_user_table();
 				}
 			}
 		);
@@ -165,7 +165,7 @@
 								break;
 							}
 						}
-						reload_user_table();
+						load_user_table();
 						alert("success!");
 						//alert(available_tags);
 					} else alert("fail!");
@@ -194,7 +194,7 @@
 						//available_tags.push(new_user_name);
 						alert("success!");
 						//$('#page-wrapper').load("user_control_view.php");
-						reload_user_table();
+						load_user_table();
 					} else alert("fail");
 				}
 			);
@@ -240,7 +240,7 @@
 					//alert(available_tags.length);
     			}
     		);*/
-    		reload_user_table();
+    		load_user_table();
 			//getAvailableTags();
 		});
 		

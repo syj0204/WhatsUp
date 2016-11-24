@@ -20,7 +20,20 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 <script src="js/jquery.auto-complete.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
+
 	var available_tags=[];
+
+	function load_permission_table() {
+		available_tags.length = 0;
+		
+		$("#permission_list_table tbody tr").each(function(){
+			$(this).remove();
+		});
+		//var user_id = $('#user_list option:selected').val();
+		var devicegroup_id = $('#devicegroup_list option:selected').val();
+		if(devicegroup_id==-1) make_permission_table_all();
+		else make_permission_table_by_group();
+	}
 	
 	function resetTableView() {
 		$('#permission_list_table tbody tr').remove();
@@ -65,13 +78,14 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 			device:td_list[0].innerHTML
 			}, 
 			function(data,status) {
-				for(var i=0; i<available_tags.length; i++) {
+				/*for(var i=0; i<available_tags.length; i++) {
 					if(available_tags[i]==td_list[0].innerHTML) {
 						available_tags.splice(i,1);
 						break;
 					}
 				}
-				document.getElementById("permission_list_table").rows.item(index).remove();
+				document.getElementById("permission_list_table").rows.item(index).remove();*/
+				load_permission_table();
 				toggleSearchView();
 			}
 		);
@@ -221,19 +235,22 @@ $han6 = ICONV("EUC-KR","UTF-8",$han6);
 					}, 
 					function(data,status) {
 						if(data==1) {
-							for(var i=0; i<devices.length; i++) {
+							/*for(var i=0; i<devices.length; i++) {
 								available_tags.push(devices_name[i]);
 							}
 							for(var i=0; i<devices.length; i++) {
 								$.newtr = $("<tr><td>"+devices[i]+"</td><td>"+devices_name[i]+"</td><td><button id='delete_permission' class='btn btn-default' type='button' onclick='delete_permission(this)'><?php echo $han2?></button></td></tr>");
 								$('#permission_list_table tbody').append($.newtr);
-							}
+							}*/
 							alert("success");
+							load_permission_table();
 							toggleSearchView();
 						} else alert(data);
 					}
 				);
-			} else alert("Choose Device");	
+			} else alert("Choose Device");
+
+				
 			
 		});
 				
