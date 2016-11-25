@@ -291,13 +291,13 @@
 					}, 
 					function(data,status) {
 						if(data==1) {
-							alert("success");
+							//alert("success");
 							load_permission_table();
 							toggleSearchView();
 						} else alert(data);
 					}
 				);
-			} else alert("Choose Device");
+			} //else alert("Choose Device");
 
 				
 			

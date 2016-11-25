@@ -160,7 +160,7 @@
 							}
 						}
 						load_user_table();
-						alert("success!");
+						//alert("success!");
 						//alert(available_tags);
 					} else alert("fail!");
 				}
@@ -186,7 +186,7 @@
 						//$('#user_list_table').append($.newtr);
 						//document.getElementById("user_list_table").rows.item(1).remove();
 						//available_tags.push(new_user_name);
-						alert("success!");
+						//alert("success!");
 						//$('#page-wrapper').load("user_control_view.php");
 						load_user_table();
 					} else alert("fail");
