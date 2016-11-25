@@ -24,14 +24,24 @@ $(function(){
 		$('#list20 option').remove();
 		var list_save = new Array();
 		var list_string1= ""
-
+		var temp_select = $('#list10 option:selected').val();
+		if($('#list10 option:selected').val()=='-- Select Template --'){
+			alert("Not Select Tmeplete.");
+			$('#page-wrapper').load("newtest2.php");
+		}
+		else{
+			if($('#list1 option:selected').size()==0){
+				alert("Not Select User");
+				$('#page-wrapper').load("newtest2.php");
+			}
+			else{
 		for(var i=0; i<list_size; i++) {
 			list_save[i] = $('#list1 option:selected:eq('+(i)+')').val();
 			var list_string = list_save[i]+",";
 			var list_string1 = list_string1 + list_string; 
 		 }
 		// alert(list_string1);
-		var temp_select = $('#list10 option:selected').val();
+		
 		//alert(temp_select);
 		$.post("newtest1.php",{
 			list: list_string1,
@@ -44,6 +54,8 @@ $(function(){
 			}
 		);
 		$('#page-wrapper').load("newtest2.php");
+			}
+		}
 	});
 
 	$('#list10').change(function(){
@@ -119,7 +131,7 @@ $(function(){
 									<label id="list10_title"><?php echo $han3?></label>
 									<div class="form-group input-group">
 									   <select name="list10" id="list10" class="form-control">
-							       			<option>--Select Template --</option>
+							       			<option>-- Select Template --</option>
 												<?php $DBControlObject = new DBController();
 													  $rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것
 														if(count($rows)>0) {		
