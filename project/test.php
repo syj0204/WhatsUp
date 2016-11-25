@@ -34,7 +34,7 @@
 			$('#enter_temp').show();
 			$('#Temp_Name').show();
 			$('#close').show();
-			$('#list10').val('--Select Template --').attr('selected', 'selected');
+			$('#list10').val('-- Select Template --').attr('selected', 'selected');
 			
 		});
 		
@@ -115,8 +115,8 @@
 			);
 			$('#list20 option').remove();
 			$('#list2 option').remove();
-			$('#list1').val('--Select Device Group --').attr('selected', 'selected');
-			$('#list10').val('--Select Template --').attr('selected', 'selected');
+			$('#list1').val('-- Select Device Group --').attr('selected', 'selected');
+			$('#list10').val('-- Select Template --').attr('selected', 'selected');
 
 			
 		});
@@ -219,7 +219,7 @@
 			var data_by_category = new Array();
 			$('#list20 option').remove();
 			$('#list2 option').remove();
-			$('#list1').val('--Select Device Group --').attr('selected', 'selected');
+			$('#list1').val('-- Select Device Group --').attr('selected', 'selected');
 			//alert(template_select);
 			$.post("test3.php",{
 				category:template_select
@@ -281,7 +281,7 @@
 				        	<div class="col-xs-6" id= "list_grid">
 				        	  <label id="list1_title"><?php echo $han8?></label>
 				        		<select name="list1" id="list1" class="form-control"  >
-				        			<option>--Select Device Group --</option>
+				        			<option>-- Select Device Group --</option>
 										<?php $DBControlObject = new DBController();
 											  $rows = $DBControlObject->DeviceGroupsView();
 												if(count($rows)>0) {		
@@ -305,7 +305,7 @@
 								<label id="list10_title"><?php echo $han5?></label>
 								<div class="form-group input-group ">
 									<select name="list10" id="list10" class="form-control">
-						        		<option>--Select Template --</option>
+						        		<option>-- Select Template --</option>
 											<?php $DBControlObject = new DBController();
 												  $rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것
 													if(count($rows)>0) {		
