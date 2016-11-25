@@ -17,7 +17,7 @@
 				return false;
 			});
 			$('#go_device_list').click(function(){
-				$('#page-wrapper').load("ajaxtest2.php");
+				$('#page-wrapper').load("Search_device_view.php");
 				return false;
 			});
 			$('#go_personal_setting').click(function(){

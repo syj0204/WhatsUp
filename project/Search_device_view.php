@@ -5,58 +5,6 @@
 </script>
 <script>
 
-$(document).ready(function(){
-	$('#search_device').click(function(){
-		//alert(''+$('#device_search_text').val());
-		var value = $('#user_search_text').val(); 
-		$("#user_list_table tbody tr").each(function(){
-			$row = $(this);
-			var text = $row.find("td:eq(0)").text();
-			if(text.toLowerCase()==value.toLowerCase()) {
-				$row.show();
-			
-			} else {
-				$row.hide();
-				
-			}
-		});
-		/*$("#user_list_table1 tbody tr").each(function(){
-			$row = $(this);
-			var text = $row.find("td:eq(0)").text();
-			if(text.toLowerCase()==value.toLowerCase()) {
-				$row.show();
-			
-			} else {
-				$row.hide();
-				
-			}
-		});*/
-			$.post("Search_device.php",{ 
-				//name: new_user_name
-				name: value
-			}, 
-				function(data,status){
-					if(!data==0){
-						//$("#test").show(); 
-						$("div#div1").html(data); 
-						// 데이터가 없는 경우를 나타낸다.
-
-					} // 오류시 수정 예정
-					else {
-						//alert(status);
-						//$test.show();
-						//$("#test").show(); 
-					//	$("div#div1").html(data);  //데이터 호출 성공
-
-										}
-				});
-
-	});
-	
-});
-$(window).load(function(e){
-
-});	
 </script>
 </head>
 <div id="page-wrapper">
@@ -81,14 +29,7 @@ $(window).load(function(e){
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-6">
-   								<div class="input-group">
-      								<input id="user_search_text" type="text" class="form-control" placeholder="Search for...">
-     									<span class="input-group-btn">
-        									<button id="search_device" class="btn btn-default" type="button">Search</button>
 
-      									</span>
-
-    							</div>
   							</div>
   						</div>  	        									<br>					
 						<div class="row">
