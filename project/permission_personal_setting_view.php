@@ -30,7 +30,7 @@
 	function make_permission_table_by_group() {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
-		toggleAddView(user_id, devicegroup_id);
+		toggleAddView();
 		
 		$.post("get_permission_by_devicegroup.php",{
 			user:user_id,
@@ -77,7 +77,9 @@
 		);
 	}
 	
-	function toggleAddView(user_id, devicegroup_id) {
+	function toggleAddView() {
+		var user_id = $('#user_list option:selected').val();
+		var devicegroup_id = $('#devicegroup_list option:selected').val();
 		if(user_id>0 && devicegroup_id>0) {
 			//$('#permission_search_text').removeAttr('disabled');
 			//$('#search_permission').removeAttr('disabled');
@@ -140,10 +142,12 @@
 				if(data!=-1) {
 					load_permission_table();
 					toggleSearchView();
-					toggleAddView(user_id, devicegroup_id);
+					//toggleAddView(user_id, devicegroup_id);
+					toggleAddView();
 					
 				} else alert("fail!");
-
+				$('#user_list').removeAttr('disabled');
+				$('#devicegroup_list').removeAttr('disabled');
 				$("#permission_list_table thead tr").find('th').eq(0).remove();
 				$('#delete_permission_multiple_save').hide();
 				$('#delete_permission_multiple').show();
@@ -219,29 +223,52 @@
 		$('#add_permission').click(function(){
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
-			$.post("get_no_permission_by_devicegroup.php",{
-				user:user_id,
-				devicegroup:devicegroup_id
-				}, 
-				function(data,status) {
-					$('#available_devices_list option').each(function() {
-						$(this).remove();
-					});
-					
-					if(data!=-1) {
-						var data_by_list1 = data.split('|');
-						for(var i=0; i<data_by_list1.length-1; i++) {
-							var value = data_by_list1[i].split(',');
-							$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
-							$('#available_devices_list').append($.newtr);
-							
+			if(devicegroup_id==-1) {
+				$.post("get_no_permission_all.php",{
+					user:user_id
+					}, 
+					function(data,status) {
+						$('#available_devices_list option').each(function() {
+							$(this).remove();
+						});
+						
+						if(data!=-1) {
+							var data_by_list1 = data.split('|');
+							for(var i=0; i<data_by_list1.length-1; i++) {
+								var value = data_by_list1[i].split(',');
+								$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
+								$('#available_devices_list').append($.newtr);
+							}
+						} else {
+							//alert("No Device To Add!!");
+							//$('#add_permission_dialog').hide();
 						}
-					} else {
-						//alert("No Device To Add!!");
-						//$('#add_permission_dialog').hide();
 					}
-				}
-			);
+				);
+			} else {
+				$.post("get_no_permission_by_devicegroup.php",{
+					user:user_id,
+					devicegroup:devicegroup_id
+					}, 
+					function(data,status) {
+						$('#available_devices_list option').each(function() {
+							$(this).remove();
+						});
+						
+						if(data!=-1) {
+							var data_by_list1 = data.split('|');
+							for(var i=0; i<data_by_list1.length-1; i++) {
+								var value = data_by_list1[i].split(',');
+								$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
+								$('#available_devices_list').append($.newtr);
+							}
+						} else {
+							//alert("No Device To Add!!");
+							//$('#add_permission_dialog').hide();
+						}
+					}
+				);
+			}
 		});
 		
 		$('#add_permission_save').click(function(){
@@ -288,6 +315,8 @@
 			$('#add_permission').attr('disabled', 'true');
 			$('#delete_permission_multiple').hide();
 			$('#delete_permission_multiple_save').show();
+			$('#user_list').attr('disabled', 'true');
+			$('#devicegroup_list').attr('disabled', 'true');
 			
 			//var delete_permission_multiple = document.getElementById("delete_permission_multiple");
 			//delete_permission_multiple.innerHTML = "<button id='delete_permission_multiple_save' class='btn btn-default' type='button' onclick='delete_permission_multiple_save()'><?php echo $han5?></button>"

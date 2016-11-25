@@ -173,7 +173,7 @@ Class DBController{
 	function getDeviceListNotForUser($user_id) {
 
 		if($this->connection) {
-			$query = "SELECT * FROM Device WHERE nDeviceID NOT IN (SELECT nDeviceID FROM Permission WHERE nUserID =".$user_id.")";
+			$query = "SELECT nDeviceID, sDisplayName FROM Device WHERE nDeviceID NOT IN (SELECT nDeviceID FROM Permission WHERE nUserID =".$user_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
