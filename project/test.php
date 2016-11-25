@@ -121,7 +121,7 @@
 			
 		});
 		
-		$('#delete_temp').on("click", "#delete_user", function() {
+		$('#delete_temp1').on("click", "#delete_user", function() {
 			$('#list20 option').remove();
 		  //  var list_save = new Array();
 		    //var list_string1=""
@@ -323,7 +323,7 @@
 								    </select>
 								    <span class="input-group-btn">
 										<button id="select_temp" class="btn btn-success" type="button"><?php echo $han2?></button>
-										<button  class="btn btn-success" type="button"  data-toggle="modal" data-target="#delete_temp" ><?php echo $han3?></button>
+										<button id="delete_temp" class="btn btn-success" type="button"  data-toggle="modal" data-target="#delete_temp1" ><?php echo $han3?></button>
 										<button id="add_temp" class="btn btn-success" type="button"><?php echo $han4?></button>
 									</span>
 									<input type="text" id="Temp_Name" class="form-control panel-yellow" placeholder="Enter Template Name ~" style="display: none"></input>
@@ -339,7 +339,7 @@
 						</div>
 						
 						<!-- Modal -->
-					  	<div class="modal fade" id="delete_temp" role="dialog">
+					  	<div class="modal fade" id="delete_temp1" role="dialog">
 					    <div class="modal-dialog">
 					    
 					      <!-- Modal content-->

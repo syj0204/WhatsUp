@@ -55,7 +55,7 @@ Class DBController{
 	function selectUser($user_id) {
 		$row = -1;
 		if($this->connection) {
-			$query = "SELECT * FROM Users WHERE nUserID=".$user_id;
+			$query = "SELECT * FROM SMSDB.dbo.Users WHERE nUserID=".$user_id;
 			$statement = $this->DBObject->executeQuery($query);
 			if(count($statement)>0) {
 				$row = sqlsrv_fetch_array( $statement, SQLSRV_FETCH_NUMERIC);
@@ -111,11 +111,29 @@ Class DBController{
 		}
 	}
 
+	function deletePermissionMultiple($user_id, $device_id_list) {
+		if($this->connection) {
+				
+			//$device_id_list =explode(',' , $device_id_list);
+			$device_id_list_length = count($device_id_list);
+			$count=0;
+				
+			for($i = 0 ; $i < $device_id_list_length ; $i++){
+				$query = "DELETE FROM SMSDB.dbo.Permission WHERE nUserID=".$user_id."and nDeviceID=".$device_id_list[$i];
+				$statement = $this->DBObject->executeQuery($query);
+				if($statement) $count++;
+			}
+	
+			return $count;
+			//$this->DBObject->disconnectDB();
+		}
+	}
+	
 	function getDeviceList() {
 /// 이거 고쳐야함
 		if($this->connection) {
 			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
-			$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where DG.nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by nDeviceID ASC ";
+			$query = "SELECT D.* from  WhatsUP.dbo.DeviceGroup AS DG INNER JOIN WhatsUP.dbo.PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN WhatsUP.dbo.Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where DG.nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by nDeviceID ASC ";
 			// WhatUp DB쩍횄 쨩챌쩔챘
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
@@ -155,7 +173,7 @@ Class DBController{
 	function getDeviceListNotForUser($user_id) {
 
 		if($this->connection) {
-			$query = "SELECT * FROM Device WHERE nDeviceID NOT IN (SELECT nDeviceID FROM Permission WHERE nUserID =".$user_id.")";
+			$query = "SELECT * FROM WhatsUP.dbo.Device WHERE nDeviceID NOT IN (SELECT nDeviceID FROM SMSDB.dbo.Permission WHERE nUserID =".$user_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -193,7 +211,7 @@ Class DBController{
 
 	function getUserListNotForDevice($device_id) {
 		if($this->connection) {
-			$query = "SELECT * FROM Users WHERE nUserID NOT IN (SELECT nUserID FROM Permission WHERE nDeviceID =".$device_id.")";
+			$query = "SELECT * FROM SMSDB.dbo.Users WHERE nUserID NOT IN (SELECT nUserID FROM SMSDB.dbo.Permission WHERE nDeviceID =".$device_id.")";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 				
@@ -212,7 +230,7 @@ Class DBController{
 	function getDeviceGroupList() {
 
 		if($this->connection) {
-			$query = "SELECT * FROM DeviceGroup";
+			$query = "SELECT * FROM WhatsUp.dbo.DeviceGroup";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -232,7 +250,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT * FROM Device WHERE nDeviceID=".$nDeviceID;
+			$query = "SELECT * FROM WhatsUp.dbo.Device WHERE nDeviceID=".$nDeviceID;
 			$statement = $this->DBObject->executeQuery($query);
 
 			if(!$statement) return $statement;
@@ -266,7 +284,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT * FROM Users WHERE sUserName='".$sUserName."'";
+			$query = "SELECT * FROM SMSDB.dbo.Users WHERE sUserName='".$sUserName."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 				
@@ -283,7 +301,7 @@ Class DBController{
 	function getPermissionList() {
 
 		if($this->connection) {
-			$query = "SELECT * FROM Permission";
+			$query = "SELECT * FROM SMSDB.dbo.Permission";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 				
@@ -322,7 +340,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT * FROM Permission WHERE nPermissionID=".$nPermissionID;
+			$query = "SELECT * FROM SMSDB.dbo.Permission WHERE nPermissionID=".$nPermissionID;
 			$statement = $this->DBObject->executeQuery($query);
 
 			if(!$statement) return $statement;
@@ -336,7 +354,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT * FROM Permission WHERE nUserID=".$nUserID;
+			$query = "SELECT * FROM SMSDB.dbo.Permission WHERE nUserID=".$nUserID;
 			$statement = $this->DBObject->executeQuery($query);
 
 			if(!$statement) return $statement;
@@ -350,7 +368,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT * FROM Permission WHERE nDeviceID=".$nDeviceID;
+			$query = "SELECT * FROM SMSDB.dbo.Permission WHERE nDeviceID=".$nDeviceID;
 			$statement = $this->DBObject->executeQuery($query);
 
 			if(!$statement) return $statement;
@@ -365,7 +383,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT p.nDeviceID, d.sDisplayName, dg.sGroupName FROM Permission p, Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID=".$nUserID." and pdg.nDeviceGroupID=".$nDeviceGroupID;
+			$query = "SELECT p.nDeviceID, d.sDisplayName, dg.sGroupName FROM SMSDB.dbo.Permission p, WhatsUp.dbo.Device d, WhatsUp.dbo.PivotDeviceToGroup pdg, WhatsUp.dbo.DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID=".$nUserID." and pdg.nDeviceGroupID=".$nDeviceGroupID;
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -385,7 +403,7 @@ Class DBController{
 
 		if($this->connection) {
 
-			$query = "SELECT D.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sUserName='".$sUserName."'";
+			$query = "SELECT D.* FROM SMSDB.dbo.Permission AS P INNER Join SMSDB.dbo.Users As U ON P.nUserID = U.nUserID INNER Join WhatsUp.dbo.Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sUserName='".$sUserName."'";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -475,7 +493,7 @@ Class DBController{
 
 			//$query = "SELECT U.* FROM Permission AS P INNER Join Users As U ON P.nUserID = U.nUserID INNER Join Device AS D ON P.nDeviceID = D.nDeviceID WHERE U.sDisplayName='".$sDisplayName."' order by nUserID ASC";
 
-			$query = "Select U.* From Device AS D INNER JOIN Permission AS P ON D.nDeviceID = P.nDeviceID INNER JOIN Users AS U ON P.nUserID=U.nUserID Where D.nDeviceID='".$nDeviceID."'";
+			$query = "Select U.* From WhatsUp.dbo.Device AS D INNER JOIN SMSDB.dbo.Permission AS P ON D.nDeviceID = P.nDeviceID INNER JOIN SMSDB.dbo.Users AS U ON P.nUserID=U.nUserID Where D.nDeviceID='".$nDeviceID."'";
 				
 			//$query = "Select * From Device Where nDeviceID ='".$sDisplayName."'";
 			$statement = $this->DBObject->executeQuery($query);
