@@ -12,6 +12,10 @@
 
 	function load_permission_table() {
 		reset_permission_table();
+
+		$('#available_devices_list option').each(function() {
+			$(this).remove();
+		});
 		
 		/*$("#permission_list_table tbody tr").each(function(){
 			$(this).remove();
@@ -80,7 +84,7 @@
 	function toggleAddView() {
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
-		if(user_id>0 && devicegroup_id>0) {
+		if(user_id>0 || devicegroup_id>0) {
 			//$('#permission_search_text').removeAttr('disabled');
 			//$('#search_permission').removeAttr('disabled');
 			$('#add_permission').removeAttr('disabled');
@@ -498,12 +502,12 @@
 						$rows = $DBControlObject->DeviceGroupsView();
 						if(count($rows)>0) {
 							for($i=0; $i<count($rows); $i++) {
-								$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
+								$device_group_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
 					?>
 		
 								<option value=<?php echo $rows[$i][0]?>>
 					<?php
-								echo "Device / " .$device_name." <br> \n";
+								echo "Device / " .$device_group_name." <br> \n";
 							}
 					?>
 								</option>
