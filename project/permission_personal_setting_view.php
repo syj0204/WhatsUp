@@ -219,29 +219,52 @@
 		$('#add_permission').click(function(){
 			var user_id = $('#user_list option:selected').val();
 			var devicegroup_id = $('#devicegroup_list option:selected').val();
-			$.post("get_no_permission_by_devicegroup.php",{
-				user:user_id,
-				devicegroup:devicegroup_id
-				}, 
-				function(data,status) {
-					$('#available_devices_list option').each(function() {
-						$(this).remove();
-					});
-					
-					if(data!=-1) {
-						var data_by_list1 = data.split('|');
-						for(var i=0; i<data_by_list1.length-1; i++) {
-							var value = data_by_list1[i].split(',');
-							$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
-							$('#available_devices_list').append($.newtr);
-							
+			if(devicegroup_id==-1) {
+				$.post("get_no_permission_all.php",{
+					user:user_id
+					}, 
+					function(data,status) {
+						$('#available_devices_list option').each(function() {
+							$(this).remove();
+						});
+						
+						if(data!=-1) {
+							var data_by_list1 = data.split('|');
+							for(var i=0; i<data_by_list1.length-1; i++) {
+								var value = data_by_list1[i].split(',');
+								$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
+								$('#available_devices_list').append($.newtr);
+							}
+						} else {
+							//alert("No Device To Add!!");
+							//$('#add_permission_dialog').hide();
 						}
-					} else {
-						//alert("No Device To Add!!");
-						//$('#add_permission_dialog').hide();
 					}
-				}
-			);
+				);
+			} else {
+				$.post("get_no_permission_by_devicegroup.php",{
+					user:user_id,
+					devicegroup:devicegroup_id
+					}, 
+					function(data,status) {
+						$('#available_devices_list option').each(function() {
+							$(this).remove();
+						});
+						
+						if(data!=-1) {
+							var data_by_list1 = data.split('|');
+							for(var i=0; i<data_by_list1.length-1; i++) {
+								var value = data_by_list1[i].split(',');
+								$.newtr = $("<option value="+value[1]+">"+value[2]+"</option>");
+								$('#available_devices_list').append($.newtr);
+							}
+						} else {
+							//alert("No Device To Add!!");
+							//$('#add_permission_dialog').hide();
+						}
+					}
+				);
+			}
 		});
 		
 		$('#add_permission_save').click(function(){
