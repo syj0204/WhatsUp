@@ -443,7 +443,7 @@ Class DBController{
 		if($this->connection) {
 
 
-			$query = "Select * from DeviceGroup Where nParentGroupID = '0' and bDynamicGroup ='0' and nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by sGroupName ASC";
+			$query = "select * from DeviceGroup where nDeviceGroupID in (select nDeviceGroupID from PivotDeviceToGroup) order by sGroupName ASC";
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
 			// 姨랁쉲�쉧吏� WhatsUp DB 夷⑹콐姨붿콠姨랁쉪 夷⑹콐姨붿콠姨붿쮷�쉧吏�
 				

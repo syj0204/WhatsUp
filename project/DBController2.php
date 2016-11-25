@@ -133,7 +133,7 @@ Class DBController{
 /// 이거 고쳐야함
 		if($this->connection) {
 			//$query = "SELECT D.* from  DeviceGroup AS DG INNER JOIN PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN Device AS D ON PD.nDeviceID = D.nDeviceID Where dg.nParentGroupID = '0' and DG.nMonitorStateID !='0' and  DG.nMonitorStateID !='10'  order by nDeviceID ASC ";
-			$query = "SELECT D.* from  WhatsUP.dbo.DeviceGroup AS DG INNER JOIN WhatsUP.dbo.PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN WhatsUP.dbo.Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select nDeviceGroupID from DeviceGroup Where DG.nDeviceGroupID in (Select nParentGroupID from DeviceGroup)) order by nDeviceID ASC ";
+			$query = "SELECT D.* from  WhatsUP.dbo.DeviceGroup AS DG INNER JOIN WhatsUP.dbo.PivotDeviceToGroup AS PD ON DG.nDeviceGroupID = PD.nDeviceGroupID INNER JOIN WhatsUP.dbo.Device AS D ON PD.nDeviceID = D.nDeviceID Where DG.nDeviceGroupID in (select * from WhatsUp.dbo.DeviceGroup where nDeviceGroupID in (select nDeviceGroupID from WhatsUp.dbo.PivotDeviceToGroup)) order by nDeviceID ASC ";
 			// WhatUp DB쩍횄 쨩챌쩔챘
 			//$query = "SELECT * from  Device";
 			$statement = $this->DBObject->executeQuery($query);
@@ -444,7 +444,7 @@ Class DBController{
 		if($this->connection) {
 
 
-			$query = "Select DG.* from WhatsUp.dbo.DeviceGroup AS DG Where DG.nParentGroupID = '0' and DG.bDynamicGroup ='0' and DG.nDeviceGroupID not in (Select DG.nDeviceGroupID from WhatsUp.dbo.DeviceGroup AS DG Where DG.nDeviceGroupID in (Select DG.nParentGroupID from WhatsUp.dbo.DeviceGroup AS DG)) order by DG.sGroupName ASC";
+			$query = "select * from WhatsUp.dbo.DeviceGroup where nDeviceGroupID in (select nDeviceGroupID from WhatsUp.dbo.PivotDeviceToGroup) order by sGroupName ASC";
 			//$query = "Select * from DeviceGroup Where nParentGroupID = '0' and nMonitorStateID !='0' and  nMonitorStateID !='10' order by sGroupName ASC";
 			// 쩍횉횁짝 WhatsUp DB 쨩챌쩔챘쩍횄 쨩챌쩔챘쩔쨔횁짚
 				
