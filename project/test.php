@@ -121,7 +121,7 @@
 			
 		});
 		
-		$('#delete_temp').click(function(){
+		$('#delete_temp').on("click", "#delete_user", function() {
 			$('#list20 option').remove();
 		  //  var list_save = new Array();
 		    //var list_string1=""
@@ -323,7 +323,7 @@
 								    </select>
 								    <span class="input-group-btn">
 										<button id="select_temp" class="btn btn-success" type="button"><?php echo $han2?></button>
-										<button id="delete_temp" class="btn btn-success" type="button"><?php echo $han3?></button>
+										<button  class="btn btn-success" type="button"  data-toggle="modal" data-target="#delete_temp" ><?php echo $han3?></button>
 										<button id="add_temp" class="btn btn-success" type="button"><?php echo $han4?></button>
 									</span>
 									<input type="text" id="Temp_Name" class="form-control panel-yellow" placeholder="Enter Template Name ~" style="display: none"></input>
@@ -337,6 +337,34 @@
 							</div>
 	
 						</div>
+						
+						<!-- Modal -->
+					  	<div class="modal fade" id="delete_temp" role="dialog">
+					    <div class="modal-dialog">
+					    
+					      <!-- Modal content-->
+					      <div class="modal-content">
+					        <div class="modal-header">
+					          <button type="button" class="close" data-dismiss="modal">&times;</button>
+					          <h4 class="modal-title">Delete Confirm</h4>
+					        </div>
+					        <div class="modal-body">
+					          <p><?php 
+				                   $text = "템플릿에 저장된 모든 내용이 삭제 됩니다. 정말 삭제하시겠습니까?";
+				                   $text = ICONV("EUC-KR","UTF-8",$text);
+				                   echo $text;
+				                   ?>
+				              </p>
+					        </div>
+					        <div class="modal-footer">
+					          <button id="delete_user" type="button" class="btn btn-primary" data-dismiss="modal">Yes, Delete!</button>
+					          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					        </div>
+					      </div>
+					      
+					    </div>
+					  	</div>
+						
 					</div>
 				</div>
 			</div>
