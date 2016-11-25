@@ -12,23 +12,26 @@
 
 		$(function(){
 
-			$('#user1').click(function(){
-				$('#ui_view').load("user_control_view.php");
+			$('#go_user_setting').click(function(){
+				$('#page-wrapper').load("user_setting_view.php");
 				return false;
 			});
-			$('#sin1').click(function(){
-				$('#ui_view').load("permission_control_view4.php");
+			$('#go_device_list').click(function(){
+				$('#page-wrapper').load("ajaxtest2.php");
 				return false;
 			});
-			$('#temp').click(function(){
-				$('#ui_view').load("test.php");
+			$('#go_personal_setting').click(function(){
+				$('#page-wrapper').load("permission_personal_setting_view.php");
 				return false;
 			});
-			$('#temp_user').click(function(){
-				$('#ui_view').load("newtest2.php");
+			$('#go_templates_setting').click(function(){
+				$('#page-wrapper').load("test.php");
 				return false;
 			});
-
+			$('#go_templates_match').click(function(){
+				$('#page-wrapper').load("newtest2.php");
+				return false;
+			});
 		});
 		
 
@@ -47,62 +50,100 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            WhatsUp <small>SMS Setting</small>
+                            WhatsUp <small></small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-dashboard"></i> WhatsUp
+                                <i class="fa fa-dashboard"></i> WhatsUp SMS Setting
                             </li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
-<!-- 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
-                        </div>
-                    </div>
-                </div> -->
-                <!-- /.row -->
-
+                
                 <div class="row">
                     <div class="col-lg-5 col-md-6">
-                        <div class="panel panel-primary">
+                        <div id="go_user_setting" class="panel panel-primary">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <!-- <i class="fa fa-comments fa-5x"></i> -->
-                                        <i class="fa fa-tasks fa-5x"></i>
+                                        <i class="fa fa-comments fa-5x"></i>
                                     </div>
-                                    <div class="col-xs-9 text-middle">
+                                    <div class="col-xs-9 text-right">
                                         <div class="huge">
-                                        <?php 
-                                        	$text = "사용자 추가/수정/삭제";
-                                        	$text = ICONV("EUC-KR","UTF-8",$text);
-                                        	echo $text;
-                                        ?>
+	                                        <?php
+	                                        	$DBControlObject = new DBController();
+												$result = $DBControlObject->getUserList();
+												echo count($result);
+											?>
+										</div>
+                                        <div>
+	                                        <?php 
+	                                        	$text = "사용자";
+	                                        	$text = ICONV("EUC-KR","UTF-8",$text);
+	                                        	echo $text;
+	                                        ?>
                                         </div>
-                                       
-                                   
-                         
-                            		 </div>
+                                    </div>
                                 </div>
                             </div>
-                            <a href="#" id="user1"> 
+                            <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">Go Match~~!</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
+                                    <span class="pull-left">
+                                    	<?php 
+	                                        $text = "사용자 추가/수정/삭제";
+	                                        $text = ICONV("EUC-KR","UTF-8",$text);
+	                                        echo $text;
+	                                   	?>
+	                                </span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-1" >
-                    </div>
                     <div class="col-lg-5 col-md-6">
+                        <div id="go_device_list" class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">
+                                        	<?php
+	                                        	$DBControlObject = new DBController();
+												$result = $DBControlObject->getDeviceList();
+												echo count($result);
+											?>
+                                        </div>
+                                        <div>
+                                        	<?php 
+	                                        	$text = "장비";
+	                                        	$text = ICONV("EUC-KR","UTF-8",$text);
+	                                        	echo $text;
+	                                        ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">
+                                    <?php 
+	                                	$text = "장비확인";
+	                                    $text = ICONV("EUC-KR","UTF-8",$text);
+	                                    echo $text;
+	                               	?>
+                                    </span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div id="go_personal_setting" class="col-lg-5 col-md-6">
                         <div class="panel panel-green">
                             <div class="panel-heading">
                                 <div class="row">
@@ -122,16 +163,15 @@
                             </div>
 							<a href="#" id="sin1"> 
                                 <div class="panel-footer">
-                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-left">Go~! 'Personal Setting'</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    </div>
-                    <div class="row">
-                       <div class="col-lg-5 col-md-6">
+                    
+                    <div id="go_templates_setting" class="col-lg-5 col-md-6">
                         <div class="panel panel-yellow">
                             <div class="panel-heading">
                                 <div class="row">
@@ -147,24 +187,20 @@
                                         	echo $text;
                                         ?>
                                         </div>
-                                       
-                                   
-                         
-                            		 </div>
+                            		</div>
                                 </div>
                             </div>
-                            <a href="#" id="temp"> 
+                            <a href="#"> 
                                 <div class="panel-footer">
-                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-left">Go~! 'Templates Setting'</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-1" >
-                    </div>
-                    <div class="col-lg-5 col-md-6">
+                    
+                    <div id="go_templates_match" class="col-lg-5 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <div class="row">
@@ -182,174 +218,18 @@
                                     </div>
                                 </div>
                             </div>
-							<a href="#" id="temp_user"> 
+							<a href="#"> 
                                 <div class="panel-footer">
-                                    <span class="pull-left">Go Match~~!</span>
+                                    <span class="pull-left">Go~! 'Templates Match'</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span> 
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                 </div>
-                
-                <!-- /.row -->
-<!-- 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-area-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- /.row -->
-
-               <!--  <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Donut Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">just now</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">4 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Commented on a post
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">23 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">46 minutes ago</span>
-                                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">1 hour ago</span>
-                                        <i class="fa fa-fw fa-user"></i> A new user has been added
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">2 hours ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">yesterday</span>
-                                        <i class="fa fa-fw fa-globe"></i> Saved the world
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">two days ago</span>
-                                        <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
-                                    </a>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Order #</th>
-                                                <th>Order Date</th>
-                                                <th>Order Time</th>
-                                                <th>Amount (USD)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>3326</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:29 PM</td>
-                                                <td>$321.33</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3325</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:20 PM</td>
-                                                <td>$234.34</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3324</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:03 PM</td>
-                                                <td>$724.17</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3323</td>
-                                                <td>10/21/2013</td>
-                                                <td>3:00 PM</td>
-                                                <td>$23.71</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3322</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:49 PM</td>
-                                                <td>$8345.23</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3321</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:23 PM</td>
-                                                <td>$245.12</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3320</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:15 PM</td>
-                                                <td>$5663.54</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3319</td>
-                                                <td>10/21/2013</td>
-                                                <td>2:13 PM</td>
-                                                <td>$943.45</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- /.row -->
-            
-                
-                
-                
-                
-                
+                   
+                </div>
+               
             </div>
             <!-- /.container-fluid -->
 
