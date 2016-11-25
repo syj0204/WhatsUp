@@ -133,30 +133,32 @@
 		var user_id = $('#user_list option:selected').val();
 		var devicegroup_id = $('#devicegroup_list option:selected').val();
 		//alert(devicelist);
-		$.post("delete_permission3.php",{
-			user:user_id,
-			devicelist:devicelist
-			}, 
-			function(data,status) {
-				//alert(data);
-				if(data!=-1) {
-					load_permission_table();
-					toggleSearchView();
-					//toggleAddView(user_id, devicegroup_id);
-					toggleAddView();
-					
-				} else alert("fail!");
-				$('#user_list').removeAttr('disabled');
-				$('#devicegroup_list').removeAttr('disabled');
-				$("#permission_list_table thead tr").find('th').eq(0).remove();
-				$('#delete_permission_multiple_save').hide();
-				$('#delete_permission_multiple').show();
-				$("#permission_list_table thead tr").find('th').eq(2).show();
-				$("#permission_list_table tbody tr").each(function(){
-					$(this).find('td').eq(2).show();
-				});
-			}
-		);
+		if(devicelist.length>0) {
+			$.post("delete_permission3.php",{
+				user:user_id,
+				devicelist:devicelist
+				}, 
+				function(data,status) {
+					//alert(data);
+					if(data!=-1) {
+						
+					} else alert("fail!");
+				}
+			);
+		}
+		$('#user_list').removeAttr('disabled');
+		$('#devicegroup_list').removeAttr('disabled');
+		load_permission_table();
+		toggleSearchView();
+		//toggleAddView(user_id, devicegroup_id);
+		toggleAddView();
+		$("#permission_list_table thead tr").find('th').eq(0).remove();
+		$('#delete_permission_multiple_save').hide();
+		$('#delete_permission_multiple').show();
+		$("#permission_list_table thead tr").find('th').eq(2).show();
+		$("#permission_list_table tbody tr").each(function(){
+			$(this).find('td').eq(2).show();
+		});
 	}
 	
 	function toggle_all_check(th) {
@@ -289,13 +291,13 @@
 					}, 
 					function(data,status) {
 						if(data==1) {
-							alert("success");
+							//alert("success");
 							load_permission_table();
 							toggleSearchView();
 						} else alert(data);
 					}
 				);
-			} else alert("Choose Device");
+			} //else alert("Choose Device");
 
 				
 			
