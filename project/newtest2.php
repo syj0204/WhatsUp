@@ -50,7 +50,7 @@ $(function(){
 			}, 
 		
 			function(data,status) {
-				alert(status);
+				if(status=='fail'){alert(status);};
 			}
 		);
 		$('#page-wrapper').load("newtest2.php");
