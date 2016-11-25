@@ -88,12 +88,13 @@
 		
 		$('#select_temp').click(function(){
 			//$('#list10 option:eq(0)').attr("selected", "selected");
-			$('#list1 option:eq(0)').attr("selected", "selected");
+			
 		    var list_save = new Array();
 		    var list_string1=""
 			var list_size = $('#list20 option').size();
 			//alert(list_size);
 			var Temp = $('#list10 option:selected').val();
+
 			//alert(Temp);
 			//for(var j=0 j<list_size; j++){
 				for(var i=0; i<list_size; i++) {
@@ -113,10 +114,9 @@
 					alert(status);
 				}
 			);
-			$('#list20 option').remove();
-			$('#list2 option').remove();
-			$('#list1').val('-- Select Device Group --').attr('selected', 'selected');
-			$('#list10').val('-- Select Template --').attr('selected', 'selected');
+			$('#page-wrapper').load("test.php");
+			//$('#list10 option:eq('+Temp+')').attr("selected", "selected");
+
 
 			
 		});
@@ -143,7 +143,7 @@
 				//category:list_string1
 				}, 
 				function(data,status) {
-					alert(status);
+					if(status=='fail'){alert(status);};
 				}
 			);
 			$('#page-wrapper').load("test.php");
