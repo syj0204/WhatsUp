@@ -173,7 +173,7 @@ Class DBController{
 	function getDeviceListNotForUser($user_id) {
 
 		if($this->connection) {
-			$query = "SELECT nDeviceID, sDisplayName FROM Device WHERE nDeviceID NOT IN (SELECT nDeviceID FROM Permission WHERE nUserID =".$user_id.")";
+			$query = "SELECT d.nDeviceID, d.sDisplayName, dg.sGroupName FROM Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and d.nDeviceID NOT IN (SELECT nDeviceID FROM Permission WHERE nUserID =".$user_id.") ORDER BY dg.sGroupName";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -193,7 +193,7 @@ Class DBController{
 
 		if($this->connection) {
 				
-			$query = "SELECT d.nDeviceID, d.sDisplayName FROM Device d, PivotDeviceToGroup pdg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.")";
+			$query = "SELECT d.nDeviceID, d.sDisplayName, dg.sGroupName FROM Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE d.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and pdg.nDeviceGroupID=".$device_group_id."and d.nDeviceID NOT IN (SELECT p.nDeviceID FROM Permission p, PivotDeviceToGroup pdg WHERE p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=".$device_group_id." and p.nUserID=".$user_id.") ORDER BY dg.sGroupName";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 
@@ -319,7 +319,7 @@ Class DBController{
 	function getPermissionListByUser($nUserID) {
 	
 		if($this->connection) {
-			$query = "SELECT p.nDeviceID, d.sDisplayName FROM Permission p, Device d WHERE p.nDeviceID=d.nDeviceID and p.nUserID=".$nUserID;
+			$query = "SELECT p.nDeviceID, d.sDisplayName, pdg.nDeviceGroupID, dg.sGroupName FROM Permission p, Device d, PivotDeviceToGroup pdg, DeviceGroup dg WHERE p.nDeviceID=d.nDeviceID and p.nDeviceID=pdg.nDeviceID and pdg.nDeviceGroupID=dg.nDeviceGroupID and p.nUserID=".$nUserID." ORDER BY dg.sGroupName";
 			$statement = $this->DBObject->executeQuery($query);
 			$rows = array();
 	
