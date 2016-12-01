@@ -1,28 +1,29 @@
 <?php
-	include "DBController.php"; 
-	$han="템플릿명을 입력하세요";
-	$han = ICONV("EUC-KR","UTF-8",$han);
-	$han1="선택한 템플릿에 저장된 디바이스";
-	$han1 = ICONV("EUC-KR","UTF-8",$han1);
-	$han2="수정";
-	$han2 = ICONV("EUC-KR","UTF-8",$han2);
-	$han3="삭제";
-	$han3 = ICONV("EUC-KR","UTF-8",$han3);
-	$han4="추가";
-	$han4 = ICONV("EUC-KR","UTF-8",$han4);
-	$han5="템플릿 선택";
-	$han5 = ICONV("EUC-KR","UTF-8",$han5);
-	$han6="템플릿 생성";
-	$han6 = ICONV("EUC-KR","UTF-8",$han6);
-	$han7="취소";
-	$han7 = ICONV("EUC-KR","UTF-8",$han7);
-	$han8="디바이스 그룹 선택";
-	$han8 = ICONV("EUC-KR","UTF-8",$han8);
-	$han9="선택한 디바이스 그룹에 포함된 디바이스";
-	$han9 = ICONV("EUC-KR","UTF-8",$han9);
-	
+include "DBController.php";
+$han="템플릿명을 입력하세요";
+$han = ICONV("EUC-KR","UTF-8",$han);
+$han1="선택한 템플릿에 저장된 디바이스";
+$han1 = ICONV("EUC-KR","UTF-8",$han1);
+$han2="수정";
+$han2 = ICONV("EUC-KR","UTF-8",$han2);
+$han3="삭제";
+$han3 = ICONV("EUC-KR","UTF-8",$han3);
+$han4="추가";
+$han4 = ICONV("EUC-KR","UTF-8",$han4);
+$han5="템플릿 선택";
+$han5 = ICONV("EUC-KR","UTF-8",$han5);
+$han6="템플릿 생성";
+$han6 = ICONV("EUC-KR","UTF-8",$han6);
+$han7="취소";
+$han7 = ICONV("EUC-KR","UTF-8",$han7);
+$han8="디바이스 그룹 선택";
+$han8 = ICONV("EUC-KR","UTF-8",$han8);
+$han9="선택한 디바이스 그룹에 포함된 디바이스";
+$han9 = ICONV("EUC-KR","UTF-8",$han9);
+
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('#add_temp').click(function(){
@@ -260,111 +261,128 @@
 <div id="page-wrapper">
 
 	<div class="container-fluid">
-	
-	<!-- Page Heading -->
+
+		<!-- Page Heading -->
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Templates Setting </h1>
-			
+				<h1 class="page-header">Templates Setting</h1>
+
 			</div>
 		</div>
 		<!-- /.row -->
-		
+
 		<div class="row">
-			<div class="col-lg-12" >
+			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Templates Setting</h3>
+						<h3 class="panel-title">
+							<i class="fa fa-bar-chart-o fa-fw"></i> Templates Setting
+						</h3>
 					</div>
 					<div class="panel-body">
-				    	<div class="row">
-				        	<div class="col-xs-6" id= "list_grid">
-				        	  <label id="list1_title"><?php echo $han8?></label>
-				        		<select name="list1" id="list1" class="form-control"  >
-				        			<option>-- Select Device Group --</option>
-										<?php $DBControlObject = new DBController();
-											  $rows = $DBControlObject->DeviceGroupsView();
-												if(count($rows)>0) {		
+						<div class="row">
+							<div class="col-xs-6" id="list_grid">
+								<label id="list1_title"><?php echo $han8?> </label> <select
+									name="list1" id="list1" class="form-control">
+									<option>-- Select Device Group --</option>
+									<?php $DBControlObject = new DBController();
+									$rows = $DBControlObject->DeviceGroupsView();
+									if(count($rows)>0) {
 													for($i=0; $i<count($rows); $i++) {
 													$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][2]);
-										?>
-									<option value=<?php echo $rows[$i][0]?>>      		 		
+													?>
+									<option value=<?php echo $rows[$i][0]?>>
 										<?php
-														echo "Device / " .$device_name." <br> \n";
+										echo "Device / " .$device_name." <br> \n";
 													}
 												}
-										?>
+												?>
 									</option>
-								</select><br>
-								<label id="list2_title"><?php echo $han9?></label>
-								<select name="list2" id="list2" class="form-control" size="25" ></select>
-				        	</div>
-							<!-- /.col-xs-4 -->			
-				
+								</select><br> <label id="list2_title"><?php echo $han9?> </label>
+								<select name="list2" id="list2" class="form-control" size="25"></select>
+							</div>
+							<!-- /.col-xs-4 -->
+
 							<div class="col-xs-6" id="test">
-								<label id="list10_title"><?php echo $han5?></label>
+								<label id="list10_title"><?php echo $han5?> </label>
 								<div class="form-group input-group ">
 									<select name="list10" id="list10" class="form-control">
-						        		<option>-- Select Template --</option>
-											<?php $DBControlObject = new DBController();
-												  $rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것
-													if(count($rows)>0) {		
+										<option>-- Select Template --</option>
+										<?php $DBControlObject = new DBController();
+										$rows = $DBControlObject->getSelecttemp();// 초기 Template select문에 나타내는 것
+										if(count($rows)>0) {
 														for($i=0; $i<count($rows); $i++) {
 														$device_name = ICONV("EUC-KR","UTF-8",$rows[$i][1]);
 														//$device_group_name = ICONV("EUC-KR","UTF-8",$rows[$i][27]);
-											?>
-										<option value=<?php echo $rows[$i][0]?>>      		 		
+														?>
+										<option value=<?php echo $rows[$i][0]?>>
 											<?php
-															echo $device_name." <br> \n";
+											echo $device_name." <br> \n";
 														}
 													}
-											?>
+													?>
 										</option>
-								    </select>
-								    <span class="input-group-btn">
-										<button id="select_temp" class="btn btn-success" type="button"><?php echo $han2?></button>
-										<button id="delete_temp" class="btn btn-success" type="button"  data-toggle="modal" data-target="#delete_temp1" ><?php echo $han3?></button>
-										<button id="add_temp" class="btn btn-success" type="button"><?php echo $han4?></button>
-									</span>
-									<input type="text" id="Temp_Name" class="form-control panel-yellow" placeholder="Enter Template Name ~" style="display: none"></input>
+									</select> <span class="input-group-btn">
+										<button id="select_temp" class="btn btn-success" type="button">
+											<?php echo $han2?>
+										</button>
+										<button id="delete_temp" class="btn btn-success" type="button"
+											data-toggle="modal" data-target="#delete_temp1">
+											<?php echo $han3?>
+										</button>
+										<button id="add_temp" class="btn btn-success" type="button">
+											<?php echo $han4?>
+										</button>
+									</span> <input type="text" id="Temp_Name"
+										class="form-control panel-yellow"
+										placeholder="Enter Template Name ~" style="display: none"></input>
 									<span class="input-group-btn">
-										<button id="enter_temp" class="btn btn-success" type="button" style="display: none" ><?php echo $han6?></button>
-										<button id="close" class="btn btn-success" type="button" style="display: none" ><?php echo $han7?></button>
+										<button id="enter_temp" class="btn btn-success" type="button"
+											style="display: none">
+											<?php echo $han6?>
+										</button>
+										<button id="close" class="btn btn-success" type="button"
+											style="display: none">
+											<?php echo $han7?>
+										</button>
 									</span>
 								</div>
-								<label id="list20_title"><?php echo $han1?></label>
-								<select name="list20" id="list20" class="form-control" size="25"></select>
+								<label id="list20_title"><?php echo $han1?> </label> <select
+									name="list20" id="list20" class="form-control" size="25"></select>
 							</div>
-	
+
 						</div>
-						
+
 						<!-- Modal -->
-					  	<div class="modal fade" id="delete_temp1" role="dialog">
-					    <div class="modal-dialog">
-					    
-					      <!-- Modal content-->
-					      <div class="modal-content">
-					        <div class="modal-header">
-					          <button type="button" class="close" data-dismiss="modal">&times;</button>
-					          <h4 class="modal-title">Delete Confirm</h4>
-					        </div>
-					        <div class="modal-body">
-					          <p><?php 
-				                   $text = "템플릿에 저장된 모든 내용이 삭제 됩니다. 정말 삭제하시겠습니까?";
-				                   $text = ICONV("EUC-KR","UTF-8",$text);
-				                   echo $text;
-				                   ?>
-				              </p>
-					        </div>
-					        <div class="modal-footer">
-					          <button id="delete_user" type="button" class="btn btn-primary" data-dismiss="modal">Yes, Delete!</button>
-					          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-					        </div>
-					      </div>
-					      
-					    </div>
-					  	</div>
-						
+						<div class="modal fade" id="delete_temp1" role="dialog">
+							<div class="modal-dialog">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Delete Confirm</h4>
+									</div>
+									<div class="modal-body">
+										<p>
+											<?php 
+											$text = "템플릿에 저장된 모든 내용이 삭제 됩니다. 정말 삭제하시겠습니까?";
+											$text = ICONV("EUC-KR","UTF-8",$text);
+											echo $text;
+											?>
+										</p>
+									</div>
+									<div class="modal-footer">
+										<button id="delete_user" type="button" class="btn btn-primary"
+											data-dismiss="modal">Yes, Delete!</button>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">No</button>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -372,7 +390,7 @@
 	</div>
 </div>
 
-	
+
 
 
 
