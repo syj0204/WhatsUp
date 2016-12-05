@@ -39,6 +39,7 @@
 	
 		});
 
+
 	</script>
 
 
@@ -51,11 +52,13 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             WhatsUp <small></small>
+                            <a href="zxcvasdf.txt" download="test.txt">User manual</a>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
                                 <i class="fa fa-dashboard"></i> WhatsUp SMS Setting
                             </li>
+
                         </ol>
                     </div>
                 </div>

@@ -36,8 +36,8 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			$('#Temp_Name').show();
 			$('#close').show();
 			$('#list10').val('-- Select Template --').attr('selected', 'selected');
-			
 		});
+		// 추가버튼 클릭시 작동 옵션
 		
 		$('#close').click(function(){
 			$('#list20 option').remove();
@@ -49,11 +49,8 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			$('#Temp_Name').hide();
 			$('#close').hide();
 			$('#page-wrapper').load("test.php");
-
-			
-
 		});
-		
+		// 취소버튼 클릭시 작동 옵션
 		$('#list1').change(function(){
 			//initSelectBoxes();
 			var selected_category = $('#list1 option:selected').val();
@@ -67,7 +64,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 				//alert(bank_val[i]);
 				var bank_val2 = bank_val[i]+",";
 				bank_val1 = bank_val1 + bank_val2;
-			} //alert(bank_val1);
+			} //현재 List20 값을 읽어서 옴(템플릿에 저장된 값을 제거 하기위함)
 			//alert(bank_size);
 			//alert(bank_val1);
 			$('#list2 option').remove();
@@ -81,11 +78,11 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 					var data_by_category = data.split('|');
 					for(var i=0; i<data_by_category.length-1; i++) {
 						var value = data_by_category[i].split(',');
-						$('#list2').append("<option value="+value[1]+">"+value[3]+" / ["+value[2]+"] </option>");
+						$('#list2').append("<option value="+value[1]+">"+value[3]+" / ["+value[2]+"] </option>");// |과 , 을 통해서 문자열을 나눠서 배열값으로 만들어 사용
 					}
 				}
 			);
-		});
+		});// LIST 1(디바이스 그룹선택) 변경시 설정 옵션
 		
 		$('#select_temp').click(function(){
 			//$('#list10 option:eq(0)').attr("selected", "selected");
@@ -97,14 +94,13 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			var Temp = $('#list10 option:selected').val();
 
 			//alert(Temp);
-			//for(var j=0 j<list_size; j++){
 				for(var i=0; i<list_size; i++) {
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
 					 var list_string = list_save[i]+",";
 					 var list_string1 = list_string1 + list_string;
-				}
+				}//List 20값을 호출 ,를 이용해 문자열로 만듬
 				
-			//}
+			
 			 //alert(list_string1);
 			$.post("test4.php",{
 				name:Temp,
@@ -120,9 +116,9 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 
 
 			
-		});
+		});//템플릿 수정 버튼 옵션
 		
-		$('#delete_temp1').on("click", "#delete_user", function() {
+		$('#delete_temp1').on("click", "#delete_user", function() {// 다이얼로그를 이용하기위해서 modal을 이용하여서 버튼 클릭 modal 활성화
 			$('#list20 option').remove();
 		  //  var list_save = new Array();
 		    //var list_string1=""
@@ -148,8 +144,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 				}
 			);
 			$('#page-wrapper').load("test.php");
-		});
-		
+		}); // 템플릿 삭제 버튼 옵션		
 		
 		$('#enter_temp').click(function(){
 
@@ -165,7 +160,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 					 list_save[i] = $('#list20 option:eq('+i+')').val();	
 					 var list_string = list_save[i]+",";
 					 var list_string1 = list_string1 + list_string;
-				}
+				}// 수정버튼과 동일한 방법 사용
 				
 			//}
 			// alert(list_string1);
@@ -178,7 +173,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 					alert(data);
 				}
 			);
-	
+			
 	
 			$('#select_temp').show();
 			$('#delete_temp').show();
@@ -190,7 +185,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			$('#list20 option').remove();
 			$('#list2 option').remove();
 			$('#page-wrapper').load("test.php");
-		});
+		});// 템플릿 생성 버튼 옵션
 	
 		
 		$('#list2').change(function(){
@@ -201,7 +196,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			//to_add_list.push(to_add_item);
 			$('#list2 option:selected').remove();
 		
-		});
+		});// List2(선택한 디바이스 그룹 리스트) 클릭시 List20으로 이동 옵션
 
 		$('#list20').change(function(){
 			var to_add_item2 = $('#list20 option:selected').text();
@@ -213,7 +208,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			//$('#list20').append("<option value="+to_add_item1+">"+to_add_item+"</option>");
 			//to_add_list.push(to_add_item);
 		
-		});
+		});// List20(선택한 템플릿내 디바이스 리스트) 클릭시 List2으로 이동 옵션
 		
 		$('#list10').change(function(){
 			var template_select = $('#list10 option:selected').val();
@@ -243,7 +238,7 @@ $han9 = ICONV("EUC-KR","UTF-8",$han9);
 			);
 			//location.reload(true);
 			
-		});
+		});  // List 10(템플릿 선택) 선택시 옵션 클릭시 
 
 		$(window).load(function(e){
 
